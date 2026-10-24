@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kızıl List — Geometry Dash Demon Ranking</title>
-<meta name="description" content="Up-to-date Geometry Dash demon list: a single-file list that does not hide unrated levels, tells same-named levels apart and uses the correct points curve. Search, filters, personal progress and a points calculator.">
+<title>Crimson List — Geometry Dash Demon Ranking</title>
+<meta name="description" content="Up-to-date Geometry Dash demon list: a single-file list that does not hide unrated levels, tells same-named levels apart and uses the correct points curve. Search, filters, record submission and a points calculator.">
 <meta name="theme-color" content="#0e0c0b">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Kızıl List — Geometry Dash Demon Ranking">
+<meta property="og:title" content="Crimson List — Geometry Dash Demon Ranking">
 <meta property="og:description" content="Unrated levels included, same-named levels told apart, correct points formula.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230e0c0b'/%3E%3Cpath d='M32 6 58 32 32 58 6 32Z' fill='%23ff3b2f'/%3E%3Cpath d='M32 20 44 32 32 44 20 32Z' fill='%230e0c0b'/%3E%3C/svg%3E">
@@ -148,6 +148,11 @@ kbd{border:1px solid var(--line);padding:0 5px;font:12px ui-monospace,Menlo,mono
 .prose[data-lang]{display:none}
 html[lang=tr] .prose[data-lang=tr],html[lang=en] .prose[data-lang=en]{display:block}
 .iconbtn{font-family:var(--sans);font-weight:600}
+input[type=text],input[type=url]{background:var(--bg-2);color:var(--text);border:1px solid var(--line);border-radius:0;padding:10px 12px;min-height:44px;width:100%}
+.check{display:flex!important;gap:10px;align-items:flex-start;text-transform:none!important;letter-spacing:0!important;font-size:14px!important;color:var(--soft)!important;margin-top:14px!important}
+.check input{width:auto;min-height:0;margin-top:4px;accent-color:var(--hot)}
+.hint{color:var(--muted);font-size:13px;margin-top:4px}
+.err{color:var(--hot)}
 </style>
 </head>
 <body>
@@ -159,7 +164,7 @@ html[lang=tr] .prose[data-lang=tr],html[lang=en] .prose[data-lang=en]{display:bl
       <span class="right"><span id="updated"></span>
         <button class="iconbtn" id="lang" type="button" data-ti="langTitle" aria-label="Language">TR</button>
         <button class="iconbtn" id="theme" type="button" data-ar="themeAria" data-ti="themeAria">◐</button></span></div>
-    <h1 data-i="h1">KIZIL LIST</h1>
+    <h1 data-i="h1">CRIMSON LIST</h1>
     <p class="dek" data-i="dek"></p>
     <div class="stats" id="stats"></div>
   </header>
@@ -168,7 +173,7 @@ html[lang=tr] .prose[data-lang=tr],html[lang=en] .prose[data-lang=en]{display:bl
 
   <nav class="views" role="tablist" data-ar="sections" id="tabs">
     <button type="button" role="tab" id="tab-list" aria-selected="true" aria-controls="panel-list" data-i="tabList">Ranking</button>
-    <button type="button" role="tab" id="tab-mine" aria-selected="false" aria-controls="panel-mine" tabindex="-1" data-i="tabMine">My progress</button>
+    <button type="button" role="tab" id="tab-submit" aria-selected="false" aria-controls="panel-submit" tabindex="-1" data-i="tabSubmit">Submit a record</button>
     <button type="button" role="tab" id="tab-stats" aria-selected="false" aria-controls="panel-stats" tabindex="-1" data-i="tabStats">Stats</button>
     <button type="button" role="tab" id="tab-players" aria-selected="false" aria-controls="panel-players" tabindex="-1" data-i="tabPlayers">Players</button>
     <button type="button" role="tab" id="tab-calc" aria-selected="false" aria-controls="panel-calc" tabindex="-1" data-i="tabCalc">Points</button>
@@ -191,8 +196,6 @@ html[lang=tr] .prose[data-lang=tr],html[lang=en] .prose[data-lang=en]{display:bl
         <button type="button" data-filter="outlier" aria-pressed="false" data-i="fOutlier"></button>
         <button type="button" data-filter="border" aria-pressed="false" data-i="fBorder"></button>
         <button type="button" data-filter="note" aria-pressed="false" data-i="fNote"></button>
-        <button type="button" data-filter="done" aria-pressed="false" data-i="fDone"></button>
-        <button type="button" data-filter="todo" aria-pressed="false" data-i="fTodo"></button>
         <button type="button" data-filter="all" aria-pressed="false" data-i="fAll"></button>
       </div>
       <div class="bar-tools">
@@ -218,21 +221,36 @@ html[lang=tr] .prose[data-lang=tr],html[lang=en] .prose[data-lang=en]{display:bl
     <div id="list"></div>
   </section>
 
-  <section class="panel" id="panel-mine" role="tabpanel" aria-labelledby="tab-mine">
-    <div style="margin-top:18px">
-      <h2 class="sec" data-i="tabMine"></h2>
-      <p class="lead" data-i="mineLead"></p>
-      <div class="sum" id="mineSum"></div>
-      <div id="mineList"></div>
-      <div class="card" style="margin-top:18px">
-        <h2 data-i="backup"></h2>
-        <p class="lead" style="margin-top:0" data-i="backupLead"></p>
-        <textarea id="io" data-ar="ioAria" spellcheck="false" data-ph="ioPh"></textarea>
-        <div class="actions">
-          <button type="button" class="ghost" id="exp" data-i="export"></button>
-          <button type="button" class="ghost" id="imp" data-i="import"></button>
-          <button type="button" class="ghost" id="wipe" data-i="wipe"></button>
-        </div>
+  <section class="panel" id="panel-submit" role="tabpanel" aria-labelledby="tab-submit">
+    <div class="calc" style="margin-top:18px">
+      <div class="card">
+        <h2 data-i="tabSubmit"></h2>
+        <p style="color:var(--soft);margin-top:0" data-i="subLead"></p>
+        <form id="recForm" novalidate>
+          <label for="recLevel" data-i="level"></label><select id="recLevel"></select>
+          <div class="hint" id="recHint"></div>
+          <label for="recPlayer" data-i="fPlayer"></label>
+          <input id="recPlayer" type="text" maxlength="40" autocomplete="nickname">
+          <label for="recPercent" data-i="percent"></label>
+          <input id="recPercent" type="number" min="1" max="100" inputmode="numeric" value="100">
+          <label for="recVideo" data-i="fVideo"></label>
+          <input id="recVideo" type="url" inputmode="url" autocomplete="off" placeholder="https://youtu.be/…">
+          <label for="recRaw" data-i="fRaw"></label>
+          <input id="recRaw" type="url" inputmode="url" autocomplete="off" placeholder="https://…">
+          <label for="recNotes" data-i="fNotes"></label>
+          <textarea id="recNotes" maxlength="400"></textarea>
+          <label class="check"><input type="checkbox" id="recConsent"><span data-i="fConsent"></span></label>
+          <div class="live" id="recEst"></div>
+          <div class="actions">
+            <button type="submit" class="primary" id="recOpen" data-i="recOpen"></button>
+            <button type="button" class="ghost" id="recCopy" data-i="recCopy"></button>
+          </div>
+          <div class="live" id="recMsg" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h2 data-i="subHowT"></h2>
+        <div class="live" data-ih="subHow"></div>
       </div>
     </div>
   </section>
@@ -244,8 +262,12 @@ html[lang=tr] .prose[data-lang=tr],html[lang=en] .prose[data-lang=en]{display:bl
       <div class="card">
         <h2 data-i="liveTitle"></h2>
         <p class="lead" style="margin-top:0" data-i="liveLead"></p>
-        <button type="button" class="primary" id="live" data-i="liveBtn"></button>
+        <div class="actions">
+          <button type="button" class="primary" id="live" data-i="liveBtnP"></button>
+          <button type="button" class="primary" id="liveG" data-i="liveBtnG"></button>
+        </div>
         <div class="live" id="liveOut" aria-live="polite"></div>
+        <div class="live" id="liveOutG" aria-live="polite"></div>
       </div>
       <div class="grid2">
         <div class="card"><h2 data-i="stReq"></h2><div class="bars" id="stReq"></div></div>
@@ -337,30 +359,34 @@ html[lang=tr] .prose[data-lang=tr],html[lang=en] .prose[data-lang=en]{display:bl
       <p>Bunlar Deadlier Clubstep, BRITNEY NO SCLEARS, Stellar Night, Gaggatrondra, Sevvend Clubstep, Edge of Destiny ve Losing Your Mind'ı Kızıl extended'a; paranoia'dan Starlight Summit'e kadar dokuz level'ı, bir de adjunto adnominal'ı sınır bandına itti. Graceful ise Rated+ #150 ile içeride kaldı.</p>
       <h3>24 Ekim 2026 güncellemesi</h3>
       <p>Pointercrate'in canlı klasik ve Rated+ sayfalarını dünkü dosyayla karşılaştırdım. Klasik 1–150 değişmemiş. Rated+ tarafında tek fark var: adjunto adnominal (klasik #137) Rated+ ilk 150'den çıkıp Rated+ legacy'ye geçmiş. Bu yüzden Kızıl #147'den #161'e indi, aradaki dokuz level bir yer yukarı kaydı ve Graceful #150'ye girdi. Nedenini sayfa söylemiyor; ben de uydurmadım.</p>
+      <h3>Kaynaklar</h3>
+      <p>Sıra Pointercrate’in Rated+ listesinden gelir. Pointercrate bazen geç güncellenir, bu yüzden Global Demonlist (demonlist.org) ikinci görüş olarak kullanılır: “İstatistik” sekmesinden karşılaştırınca Global ilk 150’de olup dosyada olmayan level’ları ve Kızıl ile Global arasındaki büyük sıra farklarını gösterir. Global sırası da listede her level’ın yanına eklenir. İki liste farklı yöntemle sıralandığı için fark otomatik olarak hata sayılmaz.</p>
+      <h3>Rekor gönderme</h3>
+      <p>Kendi beyanınla “bitirdim” demek yok. Rekor göndermek için level’ı seçip oyuncu adı, yüzde ve kanıt videosu girersin. Form GitHub’da önceden doldurulmuş bir kayıt açar; kayıt gelince liste yöneticisi GitHub bildirimiyle haberdar olur, video izlenir ve onaylanırsa rekor işlenir.</p>
       <h3>GitHub Pages</h3>
-      <p>Bu sayfa tek dosya. Repoyu aç, <b>index.html</b> dosyasını kök dizine koy, Settings → Pages → branch kökü. Başka bir şey kurmana gerek yok. Ağ yokken arama, filtre ve puan hesabı yine çalışır; yazı tipleri ve video kareleri o zaman yedek görünüme düşer.</p>
+      <p>Bu sayfa tek dosya. Repoyu aç, <b>index.html</b> dosyasını kök dizine koy, Settings → Pages → branch kökü. Rekor gönderme için ayrıca .github/ISSUE_TEMPLATE klasörünü repoya koy (README’ye bak). Ağ yokken arama, filtre ve puan hesabı yine çalışır; yazı tipleri ve video kareleri o zaman yedek görünüme düşer.</p>
     </div>
   
     <div class="prose" data-lang="en">
       <h2>What I fixed</h2>
       <p>This is not the official Pointercrate. The order comes from the Rated+ placement in the Pointercrate API on the morning of 23 October 2026. On top of it I put my own rules. I did not rewrite difficulty to taste; a shift with no data behind it would be worse than the mistake I am fixing.</p>
       <h3>1. Unrated is no longer ignored</h3>
-      <p>The classic list only takes rated levels. Today Old Orochi was placed at #17 as harder than Silent clubstep, but the classic site still does not have it. Kızıl shows it in the difficulty order. It awards no points: putting points on the scoreboard before a rate arrives is the part of Rated+ that has not settled yet.</p>
+      <p>The classic list only takes rated levels. Today Old Orochi was placed at #17 as harder than Silent clubstep, but the classic site still does not have it. Crimson shows it in the difficulty order. It awards no points: putting points on the scoreboard before a rate arrives is the part of Rated+ that has not settled yet.</p>
       <h3>2. Same name, two levels</h3>
-      <p>There are two different “Thinking Space II”s. CairoX’s is classic #4. CoCyMain’s is unrated #39 today. Other lists print both under the same name. Kızıl puts the publisher next to the name.</p>
+      <p>There are two different “Thinking Space II”s. CairoX’s is classic #4. CoCyMain’s is unrated #39 today. Other lists print both under the same name. Crimson puts the publisher next to the name.</p>
       <h3>3. The points formula</h3>
       <p>Many 2026 guides describe points as <span class="wrong">(progress/100)×(threshold/100)×500</span>. On GRIEF, a 76% record gives 288.80 points with that formula. The score Pointercrate prints on the page is 35.00. The truth: completion points depend only on the rank; a record at the threshold is 10% of that; at 100% it is all of it; linear in between. Extended has no percentage records, only completions.</p>
       <h3>4. Threshold is not difficulty</h3>
       <p>Ultra Paracosm’s threshold is 37%. That does not mean the level is soft; the hard part ends early. Through The Gates 90%, Penumbral 80%, Master of Puppets 83%, Maniacal Chains 85%: the hard part is at the end, and even a high percentage does not count as a record. I put a “Threshold” label on these five in the main list. In Extended a 100% threshold is the rule, not an outlier.</p>
       <h3>5. Who fell off today is not hidden</h3>
-      <p>When Rated+ pushed 10 unrated levels into the top 150, it moved classic #142–150 into its own legacy. Starlight Summit is still classic #150 with 18.71 points. In Rated+ it is #159, with no points. Kızıl calls this “borderline”. A list that shows a single number hides this contradiction.</p>
+      <p>When Rated+ pushed 10 unrated levels into the top 150, it moved classic #142–150 into its own legacy. Starlight Summit is still classic #150 with 18.71 points. In Rated+ it is #159, with no points. Crimson calls this “borderline”. A list that shows a single number hides this contradiction.</p>
       <h3>6. I did not invent a rank because a level isn’t fun</h3>
       <p>Silent clubstep, Acheron and Avernus have been in the “fun” and “made for the list” debate for years. Acheron’s 2022 placement at #2 is the list’s most-disliked move. Where they sit today is set by player comparison; I did not break that, I added a note.</p>
       <h3>Ranking rules</h3>
       <ol>
-        <li>Kızıl order = Rated+ order (last checked: 24 October 2026).</li>
+        <li>Crimson order = Rated+ order (last checked: 24 October 2026).</li>
         <li>Points = if the level is rated and its classic rank is 1–150, that rank’s official curve. Otherwise 0.</li>
-        <li>The Main / Extended / Legacy tiers follow the Kızıl order (1–75, 76–150, 151–200).</li>
+        <li>The Main / Extended / Legacy tiers follow the Crimson order (1–75, 76–150, 151–200).</li>
         <li>Publisher and verifier are written separately. The name on the list is often not the only creator.</li>
         <li>Instead of Legacy’s “unordered dump”, the 50 most recently dropped levels are shown. Older ones are not in this file.</li>
       </ol>
@@ -377,11 +403,15 @@ html[lang=tr] .prose[data-lang=tr],html[lang=en] .prose[data-lang=en]{display:bl
         <li>Marks #105, above Sinister Silence</li>
         <li>blight #125, above Natural Disaster</li>
       </ul>
-      <p>These pushed Deadlier Clubstep, BRITNEY NO SCLEARS, Stellar Night, Gaggatrondra, Sevvend Clubstep, Edge of Destiny and Losing Your Mind into Kızıl Extended; they pushed nine levels from paranoia to Starlight Summit, plus adjunto adnominal, into the borderline band. Graceful stayed inside at Rated+ #150.</p>
+      <p>These pushed Deadlier Clubstep, BRITNEY NO SCLEARS, Stellar Night, Gaggatrondra, Sevvend Clubstep, Edge of Destiny and Losing Your Mind into Crimson Extended; they pushed nine levels from paranoia to Starlight Summit, plus adjunto adnominal, into the borderline band. Graceful stayed inside at Rated+ #150.</p>
       <h3>24 October 2026 update</h3>
-      <p>I compared Pointercrate’s live classic and Rated+ pages with yesterday’s file. Classic 1–150 has not changed. On the Rated+ side there is one difference: adjunto adnominal (classic #137) left the Rated+ top 150 and moved to Rated+ legacy. So Kızıl moved it from #147 to #161, the nine levels in between moved up one place, and Graceful entered at #150. The page does not say why; I did not make up a reason.</p>
+      <p>I compared Pointercrate’s live classic and Rated+ pages with yesterday’s file. Classic 1–150 has not changed. On the Rated+ side there is one difference: adjunto adnominal (classic #137) left the Rated+ top 150 and moved to Rated+ legacy. So Crimson moved it from #147 to #161, the nine levels in between moved up one place, and Graceful entered at #150. The page does not say why; I did not make up a reason.</p>
+      <h3>Sources</h3>
+      <p>The order comes from Pointercrate’s Rated+ list. Pointercrate is sometimes slow to update, so the Global Demonlist (demonlist.org) is used as a second opinion: running the comparison in the “Stats” tab shows levels in the Global top 150 that are missing from this file, and big rank gaps between Crimson and Global. Each level’s Global rank is also added to the list. The two lists are ranked by different methods, so a gap is not automatically an error.</p>
+      <h3>Submitting records</h3>
+      <p>There is no “I beat it” self-declaration. To submit a record, pick the level and enter your player name, percentage and a proof video. The form opens a pre-filled GitHub issue; when it arrives the list maintainer is notified by GitHub, watches the video, and an approved record is added.</p>
       <h3>GitHub Pages</h3>
-      <p>This page is a single file. Open your repo, put <b>index.html</b> in the root, then Settings → Pages → branch root. You need nothing else. Without a network, search, filters and the points calculator still work; fonts and video frames fall back to a plain look.</p>
+      <p>This page is a single file. Open your repo, put <b>index.html</b> in the root, then Settings → Pages → branch root. For record submissions, also add the .github/ISSUE_TEMPLATE folder to the repo (see the README). Without a network, search, filters and the points calculator still work; fonts and video frames fall back to a plain look.</p>
     </div>
   </section>
   </main>
@@ -390,20 +420,29 @@ html[lang=tr] .prose[data-lang=tr],html[lang=en] .prose[data-lang=en]{display:bl
 </div>
 <div class="toast" id="toast" role="status"></div>
 
-<script id="payload" type="application/json">{"updated": "24 Ekim 2026", "scores": [0.0, 350.0, 331.71, 313.42, 291.7, 271.78, 253.53, 236.8, 221.47, 207.42, 194.54, 182.73, 171.91, 161.99, 152.89, 144.56, 136.92, 129.92, 123.5, 117.62, 112.23, 110.81, 109.39, 107.99, 106.61, 105.24, 103.88, 102.54, 101.21, 99.89, 98.58, 97.29, 96.01, 94.75, 93.49, 92.25, 89.95, 87.73, 85.58, 83.51, 81.51, 79.58, 77.72, 75.92, 74.19, 72.52, 70.9, 69.34, 67.83, 66.38, 64.98, 63.62, 62.31, 61.05, 59.83, 58.66, 57.6, 56.47, 55.37, 54.3, 53.26, 52.25, 51.26, 50.3, 49.37, 48.46, 47.57, 46.71, 45.87, 45.06, 44.26, 43.49, 42.74, 42.01, 41.3, 40.6, 39.93, 39.27, 38.63, 38.01, 37.41, 36.82, 36.24, 35.69, 35.14, 34.61, 34.1, 33.6, 33.11, 32.64, 32.18, 31.73, 31.29, 30.87, 30.45, 30.05, 29.66, 29.28, 28.91, 28.55, 28.19, 27.85, 27.52, 27.19, 26.88, 26.57, 26.27, 25.98, 25.7, 25.42, 25.16, 24.9, 24.64, 24.39, 24.15, 23.92, 23.69, 23.47, 23.26, 23.05, 22.84, 22.64, 22.45, 22.26, 22.08, 21.9, 21.73, 21.56, 21.39, 21.23, 21.08, 20.92, 20.78, 20.63, 20.49, 20.36, 20.23, 20.1, 19.97, 19.85, 19.73, 19.62, 19.5, 19.39, 19.29, 19.18, 19.08, 18.99, 18.89, 18.8, 18.71], "rows": [{"p": 1, "rp": 1, "name": "GRIEF", "pub": "icedcave", "ver": "[TCD] Doggie", "req": 76, "lid": 149992717, "yt": "gB8slBPlOjc", "pc": 728, "rated": true}, {"p": 2, "rp": 2, "name": "Artemis 13", "pub": "Mvngo", "ver": "[67] Zoink", "req": 73, "lid": 148598469, "yt": "FgjOM0ef1N8", "pc": 730, "rated": true}, {"p": 3, "rp": 3, "name": "Society", "pub": "Neomarbilan", "ver": "[WBT] wPopoff", "req": 66, "lid": 127323087, "yt": "3CoEaH1CM7o", "pc": 698, "rated": true}, {"p": 4, "rp": 4, "name": "Thinking Space II", "pub": "CairoX", "ver": "[67] Zoink", "req": 79, "lid": 119544028, "yt": "CELNmHwln_c", "pc": 635, "rated": true}, {"p": 5, "rp": 5, "name": "Amethyst", "pub": "iMist", "ver": "[WBT] wPopoff", "req": 59, "lid": 119550490, "yt": "4lfkzz1VCbA", "pc": 623, "rated": true}, {"p": 6, "rp": 6, "name": "Flamewall", "pub": "Narwall", "ver": "[400] CuatrocientosYT", "req": 68, "lid": 126242564, "yt": "x4Io4zkWVRw", "pc": 638, "rated": true}, {"p": 7, "rp": 7, "name": "Tidal Wave", "pub": "OniLink", "ver": "[67] Zoink", "req": 72, "lid": 86407629, "yt": "9fsZ014qB3s", "pc": 562, "rated": true}, {"p": 8, "rp": 8, "name": "Green Bullet", "pub": "cherryteam", "ver": "[UFA] Nickname09", "req": 68, "lid": 142896409, "yt": "JG-qcvVkZFw", "pc": 702, "rated": true}, {"p": 9, "rp": 9, "name": "ORBIT", "pub": "MindCap", "ver": "[67] Zoink", "req": 65, "lid": 133175713, "yt": "QKcv8DkNPd0", "pc": 671, "rated": true}, {"p": 10, "rp": 10, "name": "Antarctic Lights", "pub": "declanlc", "ver": "Axinity", "req": 75, "lid": 144988390, "yt": "Uue4ZRhVf-I", "pc": 711, "rated": true}, {"p": 11, "rp": 11, "name": "Nullscapes", "pub": "Kiba", "ver": "[67] Zoink", "req": 68, "lid": 109780665, "yt": "EztneTPp5CU", "pc": 589, "rated": true}, {"p": 12, "rp": 12, "name": "Quanteuse processing", "pub": "Renn241", "ver": "[67] Zoink", "req": 60, "lid": 117692518, "yt": "j5NC0u1Q91Q", "pc": 660, "rated": true}, {"p": 13, "rp": 13, "name": "BOOBAWAMBA", "pub": "Akunakunn", "ver": "eastshark", "req": 63, "lid": 110816181, "yt": "20fYiqLAo_E", "pc": 594, "rated": true}, {"p": 14, "rp": 14, "name": "The Bloop", "pub": "[TARIQ] murkkat", "ver": "[67] Zoink", "req": 67, "lid": 135661111, "yt": "ROuXHSKEhHA", "pc": 700, "rated": true}, {"p": 15, "rp": 15, "name": "Every End", "pub": "MindCap", "ver": "[FOWL] Hqmy", "req": 67, "lid": 116174063, "yt": "AO--mVVFtKI", "pc": 620, "rated": true}, {"p": 16, "rp": 16, "name": "Ashley Wave Trials", "pub": "oddmod", "ver": "[67] Zoink", "req": 77, "lid": 62912799, "yt": "aTxt76U3e2Q", "pc": 669, "rated": true}, {"p": 17, "rp": null, "name": "Old Orochi", "pub": "Platnuu", "ver": "Volumni", "req": 60, "lid": 136742562, "yt": "YxtFAQtLYQY", "pc": 736, "rated": false}, {"p": 18, "rp": 17, "name": "Silent clubstep", "pub": "TheRealSailent", "ver": "[DL] zoe", "req": 63, "lid": 4125776, "yt": "GR4OMkS3SN8", "pc": 428, "rated": true}, {"p": 19, "rp": 18, "name": "Ultra Paracosm", "pub": "declanlc", "ver": "[HOLA] Wity", "req": 37, "lid": 138704906, "yt": "4V24spYQWuE", "pc": 704, "rated": true}, {"p": 20, "rp": 19, "name": "Penumbral", "pub": "cherryteam", "ver": "[UFA] w3rty", "req": 80, "lid": 134942736, "yt": "nVHPFf13M-I", "pc": 680, "rated": true}, {"p": 21, "rp": 20, "name": "andromeda", "pub": "Insxne97", "ver": "[WBT] Taiago", "req": 66, "lid": 114283297, "yt": "mk3TDemdkC0", "pc": 613, "rated": true}, {"p": 22, "rp": 21, "name": "KILLSTEALER", "pub": "rynoxious", "ver": "[OG B] kloone", "req": 69, "lid": 138781722, "yt": "uhH4oqWrsfo", "pc": 696, "rated": true}, {"p": 23, "rp": 22, "name": "Subsuming Vortex", "pub": "[TCD] Cursed", "ver": "[TCD] Cursed", "req": 66, "lid": 127997391, "yt": "0eYG1ogJpIQ", "pc": 649, "rated": true}, {"p": 24, "rp": 23, "name": "Anathema", "pub": "nikroplays", "ver": "[IQB7] Whizkid05", "req": 77, "lid": 112313819, "yt": "_uKwmjHmySI", "pc": 602, "rated": true}, {"p": 25, "rp": 24, "name": "Defeated Circles", "pub": "GXQ", "ver": "[67] Zoink", "req": 73, "lid": 120012581, "yt": "nU5AQPzd2YA", "pc": 639, "rated": true}, {"p": 26, "rp": 25, "name": "Avernus", "pub": "PockeWindfish", "ver": "[67] Zoink", "req": 67, "lid": 89496627, "yt": "16Zh8jssanc", "pc": 486, "rated": true}, {"p": 27, "rp": 26, "name": "FOREST OF SPIKES", "pub": "bims", "ver": "Brian_Cheese", "req": 66, "lid": 145709435, "yt": "WJYh3dW8Bfo", "pc": 715, "rated": true}, {"p": 28, "rp": 27, "name": "Acheron", "pub": "ryamu", "ver": "[67] Zoink", "req": 70, "lid": 73667628, "yt": "sBKR6aUorzA", "pc": 442, "rated": true}, {"p": 29, "rp": 28, "name": "Spectre", "pub": "xander", "ver": "PersonHuman42", "req": 75, "lid": 110815379, "yt": "MzsSLKJrLSI", "pc": 592, "rated": true}, {"p": 30, "rp": 29, "name": "Menace", "pub": "Arraegen", "ver": "[IQB7] Whizkid05", "req": 73, "lid": 107805281, "yt": "nnkgghxxsEE", "pc": 577, "rated": true}, {"p": 31, "rp": 30, "name": "Abyss of Darkness", "pub": "Exen", "ver": "[TCD] Cursed", "req": 75, "lid": 49896559, "yt": "ejJkpqcMMCY", "pc": 413, "rated": true}, {"p": 32, "rp": 31, "name": "Tunnel of Despair", "pub": "Exen", "ver": "[67] Zoink", "req": 79, "lid": 91351939, "yt": "LpS4JREhW98", "pc": 520, "rated": true}, {"p": 33, "rp": 32, "name": "Kyouki", "pub": "｛出見塩｝", "ver": "｛出見塩｝", "req": 72, "lid": 86018142, "yt": "KDa5c0CJTHs", "pc": 468, "rated": true}, {"p": 34, "rp": 33, "name": "Sacrifice", "pub": "Laniakea", "ver": "Laniakea", "req": 72, "lid": 141052363, "yt": "Sth67PA8XBU", "pc": 706, "rated": true}, {"p": 35, "rp": 34, "name": "Based After Based", "pub": "Akunakunn", "ver": "DiamondSplash", "req": 74, "lid": 110534288, "yt": "yQBFyUvB3lY", "pc": 668, "rated": true}, {"p": 36, "rp": 35, "name": "cognitohazard", "pub": "MercuryDT", "ver": "[IQB7] Whizkid05", "req": 75, "lid": 130891319, "yt": "T5g0r16X_ZA", "pc": 709, "rated": true}, {"p": 37, "rp": 36, "name": "The Lightning Rod", "pub": "Lavatrex", "ver": "Lavatrex", "req": 63, "lid": 93917076, "yt": "nQDTi077O6M", "pc": 528, "rated": true}, {"p": 38, "rp": 37, "name": "Maniacal Chains", "pub": "LordDivinity", "ver": "spcreat", "req": 85, "lid": 48991380, "yt": "TzeMJeIu6bY", "pc": 697, "rated": true}, {"p": 39, "rp": null, "name": "Thinking Space II", "pub": "CoCyMain", "ver": "Zeronium", "req": 74, "lid": 132854166, "yt": "RJedeB2wHCA", "pc": 733, "rated": false}, {"p": 40, "rp": 38, "name": "Slaughterhouse", "pub": "icedcave", "ver": "[TCD] Doggie", "req": 75, "lid": 27690100, "yt": "kpcF1-QAHQc", "pc": 380, "rated": true}, {"p": 41, "rp": 39, "name": "Subterminal Point", "pub": "SyQual", "ver": "[ILUV] PoCle", "req": 71, "lid": 113599729, "yt": "h2wmRMgACH4", "pc": 612, "rated": true}, {"p": 42, "rp": 40, "name": "KOCMOC", "pub": "cherryteam", "ver": "[67] Zoink", "req": 73, "lid": 87665224, "yt": "2CxE-UWCIG4", "pc": 501, "rated": true}, {"p": 43, "rp": 41, "name": "BEING HOME", "pub": "Turtl123", "ver": "[OG] goobs", "req": 73, "lid": 130327668, "yt": "kt7FnUzK8CY", "pc": 679, "rated": true}, {"p": 44, "rp": 42, "name": "Deimos", "pub": "ItsHybrid", "ver": "[TCD] Doggie", "req": 70, "lid": 93091893, "yt": "b2yHaIk5zio", "pc": 516, "rated": true}, {"p": 45, "rp": 43, "name": "CHIL", "pub": "McCoco", "ver": "McCoco", "req": 78, "lid": 114281093, "yt": "DROMiCc2ZRM", "pc": 652, "rated": true}, {"p": 46, "rp": 44, "name": "zorin", "pub": "태리", "ver": "[미소노 미카] 구아이", "req": 62, "lid": 134541844, "yt": "U19vmpenb9g", "pc": 677, "rated": true}, {"p": 47, "rp": 45, "name": "Prismline", "pub": "ItsHarryy", "ver": "Wain", "req": 71, "lid": 135148907, "yt": "pIHOHz3i0Rw", "pc": 708, "rated": true}, {"p": 48, "rp": null, "name": "BASSLINE JUNKIE", "pub": "MCBIGMACPLAYZ", "ver": "[MOON] Karma", "req": 71, "lid": 143300771, "yt": "db_V19gW0rI", "pc": 731, "rated": false}, {"p": 49, "rp": 46, "name": "Sakupen Circles", "pub": "[TCD] Diamond", "ver": "[TCD] Diamond", "req": 69, "lid": 76962930, "yt": "ofG2mJi9kEA", "pc": 391, "rated": true}, {"p": 50, "rp": 47, "name": "The Salt Factory", "pub": "[UFA] Nickname09", "ver": "[UFA] Nickname09", "req": 66, "lid": 113045735, "yt": "lQ7M-Sgov24", "pc": 655, "rated": true}, {"p": 51, "rp": 48, "name": "Master of Puppets", "pub": "TheZinkYT", "ver": "[TMG] Scotchtape", "req": 83, "lid": 136396693, "yt": "JBZ-lrBgkl0", "pc": 695, "rated": true}, {"p": 52, "rp": null, "name": "Lost in Time 2", "pub": "Zeronium", "ver": "Zeronium", "req": 66, "lid": 148297431, "yt": "8i5GfTqb6oE", "pc": 737, "rated": false}, {"p": 53, "rp": 49, "name": "Silentlocked", "pub": "GDSkele", "ver": "TFIBB", "req": 68, "lid": 113959291, "yt": "O-IQeUdEGvI", "pc": 648, "rated": true}, {"p": 54, "rp": 50, "name": "Eyes in the Water", "pub": "hawkyre", "ver": "[DL] LordVadercraft", "req": 71, "lid": 95851008, "yt": "yvLwiOy3KEA", "pc": 545, "rated": true}, {"p": 55, "rp": 51, "name": "KOSETSU", "pub": "fwe", "ver": "[WBT] Taiago", "req": 68, "lid": 109439644, "yt": "hZ8vFX8z_BU", "pc": 587, "rated": true}, {"p": 56, "rp": 52, "name": "CONVULSION", "pub": "stellar", "ver": "[IQB7] Whizkid05", "req": 64, "lid": 113322063, "yt": "qeRKuyU3eGI", "pc": 640, "rated": true}, {"p": 57, "rp": 53, "name": "Through The Gates", "pub": "TeamTheDashers", "ver": "[67] Zoink", "req": 90, "lid": 49072489, "yt": "4yHA6jux5UI", "pc": 663, "rated": true}, {"p": 58, "rp": null, "name": "Shadow Of The Past", "pub": "ViZeris", "ver": "LennyFeus", "req": 76, "lid": 143909846, "yt": "LEyo0LJV8os", "pc": 739, "rated": false}, {"p": 59, "rp": null, "name": "ace", "pub": "TheBigCheese69", "ver": "[TSC] aidsen", "req": 64, "lid": 138215607, "yt": "7uYghOdos8I", "pc": 740, "rated": false}, {"p": 60, "rp": 54, "name": "Firework", "pub": "[TCD] Trick", "ver": "[TCD] Trick", "req": 71, "lid": 75206202, "yt": "QBe5x2o9v2w", "pc": 379, "rated": true}, {"p": 61, "rp": 55, "name": "Voltage", "pub": "ThePurgatory", "ver": "[OG B] maybee", "req": 57, "lid": 131599104, "yt": "wBRvBN9tmlc", "pc": 667, "rated": true}, {"p": 62, "rp": 56, "name": "NOMAD", "pub": "ReeseVT", "ver": "Laniakea", "req": 72, "lid": 115077305, "yt": "H2TkHbEX__A", "pc": 673, "rated": true}, {"p": 63, "rp": 57, "name": "Snowbound", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 68, "lid": 120289520, "yt": "cjHwgbtAkXU", "pc": 658, "rated": true}, {"p": 64, "rp": 58, "name": "NervHell", "pub": "ASVTeam", "ver": "ChopBlox", "req": 64, "lid": 143718114, "yt": "1zrvPgDAoaA", "pc": 705, "rated": true}, {"p": 65, "rp": 59, "name": "poocubed", "pub": "Liisp", "ver": "Kyasshukodo", "req": 66, "lid": 85133223, "yt": "fzL31vai1ms", "pc": 464, "rated": true}, {"p": 66, "rp": 60, "name": "Calibrate", "pub": "[SARK] Bamvie", "ver": "[아기엔더맨] Blebae", "req": 63, "lid": 136981369, "yt": "6WYnZryX_mg", "pc": 683, "rated": true}, {"p": 67, "rp": 61, "name": "MINUSdry", "pub": "CDMusic", "ver": "Varium", "req": 75, "lid": 89414220, "yt": "YvA8ehhzz0Q", "pc": 487, "rated": true}, {"p": 68, "rp": 62, "name": "Saul Goodman", "pub": "Renn241", "ver": "bloom", "req": 70, "lid": 90477539, "yt": "hjs5PjUaw9k", "pc": 496, "rated": true}, {"p": 69, "rp": 63, "name": "Apocalyptic Trilogy", "pub": "APTeamOfficial", "ver": "Polterghast", "req": 73, "lid": 113443235, "yt": "RUBbpsTR5eU", "pc": 614, "rated": true}, {"p": 70, "rp": 64, "name": "The Hallucination", "pub": "SyQual", "ver": "VoTcHi", "req": 66, "lid": 81139702, "yt": "tYbXsNkO9HE", "pc": 427, "rated": true}, {"p": 71, "rp": null, "name": "Blooming Blossoms", "pub": "nikoberry", "ver": "[!MUTE] piesy", "req": 77, "lid": 130293163, "yt": "GU-qfLRoDMo", "pc": 735, "rated": false}, {"p": 72, "rp": 65, "name": "Pinnacle of Life", "pub": "skzyl", "ver": "[DL] vonic", "req": 71, "lid": 144012996, "yt": "gQl5iY1ekyE", "pc": 707, "rated": true}, {"p": 73, "rp": 66, "name": "COMBUSTION", "pub": "[SKWAD] Cersia", "ver": "[SKWAD] Slithium", "req": 76, "lid": 94359172, "yt": "3cTR4XUcA28", "pc": 526, "rated": true}, {"p": 74, "rp": 67, "name": "Haunted Ship", "pub": "awesomeme360", "ver": "[SWOON] Gnamolor", "req": 61, "lid": 143523624, "yt": "22l59QGmL48", "pc": 713, "rated": true}, {"p": 75, "rp": 68, "name": "Loops of Fury", "pub": "[TCC] Enfur", "ver": "[TCC] Cork", "req": 73, "lid": 126571887, "yt": "9HBG3i5zbw8", "pc": 642, "rated": true}, {"p": 76, "rp": 69, "name": "Deadlier Clubstep", "pub": "HeroZombie80", "ver": "Jenath", "req": 70, "lid": 96314787, "yt": "eRhgaF0r5Q0", "pc": 558, "rated": true}, {"p": 77, "rp": 70, "name": "BRITNEY NO SCLEARS", "pub": "wabas", "ver": "[TMG] Scotchtape", "req": 76, "lid": 125317359, "yt": "ff_mQSXwjhU", "pc": 684, "rated": true}, {"p": 78, "rp": 71, "name": "Stellar Night", "pub": "icedcave", "ver": "Tuggy", "req": 78, "lid": 83244159, "yt": "XpBY-eMYZTE", "pc": 674, "rated": true}, {"p": 79, "rp": 72, "name": "Gaggatrondra", "pub": "JCMoon", "ver": "Zeronium", "req": 68, "lid": 114990369, "yt": "A4G41vw6Cf0", "pc": 615, "rated": true}, {"p": 80, "rp": 73, "name": "Sevvend Clubstep", "pub": "cherryteam", "ver": "[UFA] Vorten", "req": 66, "lid": 120255728, "yt": "TvA8EJTJFCc", "pc": 630, "rated": true}, {"p": 81, "rp": 74, "name": "Edge of Destiny", "pub": "CDMusic", "ver": "Polterghast", "req": 73, "lid": 89187968, "yt": "rUphe3H59yU", "pc": 485, "rated": true}, {"p": 82, "rp": 75, "name": "Losing Your Mind", "pub": "GDgalaxygaming", "ver": "[OG B] Laysah", "req": 67, "lid": 139508889, "yt": "LXp7t5gjyX8", "pc": 699, "rated": true}, {"p": 83, "rp": null, "name": "ETERNALtheory", "pub": "[AUF] Hyperlith", "ver": "[AUF] Hyperlith", "req": 100, "lid": 92196326, "yt": "3LfjQWk9Hyg", "pc": 734, "rated": false}, {"p": 84, "rp": 76, "name": "Solar Flare", "pub": "Linear", "ver": "[1319] swiborg", "req": 69, "lid": 90390075, "yt": "eHQNgty8ypY", "pc": 495, "rated": true}, {"p": 85, "rp": 77, "name": "The Catacombs", "pub": "[SKWAD] Cersia", "ver": "[SKWAD] Slithium", "req": 60, "lid": 104232191, "yt": "T9-75lfKVQg", "pc": 670, "rated": true}, {"p": 86, "rp": 78, "name": "LIMBO", "pub": "MindCap", "ver": "[1319] BUNNYGRAM", "req": 64, "lid": 86084399, "yt": "kXYMbaMVOZg", "pc": 467, "rated": true}, {"p": 87, "rp": 79, "name": "Make Paul Dance", "pub": "Bemq", "ver": "Airi~", "req": 57, "lid": 115860808, "yt": "XQoF35hNKpg", "pc": 712, "rated": true}, {"p": 88, "rp": 80, "name": "Belladonna", "pub": "cherryteam", "ver": "[PRIME] exsii", "req": 70, "lid": 94969889, "yt": "saHSgoU1JQQ", "pc": 551, "rated": true}, {"p": 89, "rp": 81, "name": "Codependence", "pub": "TCTeam", "ver": "[IH82P] Pukklez", "req": 78, "lid": 62556400, "yt": "IKGk41hSnDo", "pc": 511, "rated": true}, {"p": 90, "rp": 82, "name": "Collapse", "pub": "[Hi] Nexel", "ver": "[Hi] Nexel", "req": 66, "lid": 113256247, "yt": "RCFpXyf6bn0", "pc": 606, "rated": true}, {"p": 91, "rp": 83, "name": "Mayhem", "pub": "[DL] LordVadercraft", "ver": "[DL] LordVadercraft", "req": 57, "lid": 82544060, "yt": "U6e6DD32noM", "pc": 439, "rated": true}, {"p": 92, "rp": 84, "name": "CHROMACAVE", "pub": "HappyMoby", "ver": "[FOWL] geodom", "req": 82, "lid": 131497860, "yt": "tfpsMZI6z-o", "pc": 672, "rated": true}, {"p": 93, "rp": 85, "name": "The Plunge", "pub": "Dolabill", "ver": "Gokill", "req": 67, "lid": 113220284, "yt": "8gW1-_u1K0Y", "pc": 610, "rated": true}, {"p": 94, "rp": 86, "name": "Fracture", "pub": "Arrow", "ver": "Dezstro", "req": 66, "lid": 99703915, "yt": "R_-chk3SRFI", "pc": 681, "rated": true}, {"p": 95, "rp": 87, "name": "Wavterminal", "pub": "Skyavoxii", "ver": "Frice", "req": 73, "lid": 128093374, "yt": "dlvsCE3xYkQ", "pc": 650, "rated": true}, {"p": 96, "rp": 88, "name": "walter white", "pub": "Renn241", "ver": "[OG B] Laysah", "req": 65, "lid": 81011195, "yt": "KzK62PkWOJ0", "pc": 429, "rated": true}, {"p": 97, "rp": 89, "name": "Infinite Chaos", "pub": "CairoX", "ver": "Victurkey", "req": 70, "lid": 119689515, "yt": "wOMVERxU5IA", "pc": 653, "rated": true}, {"p": 98, "rp": 90, "name": "Operation Evolution", "pub": "Halzion", "ver": "cobrablitz", "req": 76, "lid": 114999625, "yt": "WsVF-ayipvY", "pc": 627, "rated": true}, {"p": 99, "rp": 91, "name": "Damascus", "pub": "Dzeser", "ver": "Timo", "req": 69, "lid": 93339534, "yt": "MWQyCUGt76Y", "pc": 521, "rated": true}, {"p": 100, "rp": 92, "name": "Decks Dark", "pub": "[SKG] Madison Yuko", "ver": "[IQB7] Whizkid05", "req": 77, "lid": 95719795, "yt": "l52ApE4HWkY", "pc": 659, "rated": true}, {"p": 101, "rp": 93, "name": "SARYYX NEVER CLEAR", "pub": "artos", "ver": "skzyl", "req": 74, "lid": 95998005, "yt": "rRlyvmjcz_4", "pc": 547, "rated": true}, {"p": 102, "rp": 94, "name": "The Yangire", "pub": "Dorami", "ver": "Dorami", "req": 73, "lid": 110500920, "yt": "V3FjIorIfWg", "pc": 590, "rated": true}, {"p": 103, "rp": 95, "name": "Climax", "pub": "HushLC", "ver": "Wain", "req": 70, "lid": 95049815, "yt": "E4ppq2WeAAs", "pc": 540, "rated": true}, {"p": 104, "rp": 96, "name": "ORDINARY", "pub": "vit12", "ver": "[WBT] wPopoff", "req": 74, "lid": 105593215, "yt": "4QiHP3jpGnk", "pc": 579, "rated": true}, {"p": 105, "rp": null, "name": "Marks", "pub": "HazelSZL", "ver": "[MEALY] oozerdonkey", "req": 100, "lid": 144895744, "yt": "CxYXfCvNZtQ", "pc": 732, "rated": false}, {"p": 106, "rp": 97, "name": "Sinister Silence", "pub": "Wahffle", "ver": "DarkTD", "req": 69, "lid": 82249742, "yt": "dJCdTMQxHMo", "pc": 469, "rated": true}, {"p": 107, "rp": 98, "name": "THE JET ENGINE", "pub": "[TARIQ] Billzer", "ver": "[TARIQ] eviljoe", "req": 71, "lid": 122941596, "yt": "8Q20XU__LoQ", "pc": 633, "rated": true}, {"p": 108, "rp": 99, "name": "Coalescence", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 69, "lid": 108708033, "yt": "do-a2EzZ4R8", "pc": 588, "rated": true}, {"p": 109, "rp": 100, "name": "Trickshot", "pub": "[DL] vonic", "ver": "[DL] vonic", "req": 100, "lid": 136135870, "yt": "IMLjnmnIWRc", "pc": 687, "rated": true}, {"p": 110, "rp": 101, "name": "Midnight", "pub": "[SKG] Madison Yuko", "ver": "[BLOOM] nei", "req": 74, "lid": 96083028, "yt": "NhkN_a9cNi8", "pc": 549, "rated": true}, {"p": 111, "rp": 102, "name": "Doppler", "pub": "At424", "ver": "[IH82P] Danieljgd", "req": 100, "lid": 133489881, "yt": "xSP43i61SLM", "pc": 701, "rated": true}, {"p": 112, "rp": 103, "name": "Cimmerian Shade", "pub": "spcreat", "ver": "spcreat", "req": 81, "lid": 93340783, "yt": "lUNvV1k19HA", "pc": 622, "rated": true}, {"p": 113, "rp": 104, "name": "PSYCHOPATH", "pub": "DeniPol", "ver": "[USSR] BONN GD", "req": 70, "lid": 103925676, "yt": "1luL7tTE8p8", "pc": 570, "rated": true}, {"p": 114, "rp": 105, "name": "TrakineS", "pub": "Laranjoo", "ver": "[WBT] mariner", "req": 77, "lid": 125788781, "yt": "oKuoI-_JzKU", "pc": 676, "rated": true}, {"p": 115, "rp": 106, "name": "arcturus", "pub": "Maxfs", "ver": "ultrakawaHD", "req": 74, "lid": 72315402, "yt": "a_Bqa8l9Xtc", "pc": 383, "rated": true}, {"p": 116, "rp": 107, "name": "Diabolic ClubStep", "pub": "Sevant", "ver": "Sevant", "req": 100, "lid": 73214186, "yt": "BN7DxkMaQfg", "pc": 675, "rated": true}, {"p": 117, "rp": 108, "name": "BEELINE", "pub": "[DOOBY] Galaxxyss", "ver": "[IH82P] Motor8", "req": 71, "lid": 93792764, "yt": "nt6T9YDb6gw", "pc": 605, "rated": true}, {"p": 118, "rp": 109, "name": "DreamStep", "pub": "[MOON] Blaster1337", "ver": "[LARP] youngs6", "req": 100, "lid": 129235528, "yt": "EK5-0OB1tmc", "pc": 682, "rated": true}, {"p": 119, "rp": 110, "name": "Sonic Wave Infinity", "pub": "APTeamOfficial", "ver": "[1319] Xanii", "req": 68, "lid": 69685815, "yt": "C3-l_fFikpQ", "pc": 349, "rated": true}, {"p": 120, "rp": 111, "name": "Tartarus", "pub": "-", "ver": "-", "req": 64, "lid": 59075347, "yt": "JptG7rwti1U", "pc": 250, "rated": true}, {"p": 121, "rp": 112, "name": "Waterfall", "pub": "cherryteam", "ver": "[DL] LordVadercraft", "req": 71, "lid": 110991117, "yt": "VKuVdqneG9Y", "pc": 595, "rated": true}, {"p": 122, "rp": 113, "name": "Jigsaw", "pub": "NekonGames", "ver": "Gokill", "req": 70, "lid": 95031870, "yt": "FPfSqlI0T30", "pc": 555, "rated": true}, {"p": 123, "rp": 114, "name": "Delta", "pub": "[FaZe] Drakosa", "ver": "[TCD] Doggie", "req": 69, "lid": 93917362, "yt": "_rr3J8DkIm4", "pc": 525, "rated": true}, {"p": 124, "rp": 115, "name": "Between Duality", "pub": "[Hi] Nexel", "ver": "[TSC] destr", "req": 100, "lid": 137757402, "yt": "uOb-ajQ4bgw", "pc": 690, "rated": true}, {"p": 125, "rp": 116, "name": "BPATA MPAKA", "pub": "Inex", "ver": "[OG B] maybee", "req": 71, "lid": 109947627, "yt": "sSbHYzYgYfA", "pc": 599, "rated": true}, {"p": 126, "rp": null, "name": "blight", "pub": "xSlendy", "ver": "[ARMED] zRickyy", "req": 100, "lid": 146392813, "yt": "2y1GVoPZjhU", "pc": 738, "rated": false}, {"p": 127, "rp": 117, "name": "Natural Disaster", "pub": "[OG B] Laysah", "ver": "[OG B] Laysah", "req": 71, "lid": 107741051, "yt": "_0GqdSFmG_8", "pc": 583, "rated": true}, {"p": 128, "rp": 118, "name": "The Wonder of You", "pub": "HangerLord", "ver": "Helix", "req": 100, "lid": 94858072, "yt": "iQ3RzYCvLvA", "pc": 662, "rated": true}, {"p": 129, "rp": 119, "name": "Dualist", "pub": "SyncTM", "ver": "[HOLA] Draks_Loves_U", "req": 100, "lid": 130464801, "yt": "6ntYaDqBqu4", "pc": 678, "rated": true}, {"p": 130, "rp": 120, "name": "Sanctity", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 100, "lid": 135547923, "yt": "rtU2oDBz9X0", "pc": 710, "rated": true}, {"p": 131, "rp": 121, "name": "The Golden", "pub": "BoBoBoBoBoBoBo", "ver": "nSwish", "req": 72, "lid": 60978746, "yt": "Ah-PcqwqRTQ", "pc": 274, "rated": true}, {"p": 132, "rp": 122, "name": "Oblivion", "pub": "[DLNW] Dice88", "ver": "[DLNW] Dice88", "req": 72, "lid": 71025973, "yt": "ZcmDAm50BB0", "pc": 425, "rated": true}, {"p": 133, "rp": 123, "name": "Viprin UFO", "pub": "hawkyre", "ver": "[BHO] Cookie", "req": 66, "lid": 107238250, "yt": "LTMW9Py-nHE", "pc": 578, "rated": true}, {"p": 134, "rp": 124, "name": "NETWORK", "pub": "Agat3", "ver": "vulcanium4", "req": 76, "lid": 95176417, "yt": "K7wJi01J5D8", "pc": 539, "rated": true}, {"p": 135, "rp": 125, "name": "ATOMIC CANNON Mk III", "pub": "Lieb", "ver": "Zeronium", "req": 66, "lid": 104672501, "yt": "xlAI_wVvnx8", "pc": 568, "rated": true}, {"p": 136, "rp": 126, "name": "Terminal Rampancy", "pub": "Xyriak", "ver": "Bigthunder556", "req": 73, "lid": 90057148, "yt": "29hRhhqQTLc", "pc": 497, "rated": true}, {"p": 137, "rp": 127, "name": "Verdant Landscape", "pub": "Nisha", "ver": "Nisha", "req": 63, "lid": 76543324, "yt": "wjZxkS5KC0A", "pc": 393, "rated": true}, {"p": 138, "rp": 128, "name": "Levigo", "pub": "Swib", "ver": "[DTC] Kandai", "req": 100, "lid": 97086864, "yt": "AROmUo7DNkE", "pc": 665, "rated": true}, {"p": 139, "rp": 129, "name": "Checked Steam", "pub": "gruzy", "ver": "[IQB7] Whizkid05", "req": 70, "lid": 105748155, "yt": "cq6047eYGXs", "pc": 582, "rated": true}, {"p": 140, "rp": 130, "name": "Heavenly Sakupen", "pub": "Youknowwho", "ver": "[BHO] bazettuk", "req": 100, "lid": 123467310, "yt": "4uwSVZBrtfg", "pc": 716, "rated": true}, {"p": 141, "rp": 131, "name": "UNKNOWN", "pub": "NineDice", "ver": "[TCD] Diamond", "req": 83, "lid": 88203501, "yt": "a1sQxQqU6EM", "pc": 475, "rated": true}, {"p": 142, "rp": 132, "name": "SPIRIT OVERCLOCK", "pub": "TheRealXFuture", "ver": "[ABA] Riley", "req": 100, "lid": 132751236, "yt": "WECBlbM0LJk", "pc": 714, "rated": true}, {"p": 143, "rp": 133, "name": "Shukketsu", "pub": "[SKG] Madison Yuko", "ver": "[YAHO] Baeru", "req": 78, "lid": 75286957, "yt": "nkG4hKJIz2g", "pc": 435, "rated": true}, {"p": 144, "rp": 134, "name": "Breakcore", "pub": "WoofelGD", "ver": "[IQB7] Breakcore", "req": 100, "lid": 123674931, "yt": "_H3KOVLE6gs", "pc": 729, "rated": true}, {"p": 145, "rp": 135, "name": "idontknowwhatthisis", "pub": "YeldA", "ver": "YeldA", "req": 100, "lid": 137334994, "yt": "Dg9Q6s8EOlg", "pc": 703, "rated": true}, {"p": 146, "rp": 136, "name": "Critical Heat", "pub": "Zeniux", "ver": "[WBT] hstorm", "req": 69, "lid": 88442157, "yt": "UjYIt2jy_BY", "pc": 478, "rated": true}, {"p": 147, "rp": 138, "name": "WOBBLING MACHINE", "pub": "Smarted", "ver": "[POB2P] conski", "req": 100, "lid": 87130877, "yt": "RKX6VOsICOg", "pc": 637, "rated": true}, {"p": 148, "rp": 139, "name": "Crystal Crusher", "pub": "Zeniux", "ver": "GuitGuit", "req": 67, "lid": 93732702, "yt": "qirwgz-haVQ", "pc": 617, "rated": true}, {"p": 149, "rp": 140, "name": "limbo but uwu ig idk", "pub": "Akunakunn", "ver": "[JOB] ViperVenom95", "req": 77, "lid": 110705712, "yt": "3B36N-qfOD8", "pc": 625, "rated": true}, {"p": 150, "rp": 141, "name": "Graceful", "pub": "[1319] D A G", "ver": "[1319] D A G", "req": 100, "lid": 71885708, "yt": "5kOD37vQHKE", "pc": 651, "rated": true}, {"p": 151, "rp": 142, "name": "paranoia", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 100, "lid": 113364415, "yt": "Aw83i8Zmh_0", "pc": 664, "rated": true}, {"p": 152, "rp": 143, "name": "Starlit Stroll", "pub": "[TCC] Enfur", "ver": "[TCC] TheButcher", "req": 100, "lid": 115380769, "yt": "U7MM74dTXuI", "pc": 618, "rated": true}, {"p": 153, "rp": 144, "name": "The Paroxysm of Rage", "pub": "Zacanaii", "ver": "[RF] turtle", "req": 65, "lid": 87071894, "yt": "nq3i1qJQeEk", "pc": 572, "rated": true}, {"p": 154, "rp": 145, "name": "Blood Echo", "pub": "Farva", "ver": "[1319] swiborg", "req": 100, "lid": 112242564, "yt": "fSvk4tLlQzQ", "pc": 636, "rated": true}, {"p": 155, "rp": 146, "name": "Aerial Gleam", "pub": "Endlevel", "ver": "[TCD] Doggie", "req": 63, "lid": 79771070, "yt": "eyZjKtrGVYw", "pc": 412, "rated": true}, {"p": 156, "rp": 147, "name": "DISCONNECT", "pub": "MCres", "ver": "Elinore", "req": 100, "lid": 127023313, "yt": "HxHo-LzwSao", "pc": 654, "rated": true}, {"p": 157, "rp": 148, "name": "VOID", "pub": "nikoberry", "ver": "[IQB7] Whizkid05", "req": 100, "lid": 100990392, "yt": "kN1FUoucoSc", "pc": 631, "rated": true}, {"p": 158, "rp": 149, "name": "Henken", "pub": "PLoLek", "ver": "Gokill", "req": 100, "lid": 80714349, "yt": "M--2oQKrV68", "pc": 646, "rated": true}, {"p": 159, "rp": 150, "name": "Starlight Summit", "pub": "[BDAY] hazelmrow", "ver": "[BDAY] hazelmrow", "req": 100, "lid": 114530859, "yt": "LB9xx41M4Ns", "pc": 628, "rated": true}, {"p": 160, "rp": 151, "name": "Trueffet", "pub": "SyQual", "ver": "[YAHO] Baeru", "req": 69, "lid": 71434979, "yt": "yHESkazVD4Q", "pc": 361, "rated": true}, {"p": 161, "rp": 137, "name": "adjunto adnominal", "pub": "soumpeixe", "ver": "soumpeixe", "req": 100, "lid": 137400971, "yt": "YsFOtI9DACQ", "pc": 723, "rated": true}, {"p": 162, "rp": 152, "name": "azure blast", "pub": "[tq] AlbinoSnail", "ver": "[YAHO] DNM121", "req": 100, "lid": 120060187, "yt": "TN0FQ3KBv4w", "pc": 641, "rated": true}, {"p": 163, "rp": 153, "name": "Kenos", "pub": "npesta", "ver": "npesta", "req": 69, "lid": 58673581, "yt": "Bs1kVySdUtI", "pc": 238, "rated": true}, {"p": 164, "rp": 154, "name": "Fragile", "pub": "Endlevel", "ver": "[PRIME] vaen", "req": 64, "lid": 65588448, "yt": "XfXzGv0oALw", "pc": 335, "rated": true}, {"p": 165, "rp": 155, "name": "chrome hearts", "pub": "Roadbose", "ver": "[tq] Sangalchi", "req": 100, "lid": 128385946, "yt": "7o3I45B8-yY", "pc": 656, "rated": true}, {"p": 166, "rp": 156, "name": "Esfera", "pub": "SyQual", "ver": "[YAHO] Baeru", "req": 77, "lid": 78435955, "yt": "GK0Z8rgziH4", "pc": 420, "rated": true}, {"p": 167, "rp": 157, "name": "Silent Lunch", "pub": "DreamTide", "ver": "[DL] LordVadercraft", "req": 100, "lid": 137586316, "yt": "V8pu6Rrer8M", "pc": 686, "rated": true}, {"p": 168, "rp": 158, "name": "Destruction 19", "pub": "bosjoker", "ver": "[DAMN!] razsta4ax", "req": 82, "lid": 99495619, "yt": "UUyzGg_4mqs", "pc": 573, "rated": true}, {"p": 169, "rp": 159, "name": "in this", "pub": "enci", "ver": "[ETPS] Xplode", "req": 100, "lid": 122389640, "yt": "gQiOdxOyNGg", "pc": 647, "rated": true}, {"p": 170, "rp": 160, "name": "NEUTRA", "pub": "Jenkins GD", "ver": "AeonAir", "req": 80, "lid": 88611404, "yt": "0fNBFwNS1qg", "pc": 481, "rated": true}, {"p": 171, "rp": 161, "name": "ROCKBOTTOM", "pub": "bims", "ver": "[BLKHL] ZaZa GD", "req": 100, "lid": 122196131, "yt": "HAyxOJ1XuBk", "pc": 685, "rated": true}, {"p": 172, "rp": 162, "name": "Dark Dimension", "pub": "ThePurgatory", "ver": "TheNixuzGD200", "req": 100, "lid": 125617849, "yt": "g2DrT9bHjOI", "pc": 644, "rated": true}, {"p": 173, "rp": 163, "name": "Swing Swing", "pub": "[COMET] Kaza", "ver": "[IQB7] Whizkid05", "req": 67, "lid": 112231282, "yt": "_hL9hFU3WI4", "pc": 629, "rated": true}, {"p": 174, "rp": 164, "name": "Guideless Goobering", "pub": "[TCC] Enfur", "ver": "Zytrox", "req": 100, "lid": 105625871, "yt": "pFxdGKYQrcg", "pc": 576, "rated": true}, {"p": 175, "rp": 165, "name": "Hard Machine", "pub": "Komp", "ver": "Varium", "req": 79, "lid": 72744364, "yt": "6i0pdTDAo1c", "pc": 365, "rated": true}, {"p": 176, "rp": 166, "name": "DISSONANCE", "pub": "[meow] ivyteal", "ver": "[COMET] zSquidKnight", "req": 73, "lid": 108141323, "yt": "IfFser-f9c0", "pc": 584, "rated": true}, {"p": 177, "rp": 167, "name": "Crackhead Circles", "pub": "AlrexX", "ver": "[OG B] teraaa", "req": 67, "lid": 95524621, "yt": "_4MDq8Us5gM", "pc": 553, "rated": true}, {"p": 178, "rp": 168, "name": "Time Lapse", "pub": "HappyMoby", "ver": "chloechu", "req": 100, "lid": 97705490, "yt": "QWrDOemVBLk", "pc": 657, "rated": true}, {"p": 179, "rp": 169, "name": "Zodiac", "pub": "Bianox", "ver": "-", "req": 75, "lid": 52374843, "yt": "HCQK_y8JutU", "pc": 219, "rated": true}, {"p": 180, "rp": 170, "name": "Lotus Flower", "pub": "StarkytheSalad", "ver": "BrianTheBurger", "req": 70, "lid": 75813671, "yt": "pTgOHcwJhd0", "pc": 389, "rated": true}, {"p": 181, "rp": 171, "name": "Scream Machine", "pub": "TMco", "ver": "WatchPiggy", "req": 72, "lid": 96035641, "yt": "n-KeSGEX7Jg", "pc": 556, "rated": true}, {"p": 182, "rp": 172, "name": "Goober Rage Stage", "pub": "bonscarrot", "ver": "trenbabypaleo", "req": 100, "lid": 130183035, "yt": "1rrouUCPXhY", "pc": 661, "rated": true}, {"p": 183, "rp": 173, "name": "Axinie", "pub": "[IQB7] SaturMan", "ver": "[IQB7] SaturMan", "req": 77, "lid": 107299600, "yt": "LjfO2fqnozI", "pc": 581, "rated": true}, {"p": 184, "rp": 174, "name": "GLUNGUS ADVENTURES", "pub": "bims", "ver": "[TCD] Conix", "req": 100, "lid": 138615726, "yt": "0a2BX5I3v94", "pc": 689, "rated": true}, {"p": 185, "rp": 175, "name": "Judgement Knights", "pub": "HangerLord", "ver": "Helix", "req": 72, "lid": 110913375, "yt": "MzzY8nWfxnk", "pc": 596, "rated": true}, {"p": 186, "rp": 176, "name": "BLITZ", "pub": "chloechu", "ver": "[COMET] sock", "req": 100, "lid": 137248479, "yt": "p5NquHWeWZ0", "pc": 688, "rated": true}, {"p": 187, "rp": 177, "name": "Widestep", "pub": "｛出見塩｝", "ver": "｛出見塩｝", "req": 79, "lid": 69289606, "yt": "GhLFsr9skXs", "pc": 494, "rated": true}, {"p": 188, "rp": 178, "name": "Lithium", "pub": "L4tezk", "ver": "[SARK] Bamvie", "req": 100, "lid": 97364686, "yt": "IfVM56qNVdA", "pc": 597, "rated": true}, {"p": 189, "rp": 179, "name": "Keres", "pub": "ItsHybrid", "ver": "Crisis", "req": 64, "lid": 74391640, "yt": "MFFIjZP7PxQ", "pc": 377, "rated": true}, {"p": 190, "rp": 180, "name": "IRIS", "pub": "[COMET] Kaza", "ver": "[COMET] bnuuy", "req": 100, "lid": 123853954, "yt": "WiFwAU8pgr4", "pc": 632, "rated": true}, {"p": 191, "rp": 181, "name": "Galeforce", "pub": "OniLink", "ver": "[DL] Blitzer", "req": 100, "lid": 115313314, "yt": "G6VF2Gvmpz0", "pc": 666, "rated": true}, {"p": 192, "rp": 182, "name": "Cold Sweat", "pub": "para", "ver": "Kapinapi", "req": 61, "lid": 63996127, "yt": "tBpEPXGhQug", "pc": 293, "rated": true}, {"p": 193, "rp": 183, "name": "Frost Spirit", "pub": "Quaybus", "ver": "Varium", "req": 77, "lid": 95767653, "yt": "KXbaRnRpm58", "pc": 542, "rated": true}, {"p": 194, "rp": 184, "name": "Ascent", "pub": "Rimexon", "ver": "[DL] LordVadercraft", "req": 63, "lid": 112046512, "yt": "sII8zQZIJlg", "pc": 601, "rated": true}, {"p": 195, "rp": 185, "name": "Promethean", "pub": "Endlevel", "ver": "RicoLP", "req": 85, "lid": 69333212, "yt": "19kE_Yo8puE", "pc": 351, "rated": true}, {"p": 196, "rp": 186, "name": "Thinking Space", "pub": "Atomic", "ver": "Atomic", "req": 84, "lid": 54953085, "yt": "iHf2nanWjvE", "pc": 273, "rated": true}, {"p": 197, "rp": 187, "name": "Dry Out Copyable 2", "pub": "[FaZe] tenzk", "ver": "s3batr0nic", "req": 77, "lid": 106522770, "yt": "FXW9J9CaREU", "pc": 575, "rated": true}, {"p": 198, "rp": 188, "name": "Calculator Core", "pub": "Walroose", "ver": "-", "req": 59, "lid": 58355141, "yt": "VrgNFsF2NGw", "pc": 244, "rated": true}, {"p": 199, "rp": 189, "name": "Renevant", "pub": "nikroplays", "ver": "rori", "req": 60, "lid": 58161496, "yt": "2Y8kBw8YxO8", "pc": 239, "rated": true}, {"p": 200, "rp": 190, "name": "ConClusion", "pub": "DreamZoneGD", "ver": "Browar", "req": 58, "lid": 96471171, "yt": "wpuPFFqnJFY", "pc": 552, "rated": true}], "notes": {"1": "5 Ekim 2026'da #1 oldu ve Kenos'u yaklaşık 7 yıl sonra listeden düşürdü. Doğrulayan [TCD] Doggie. Yerleştirme, listenin en çok beğenilen değişikliği.", "4": "CairoX sürümü. CoCyMain'in aynı isimli level'ı ile karıştırılmasın; Kızıl ismin yanına yayınlayanı yazar.", "17": "23 Ekim 2026, Rated+ #17. Klasik liste hâlâ göstermiyor. Liste ekibi: doğrulayan ve level'ı 2 koşuda tutan oyuncu, Silent clubstep'ten en az daha zor diyor. Kızıl zorluk sırasına alır, puan yazmaz.", "18": "1.9 fiziği, bug'lar ve düşük keyif yıllardır tartışılıyor. Zorluk sırasını keyifsizlik bahanesiyle kaydırmadım; etiket duruyor, sıra duruyor.", "19": "Eşik %37, bu listedeki en düşük. Level kolay demek değil: kabul edilen rekor çok erken başlıyor. Komşu levellerde %40 sıradan bir ölümdür.", "20": "Eşik %80. Rekor ancak geç bir yüzdede açılıyor; erken ölümler listeye girmez.", "26": "Wiki'nin, öncelikle listeye girmek için yapılmış level örneklerinden biri. Sıra bugünkü verilere göre duruyor.", "28": "Eylül 2022'de #2'ye konması listenin en çok dislike alan değişikliği (2.427). Bugünkü sıra bunun çok altında.", "38": "Eşik %85. Zor kısım sonda; yüksek yüzde bile rekor sayılmayabilir.", "39": "CoCyMain sürümü, CairoX'in Thinking Space II'si değil. 23 Ekim 2026'da Slaughterhouse'un hemen üstüne kondu. Unrated: sırada var, puanda yok.", "51": "Eşik %83. Geç eşik; %80 ölüm hâlâ rekor değil.", "57": "Eşik %90, ana listedeki en yüksek. Bitmeye çok yakın ölümler bile eşiğin altında kalır.", "163": "Yaklaşık 7 yıl listenin zirvesinde ve çevresinde kaldı. 5 Ekim 2026'da GRIEF ile klasik listeden de düştü. 2010'ların işareti kapandı.", "161": "24 Ekim 2026: Rated+ ilk 150’de görünmüyor, Rated+ legacy’de duruyor. Klasik listede hâlâ #137. Önceki Kızıl sürümünde #147’deydi; yani bu level iki liste arasında ayrışan bir örnek. Kızıl, Rated+ sırasını izler."}, "players": [[1, "Zoink", "67", 7177.26], [2, "wPopoff", "WBT", 4981.21], [3, "zLevii", "MEALY", 3846.86], [4, "Trick", "TCD", 3558.86], [5, "Netermind", "SARK", 3456.1], [6, "Sharkified", "GTS", 2424.78], [7, "kloone", "OG B", 2298.24], [8, "Thnnder", "THNDR", 2249.61], [9, "eastshark", "—", 2243.29], [10, "Slaughter", "—", 2052.64], [11, "pizi", "UCH", 2015.8], [12, "rediio", "—", 1963.03], [13, "Cookie", "BHO", 1843.67], [14, "xmercurylamp", "—", 1817.08], [15, "weyolll3", "HOLA", 1740.07], [16, "Taiago", "WBT", 1732.22], [17, "LAMINGTON", "MEALY", 1674.02], [18, "Laysah", "OG B", 1638.26], [19, "Whizkid05", "IQB7", 1599.16], [20, "PoCle", "ILUV", 1580.94]], "nations": [[1, "Amerika Birleşik Devletleri", 8985.82], [2, "Güney Kore", 6187.53], [3, "İspanya", 5372.27], [4, "Rusya", 5099.56], [5, "Polonya", 4957.87], [6, "Birleşik Krallık", 4492.77], [7, "Kanada", 4429.57], [8, "Avustralya", 4053.01], [9, "Yeni Zelanda", 4023.11], [10, "Finlandiya", 3850.65]], "date": "2026-10-24", "notes_en": {"1": "Became #1 on 5 October 2026 and pushed Kenos off the list after about 7 years. Verified by [TCD] Doggie. The placement is the most-liked change in the list’s history.", "4": "CairoX’s version. Not to be confused with CoCyMain’s level of the same name; Kızıl writes the publisher next to the name.", "17": "23 October 2026, Rated+ #17. The classic list still does not show it. List team: the verifier and the player holding the level in 2 runs say it is harder than Silent clubstep, at the very least. Kızıl puts it in the difficulty order and awards no points.", "18": "The 1.9 physics, bugs and low enjoyment have been debated for years. I did not move the difficulty order because of enjoyment; the label stays, the rank stays.", "19": "Threshold 37%, the lowest on this list. That does not make the level easy: the accepted record starts very early. At the neighbouring levels, 40% is an ordinary death.", "20": "Threshold 80%. A record only opens at a late percentage; early deaths do not count.", "26": "One of the wiki’s examples of levels made primarily to get on the list. The rank follows today’s data.", "28": "Its placement at #2 in September 2022 is the most-disliked change in the list’s history (2,427). Today’s rank is far below that.", "38": "Threshold 85%. The hard part is at the end; even a high percentage may not count as a record.", "39": "CoCyMain’s version, not CairoX’s Thinking Space II. Placed right above Slaughterhouse on 23 October 2026. Unrated: it has a rank, but no points.", "51": "Threshold 83%. A late threshold; an 80% death still isn’t a record.", "57": "Threshold 90%, the highest in the main list. Even deaths very close to the end fall below the threshold.", "161": "24 October 2026: not in the Rated+ top 150, it sits in Rated+ legacy. Still #137 in the classic list. It was #147 in the previous Kızıl version, so it is a level where the two lists diverge. Kızıl follows the Rated+ order.", "163": "Stayed at or near the top of the list for about 7 years. Fell off the classic list too on 5 October 2026 with GRIEF. The mark of the 2010s is closed."}, "nations_en": ["United States", "South Korea", "Spain", "Russia", "Poland", "United Kingdom", "Canada", "Australia", "New Zealand", "Finland"]}</script>
+<script id="payload" type="application/json">{"updated": "24 Ekim 2026", "scores": [0.0, 350.0, 331.71, 313.42, 291.7, 271.78, 253.53, 236.8, 221.47, 207.42, 194.54, 182.73, 171.91, 161.99, 152.89, 144.56, 136.92, 129.92, 123.5, 117.62, 112.23, 110.81, 109.39, 107.99, 106.61, 105.24, 103.88, 102.54, 101.21, 99.89, 98.58, 97.29, 96.01, 94.75, 93.49, 92.25, 89.95, 87.73, 85.58, 83.51, 81.51, 79.58, 77.72, 75.92, 74.19, 72.52, 70.9, 69.34, 67.83, 66.38, 64.98, 63.62, 62.31, 61.05, 59.83, 58.66, 57.6, 56.47, 55.37, 54.3, 53.26, 52.25, 51.26, 50.3, 49.37, 48.46, 47.57, 46.71, 45.87, 45.06, 44.26, 43.49, 42.74, 42.01, 41.3, 40.6, 39.93, 39.27, 38.63, 38.01, 37.41, 36.82, 36.24, 35.69, 35.14, 34.61, 34.1, 33.6, 33.11, 32.64, 32.18, 31.73, 31.29, 30.87, 30.45, 30.05, 29.66, 29.28, 28.91, 28.55, 28.19, 27.85, 27.52, 27.19, 26.88, 26.57, 26.27, 25.98, 25.7, 25.42, 25.16, 24.9, 24.64, 24.39, 24.15, 23.92, 23.69, 23.47, 23.26, 23.05, 22.84, 22.64, 22.45, 22.26, 22.08, 21.9, 21.73, 21.56, 21.39, 21.23, 21.08, 20.92, 20.78, 20.63, 20.49, 20.36, 20.23, 20.1, 19.97, 19.85, 19.73, 19.62, 19.5, 19.39, 19.29, 19.18, 19.08, 18.99, 18.89, 18.8, 18.71], "rows": [{"p": 1, "rp": 1, "name": "GRIEF", "pub": "icedcave", "ver": "[TCD] Doggie", "req": 76, "lid": 149992717, "yt": "gB8slBPlOjc", "pc": 728, "rated": true}, {"p": 2, "rp": 2, "name": "Artemis 13", "pub": "Mvngo", "ver": "[67] Zoink", "req": 73, "lid": 148598469, "yt": "FgjOM0ef1N8", "pc": 730, "rated": true}, {"p": 3, "rp": 3, "name": "Society", "pub": "Neomarbilan", "ver": "[WBT] wPopoff", "req": 66, "lid": 127323087, "yt": "3CoEaH1CM7o", "pc": 698, "rated": true}, {"p": 4, "rp": 4, "name": "Thinking Space II", "pub": "CairoX", "ver": "[67] Zoink", "req": 79, "lid": 119544028, "yt": "CELNmHwln_c", "pc": 635, "rated": true}, {"p": 5, "rp": 5, "name": "Amethyst", "pub": "iMist", "ver": "[WBT] wPopoff", "req": 59, "lid": 119550490, "yt": "4lfkzz1VCbA", "pc": 623, "rated": true}, {"p": 6, "rp": 6, "name": "Flamewall", "pub": "Narwall", "ver": "[400] CuatrocientosYT", "req": 68, "lid": 126242564, "yt": "x4Io4zkWVRw", "pc": 638, "rated": true}, {"p": 7, "rp": 7, "name": "Tidal Wave", "pub": "OniLink", "ver": "[67] Zoink", "req": 72, "lid": 86407629, "yt": "9fsZ014qB3s", "pc": 562, "rated": true}, {"p": 8, "rp": 8, "name": "Green Bullet", "pub": "cherryteam", "ver": "[UFA] Nickname09", "req": 68, "lid": 142896409, "yt": "JG-qcvVkZFw", "pc": 702, "rated": true}, {"p": 9, "rp": 9, "name": "ORBIT", "pub": "MindCap", "ver": "[67] Zoink", "req": 65, "lid": 133175713, "yt": "QKcv8DkNPd0", "pc": 671, "rated": true}, {"p": 10, "rp": 10, "name": "Antarctic Lights", "pub": "declanlc", "ver": "Axinity", "req": 75, "lid": 144988390, "yt": "Uue4ZRhVf-I", "pc": 711, "rated": true}, {"p": 11, "rp": 11, "name": "Nullscapes", "pub": "Kiba", "ver": "[67] Zoink", "req": 68, "lid": 109780665, "yt": "EztneTPp5CU", "pc": 589, "rated": true}, {"p": 12, "rp": 12, "name": "Quanteuse processing", "pub": "Renn241", "ver": "[67] Zoink", "req": 60, "lid": 117692518, "yt": "j5NC0u1Q91Q", "pc": 660, "rated": true}, {"p": 13, "rp": 13, "name": "BOOBAWAMBA", "pub": "Akunakunn", "ver": "eastshark", "req": 63, "lid": 110816181, "yt": "20fYiqLAo_E", "pc": 594, "rated": true}, {"p": 14, "rp": 14, "name": "The Bloop", "pub": "[TARIQ] murkkat", "ver": "[67] Zoink", "req": 67, "lid": 135661111, "yt": "ROuXHSKEhHA", "pc": 700, "rated": true}, {"p": 15, "rp": 15, "name": "Every End", "pub": "MindCap", "ver": "[FOWL] Hqmy", "req": 67, "lid": 116174063, "yt": "AO--mVVFtKI", "pc": 620, "rated": true}, {"p": 16, "rp": 16, "name": "Ashley Wave Trials", "pub": "oddmod", "ver": "[67] Zoink", "req": 77, "lid": 62912799, "yt": "aTxt76U3e2Q", "pc": 669, "rated": true}, {"p": 17, "rp": null, "name": "Old Orochi", "pub": "Platnuu", "ver": "Volumni", "req": 60, "lid": 136742562, "yt": "YxtFAQtLYQY", "pc": 736, "rated": false}, {"p": 18, "rp": 17, "name": "Silent clubstep", "pub": "TheRealSailent", "ver": "[DL] zoe", "req": 63, "lid": 4125776, "yt": "GR4OMkS3SN8", "pc": 428, "rated": true}, {"p": 19, "rp": 18, "name": "Ultra Paracosm", "pub": "declanlc", "ver": "[HOLA] Wity", "req": 37, "lid": 138704906, "yt": "4V24spYQWuE", "pc": 704, "rated": true}, {"p": 20, "rp": 19, "name": "Penumbral", "pub": "cherryteam", "ver": "[UFA] w3rty", "req": 80, "lid": 134942736, "yt": "nVHPFf13M-I", "pc": 680, "rated": true}, {"p": 21, "rp": 20, "name": "andromeda", "pub": "Insxne97", "ver": "[WBT] Taiago", "req": 66, "lid": 114283297, "yt": "mk3TDemdkC0", "pc": 613, "rated": true}, {"p": 22, "rp": 21, "name": "KILLSTEALER", "pub": "rynoxious", "ver": "[OG B] kloone", "req": 69, "lid": 138781722, "yt": "uhH4oqWrsfo", "pc": 696, "rated": true}, {"p": 23, "rp": 22, "name": "Subsuming Vortex", "pub": "[TCD] Cursed", "ver": "[TCD] Cursed", "req": 66, "lid": 127997391, "yt": "0eYG1ogJpIQ", "pc": 649, "rated": true}, {"p": 24, "rp": 23, "name": "Anathema", "pub": "nikroplays", "ver": "[IQB7] Whizkid05", "req": 77, "lid": 112313819, "yt": "_uKwmjHmySI", "pc": 602, "rated": true}, {"p": 25, "rp": 24, "name": "Defeated Circles", "pub": "GXQ", "ver": "[67] Zoink", "req": 73, "lid": 120012581, "yt": "nU5AQPzd2YA", "pc": 639, "rated": true}, {"p": 26, "rp": 25, "name": "Avernus", "pub": "PockeWindfish", "ver": "[67] Zoink", "req": 67, "lid": 89496627, "yt": "16Zh8jssanc", "pc": 486, "rated": true}, {"p": 27, "rp": 26, "name": "FOREST OF SPIKES", "pub": "bims", "ver": "Brian_Cheese", "req": 66, "lid": 145709435, "yt": "WJYh3dW8Bfo", "pc": 715, "rated": true}, {"p": 28, "rp": 27, "name": "Acheron", "pub": "ryamu", "ver": "[67] Zoink", "req": 70, "lid": 73667628, "yt": "sBKR6aUorzA", "pc": 442, "rated": true}, {"p": 29, "rp": 28, "name": "Spectre", "pub": "xander", "ver": "PersonHuman42", "req": 75, "lid": 110815379, "yt": "MzsSLKJrLSI", "pc": 592, "rated": true}, {"p": 30, "rp": 29, "name": "Menace", "pub": "Arraegen", "ver": "[IQB7] Whizkid05", "req": 73, "lid": 107805281, "yt": "nnkgghxxsEE", "pc": 577, "rated": true}, {"p": 31, "rp": 30, "name": "Abyss of Darkness", "pub": "Exen", "ver": "[TCD] Cursed", "req": 75, "lid": 49896559, "yt": "ejJkpqcMMCY", "pc": 413, "rated": true}, {"p": 32, "rp": 31, "name": "Tunnel of Despair", "pub": "Exen", "ver": "[67] Zoink", "req": 79, "lid": 91351939, "yt": "LpS4JREhW98", "pc": 520, "rated": true}, {"p": 33, "rp": 32, "name": "Kyouki", "pub": "｛出見塩｝", "ver": "｛出見塩｝", "req": 72, "lid": 86018142, "yt": "KDa5c0CJTHs", "pc": 468, "rated": true}, {"p": 34, "rp": 33, "name": "Sacrifice", "pub": "Laniakea", "ver": "Laniakea", "req": 72, "lid": 141052363, "yt": "Sth67PA8XBU", "pc": 706, "rated": true}, {"p": 35, "rp": 34, "name": "Based After Based", "pub": "Akunakunn", "ver": "DiamondSplash", "req": 74, "lid": 110534288, "yt": "yQBFyUvB3lY", "pc": 668, "rated": true}, {"p": 36, "rp": 35, "name": "cognitohazard", "pub": "MercuryDT", "ver": "[IQB7] Whizkid05", "req": 75, "lid": 130891319, "yt": "T5g0r16X_ZA", "pc": 709, "rated": true}, {"p": 37, "rp": 36, "name": "The Lightning Rod", "pub": "Lavatrex", "ver": "Lavatrex", "req": 63, "lid": 93917076, "yt": "nQDTi077O6M", "pc": 528, "rated": true}, {"p": 38, "rp": 37, "name": "Maniacal Chains", "pub": "LordDivinity", "ver": "spcreat", "req": 85, "lid": 48991380, "yt": "TzeMJeIu6bY", "pc": 697, "rated": true}, {"p": 39, "rp": null, "name": "Thinking Space II", "pub": "CoCyMain", "ver": "Zeronium", "req": 74, "lid": 132854166, "yt": "RJedeB2wHCA", "pc": 733, "rated": false}, {"p": 40, "rp": 38, "name": "Slaughterhouse", "pub": "icedcave", "ver": "[TCD] Doggie", "req": 75, "lid": 27690100, "yt": "kpcF1-QAHQc", "pc": 380, "rated": true}, {"p": 41, "rp": 39, "name": "Subterminal Point", "pub": "SyQual", "ver": "[ILUV] PoCle", "req": 71, "lid": 113599729, "yt": "h2wmRMgACH4", "pc": 612, "rated": true}, {"p": 42, "rp": 40, "name": "KOCMOC", "pub": "cherryteam", "ver": "[67] Zoink", "req": 73, "lid": 87665224, "yt": "2CxE-UWCIG4", "pc": 501, "rated": true}, {"p": 43, "rp": 41, "name": "BEING HOME", "pub": "Turtl123", "ver": "[OG] goobs", "req": 73, "lid": 130327668, "yt": "kt7FnUzK8CY", "pc": 679, "rated": true}, {"p": 44, "rp": 42, "name": "Deimos", "pub": "ItsHybrid", "ver": "[TCD] Doggie", "req": 70, "lid": 93091893, "yt": "b2yHaIk5zio", "pc": 516, "rated": true}, {"p": 45, "rp": 43, "name": "CHIL", "pub": "McCoco", "ver": "McCoco", "req": 78, "lid": 114281093, "yt": "DROMiCc2ZRM", "pc": 652, "rated": true}, {"p": 46, "rp": 44, "name": "zorin", "pub": "태리", "ver": "[미소노 미카] 구아이", "req": 62, "lid": 134541844, "yt": "U19vmpenb9g", "pc": 677, "rated": true}, {"p": 47, "rp": 45, "name": "Prismline", "pub": "ItsHarryy", "ver": "Wain", "req": 71, "lid": 135148907, "yt": "pIHOHz3i0Rw", "pc": 708, "rated": true}, {"p": 48, "rp": null, "name": "BASSLINE JUNKIE", "pub": "MCBIGMACPLAYZ", "ver": "[MOON] Karma", "req": 71, "lid": 143300771, "yt": "db_V19gW0rI", "pc": 731, "rated": false}, {"p": 49, "rp": 46, "name": "Sakupen Circles", "pub": "[TCD] Diamond", "ver": "[TCD] Diamond", "req": 69, "lid": 76962930, "yt": "ofG2mJi9kEA", "pc": 391, "rated": true}, {"p": 50, "rp": 47, "name": "The Salt Factory", "pub": "[UFA] Nickname09", "ver": "[UFA] Nickname09", "req": 66, "lid": 113045735, "yt": "lQ7M-Sgov24", "pc": 655, "rated": true}, {"p": 51, "rp": 48, "name": "Master of Puppets", "pub": "TheZinkYT", "ver": "[TMG] Scotchtape", "req": 83, "lid": 136396693, "yt": "JBZ-lrBgkl0", "pc": 695, "rated": true}, {"p": 52, "rp": null, "name": "Lost in Time 2", "pub": "Zeronium", "ver": "Zeronium", "req": 66, "lid": 148297431, "yt": "8i5GfTqb6oE", "pc": 737, "rated": false}, {"p": 53, "rp": 49, "name": "Silentlocked", "pub": "GDSkele", "ver": "TFIBB", "req": 68, "lid": 113959291, "yt": "O-IQeUdEGvI", "pc": 648, "rated": true}, {"p": 54, "rp": 50, "name": "Eyes in the Water", "pub": "hawkyre", "ver": "[DL] LordVadercraft", "req": 71, "lid": 95851008, "yt": "yvLwiOy3KEA", "pc": 545, "rated": true}, {"p": 55, "rp": 51, "name": "KOSETSU", "pub": "fwe", "ver": "[WBT] Taiago", "req": 68, "lid": 109439644, "yt": "hZ8vFX8z_BU", "pc": 587, "rated": true}, {"p": 56, "rp": 52, "name": "CONVULSION", "pub": "stellar", "ver": "[IQB7] Whizkid05", "req": 64, "lid": 113322063, "yt": "qeRKuyU3eGI", "pc": 640, "rated": true}, {"p": 57, "rp": 53, "name": "Through The Gates", "pub": "TeamTheDashers", "ver": "[67] Zoink", "req": 90, "lid": 49072489, "yt": "4yHA6jux5UI", "pc": 663, "rated": true}, {"p": 58, "rp": null, "name": "Shadow Of The Past", "pub": "ViZeris", "ver": "LennyFeus", "req": 76, "lid": 143909846, "yt": "LEyo0LJV8os", "pc": 739, "rated": false}, {"p": 59, "rp": null, "name": "ace", "pub": "TheBigCheese69", "ver": "[TSC] aidsen", "req": 64, "lid": 138215607, "yt": "7uYghOdos8I", "pc": 740, "rated": false}, {"p": 60, "rp": 54, "name": "Firework", "pub": "[TCD] Trick", "ver": "[TCD] Trick", "req": 71, "lid": 75206202, "yt": "QBe5x2o9v2w", "pc": 379, "rated": true}, {"p": 61, "rp": 55, "name": "Voltage", "pub": "ThePurgatory", "ver": "[OG B] maybee", "req": 57, "lid": 131599104, "yt": "wBRvBN9tmlc", "pc": 667, "rated": true}, {"p": 62, "rp": 56, "name": "NOMAD", "pub": "ReeseVT", "ver": "Laniakea", "req": 72, "lid": 115077305, "yt": "H2TkHbEX__A", "pc": 673, "rated": true}, {"p": 63, "rp": 57, "name": "Snowbound", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 68, "lid": 120289520, "yt": "cjHwgbtAkXU", "pc": 658, "rated": true}, {"p": 64, "rp": 58, "name": "NervHell", "pub": "ASVTeam", "ver": "ChopBlox", "req": 64, "lid": 143718114, "yt": "1zrvPgDAoaA", "pc": 705, "rated": true}, {"p": 65, "rp": 59, "name": "poocubed", "pub": "Liisp", "ver": "Kyasshukodo", "req": 66, "lid": 85133223, "yt": "fzL31vai1ms", "pc": 464, "rated": true}, {"p": 66, "rp": 60, "name": "Calibrate", "pub": "[SARK] Bamvie", "ver": "[아기엔더맨] Blebae", "req": 63, "lid": 136981369, "yt": "6WYnZryX_mg", "pc": 683, "rated": true}, {"p": 67, "rp": 61, "name": "MINUSdry", "pub": "CDMusic", "ver": "Varium", "req": 75, "lid": 89414220, "yt": "YvA8ehhzz0Q", "pc": 487, "rated": true}, {"p": 68, "rp": 62, "name": "Saul Goodman", "pub": "Renn241", "ver": "bloom", "req": 70, "lid": 90477539, "yt": "hjs5PjUaw9k", "pc": 496, "rated": true}, {"p": 69, "rp": 63, "name": "Apocalyptic Trilogy", "pub": "APTeamOfficial", "ver": "Polterghast", "req": 73, "lid": 113443235, "yt": "RUBbpsTR5eU", "pc": 614, "rated": true}, {"p": 70, "rp": 64, "name": "The Hallucination", "pub": "SyQual", "ver": "VoTcHi", "req": 66, "lid": 81139702, "yt": "tYbXsNkO9HE", "pc": 427, "rated": true}, {"p": 71, "rp": null, "name": "Blooming Blossoms", "pub": "nikoberry", "ver": "[!MUTE] piesy", "req": 77, "lid": 130293163, "yt": "GU-qfLRoDMo", "pc": 735, "rated": false}, {"p": 72, "rp": 65, "name": "Pinnacle of Life", "pub": "skzyl", "ver": "[DL] vonic", "req": 71, "lid": 144012996, "yt": "gQl5iY1ekyE", "pc": 707, "rated": true}, {"p": 73, "rp": 66, "name": "COMBUSTION", "pub": "[SKWAD] Cersia", "ver": "[SKWAD] Slithium", "req": 76, "lid": 94359172, "yt": "3cTR4XUcA28", "pc": 526, "rated": true}, {"p": 74, "rp": 67, "name": "Haunted Ship", "pub": "awesomeme360", "ver": "[SWOON] Gnamolor", "req": 61, "lid": 143523624, "yt": "22l59QGmL48", "pc": 713, "rated": true}, {"p": 75, "rp": 68, "name": "Loops of Fury", "pub": "[TCC] Enfur", "ver": "[TCC] Cork", "req": 73, "lid": 126571887, "yt": "9HBG3i5zbw8", "pc": 642, "rated": true}, {"p": 76, "rp": 69, "name": "Deadlier Clubstep", "pub": "HeroZombie80", "ver": "Jenath", "req": 70, "lid": 96314787, "yt": "eRhgaF0r5Q0", "pc": 558, "rated": true}, {"p": 77, "rp": 70, "name": "BRITNEY NO SCLEARS", "pub": "wabas", "ver": "[TMG] Scotchtape", "req": 76, "lid": 125317359, "yt": "ff_mQSXwjhU", "pc": 684, "rated": true}, {"p": 78, "rp": 71, "name": "Stellar Night", "pub": "icedcave", "ver": "Tuggy", "req": 78, "lid": 83244159, "yt": "XpBY-eMYZTE", "pc": 674, "rated": true}, {"p": 79, "rp": 72, "name": "Gaggatrondra", "pub": "JCMoon", "ver": "Zeronium", "req": 68, "lid": 114990369, "yt": "A4G41vw6Cf0", "pc": 615, "rated": true}, {"p": 80, "rp": 73, "name": "Sevvend Clubstep", "pub": "cherryteam", "ver": "[UFA] Vorten", "req": 66, "lid": 120255728, "yt": "TvA8EJTJFCc", "pc": 630, "rated": true}, {"p": 81, "rp": 74, "name": "Edge of Destiny", "pub": "CDMusic", "ver": "Polterghast", "req": 73, "lid": 89187968, "yt": "rUphe3H59yU", "pc": 485, "rated": true}, {"p": 82, "rp": 75, "name": "Losing Your Mind", "pub": "GDgalaxygaming", "ver": "[OG B] Laysah", "req": 67, "lid": 139508889, "yt": "LXp7t5gjyX8", "pc": 699, "rated": true}, {"p": 83, "rp": null, "name": "ETERNALtheory", "pub": "[AUF] Hyperlith", "ver": "[AUF] Hyperlith", "req": 100, "lid": 92196326, "yt": "3LfjQWk9Hyg", "pc": 734, "rated": false}, {"p": 84, "rp": 76, "name": "Solar Flare", "pub": "Linear", "ver": "[1319] swiborg", "req": 69, "lid": 90390075, "yt": "eHQNgty8ypY", "pc": 495, "rated": true}, {"p": 85, "rp": 77, "name": "The Catacombs", "pub": "[SKWAD] Cersia", "ver": "[SKWAD] Slithium", "req": 60, "lid": 104232191, "yt": "T9-75lfKVQg", "pc": 670, "rated": true}, {"p": 86, "rp": 78, "name": "LIMBO", "pub": "MindCap", "ver": "[1319] BUNNYGRAM", "req": 64, "lid": 86084399, "yt": "kXYMbaMVOZg", "pc": 467, "rated": true}, {"p": 87, "rp": 79, "name": "Make Paul Dance", "pub": "Bemq", "ver": "Airi~", "req": 57, "lid": 115860808, "yt": "XQoF35hNKpg", "pc": 712, "rated": true}, {"p": 88, "rp": 80, "name": "Belladonna", "pub": "cherryteam", "ver": "[PRIME] exsii", "req": 70, "lid": 94969889, "yt": "saHSgoU1JQQ", "pc": 551, "rated": true}, {"p": 89, "rp": 81, "name": "Codependence", "pub": "TCTeam", "ver": "[IH82P] Pukklez", "req": 78, "lid": 62556400, "yt": "IKGk41hSnDo", "pc": 511, "rated": true}, {"p": 90, "rp": 82, "name": "Collapse", "pub": "[Hi] Nexel", "ver": "[Hi] Nexel", "req": 66, "lid": 113256247, "yt": "RCFpXyf6bn0", "pc": 606, "rated": true}, {"p": 91, "rp": 83, "name": "Mayhem", "pub": "[DL] LordVadercraft", "ver": "[DL] LordVadercraft", "req": 57, "lid": 82544060, "yt": "U6e6DD32noM", "pc": 439, "rated": true}, {"p": 92, "rp": 84, "name": "CHROMACAVE", "pub": "HappyMoby", "ver": "[FOWL] geodom", "req": 82, "lid": 131497860, "yt": "tfpsMZI6z-o", "pc": 672, "rated": true}, {"p": 93, "rp": 85, "name": "The Plunge", "pub": "Dolabill", "ver": "Gokill", "req": 67, "lid": 113220284, "yt": "8gW1-_u1K0Y", "pc": 610, "rated": true}, {"p": 94, "rp": 86, "name": "Fracture", "pub": "Arrow", "ver": "Dezstro", "req": 66, "lid": 99703915, "yt": "R_-chk3SRFI", "pc": 681, "rated": true}, {"p": 95, "rp": 87, "name": "Wavterminal", "pub": "Skyavoxii", "ver": "Frice", "req": 73, "lid": 128093374, "yt": "dlvsCE3xYkQ", "pc": 650, "rated": true}, {"p": 96, "rp": 88, "name": "walter white", "pub": "Renn241", "ver": "[OG B] Laysah", "req": 65, "lid": 81011195, "yt": "KzK62PkWOJ0", "pc": 429, "rated": true}, {"p": 97, "rp": 89, "name": "Infinite Chaos", "pub": "CairoX", "ver": "Victurkey", "req": 70, "lid": 119689515, "yt": "wOMVERxU5IA", "pc": 653, "rated": true}, {"p": 98, "rp": 90, "name": "Operation Evolution", "pub": "Halzion", "ver": "cobrablitz", "req": 76, "lid": 114999625, "yt": "WsVF-ayipvY", "pc": 627, "rated": true}, {"p": 99, "rp": 91, "name": "Damascus", "pub": "Dzeser", "ver": "Timo", "req": 69, "lid": 93339534, "yt": "MWQyCUGt76Y", "pc": 521, "rated": true}, {"p": 100, "rp": 92, "name": "Decks Dark", "pub": "[SKG] Madison Yuko", "ver": "[IQB7] Whizkid05", "req": 77, "lid": 95719795, "yt": "l52ApE4HWkY", "pc": 659, "rated": true}, {"p": 101, "rp": 93, "name": "SARYYX NEVER CLEAR", "pub": "artos", "ver": "skzyl", "req": 74, "lid": 95998005, "yt": "rRlyvmjcz_4", "pc": 547, "rated": true}, {"p": 102, "rp": 94, "name": "The Yangire", "pub": "Dorami", "ver": "Dorami", "req": 73, "lid": 110500920, "yt": "V3FjIorIfWg", "pc": 590, "rated": true}, {"p": 103, "rp": 95, "name": "Climax", "pub": "HushLC", "ver": "Wain", "req": 70, "lid": 95049815, "yt": "E4ppq2WeAAs", "pc": 540, "rated": true}, {"p": 104, "rp": 96, "name": "ORDINARY", "pub": "vit12", "ver": "[WBT] wPopoff", "req": 74, "lid": 105593215, "yt": "4QiHP3jpGnk", "pc": 579, "rated": true}, {"p": 105, "rp": null, "name": "Marks", "pub": "HazelSZL", "ver": "[MEALY] oozerdonkey", "req": 100, "lid": 144895744, "yt": "CxYXfCvNZtQ", "pc": 732, "rated": false}, {"p": 106, "rp": 97, "name": "Sinister Silence", "pub": "Wahffle", "ver": "DarkTD", "req": 69, "lid": 82249742, "yt": "dJCdTMQxHMo", "pc": 469, "rated": true}, {"p": 107, "rp": 98, "name": "THE JET ENGINE", "pub": "[TARIQ] Billzer", "ver": "[TARIQ] eviljoe", "req": 71, "lid": 122941596, "yt": "8Q20XU__LoQ", "pc": 633, "rated": true}, {"p": 108, "rp": 99, "name": "Coalescence", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 69, "lid": 108708033, "yt": "do-a2EzZ4R8", "pc": 588, "rated": true}, {"p": 109, "rp": 100, "name": "Trickshot", "pub": "[DL] vonic", "ver": "[DL] vonic", "req": 100, "lid": 136135870, "yt": "IMLjnmnIWRc", "pc": 687, "rated": true}, {"p": 110, "rp": 101, "name": "Midnight", "pub": "[SKG] Madison Yuko", "ver": "[BLOOM] nei", "req": 74, "lid": 96083028, "yt": "NhkN_a9cNi8", "pc": 549, "rated": true}, {"p": 111, "rp": 102, "name": "Doppler", "pub": "At424", "ver": "[IH82P] Danieljgd", "req": 100, "lid": 133489881, "yt": "xSP43i61SLM", "pc": 701, "rated": true}, {"p": 112, "rp": 103, "name": "Cimmerian Shade", "pub": "spcreat", "ver": "spcreat", "req": 81, "lid": 93340783, "yt": "lUNvV1k19HA", "pc": 622, "rated": true}, {"p": 113, "rp": 104, "name": "PSYCHOPATH", "pub": "DeniPol", "ver": "[USSR] BONN GD", "req": 70, "lid": 103925676, "yt": "1luL7tTE8p8", "pc": 570, "rated": true}, {"p": 114, "rp": 105, "name": "TrakineS", "pub": "Laranjoo", "ver": "[WBT] mariner", "req": 77, "lid": 125788781, "yt": "oKuoI-_JzKU", "pc": 676, "rated": true}, {"p": 115, "rp": 106, "name": "arcturus", "pub": "Maxfs", "ver": "ultrakawaHD", "req": 74, "lid": 72315402, "yt": "a_Bqa8l9Xtc", "pc": 383, "rated": true}, {"p": 116, "rp": 107, "name": "Diabolic ClubStep", "pub": "Sevant", "ver": "Sevant", "req": 100, "lid": 73214186, "yt": "BN7DxkMaQfg", "pc": 675, "rated": true}, {"p": 117, "rp": 108, "name": "BEELINE", "pub": "[DOOBY] Galaxxyss", "ver": "[IH82P] Motor8", "req": 71, "lid": 93792764, "yt": "nt6T9YDb6gw", "pc": 605, "rated": true}, {"p": 118, "rp": 109, "name": "DreamStep", "pub": "[MOON] Blaster1337", "ver": "[LARP] youngs6", "req": 100, "lid": 129235528, "yt": "EK5-0OB1tmc", "pc": 682, "rated": true}, {"p": 119, "rp": 110, "name": "Sonic Wave Infinity", "pub": "APTeamOfficial", "ver": "[1319] Xanii", "req": 68, "lid": 69685815, "yt": "C3-l_fFikpQ", "pc": 349, "rated": true}, {"p": 120, "rp": 111, "name": "Tartarus", "pub": "-", "ver": "-", "req": 64, "lid": 59075347, "yt": "JptG7rwti1U", "pc": 250, "rated": true}, {"p": 121, "rp": 112, "name": "Waterfall", "pub": "cherryteam", "ver": "[DL] LordVadercraft", "req": 71, "lid": 110991117, "yt": "VKuVdqneG9Y", "pc": 595, "rated": true}, {"p": 122, "rp": 113, "name": "Jigsaw", "pub": "NekonGames", "ver": "Gokill", "req": 70, "lid": 95031870, "yt": "FPfSqlI0T30", "pc": 555, "rated": true}, {"p": 123, "rp": 114, "name": "Delta", "pub": "[FaZe] Drakosa", "ver": "[TCD] Doggie", "req": 69, "lid": 93917362, "yt": "_rr3J8DkIm4", "pc": 525, "rated": true}, {"p": 124, "rp": 115, "name": "Between Duality", "pub": "[Hi] Nexel", "ver": "[TSC] destr", "req": 100, "lid": 137757402, "yt": "uOb-ajQ4bgw", "pc": 690, "rated": true}, {"p": 125, "rp": 116, "name": "BPATA MPAKA", "pub": "Inex", "ver": "[OG B] maybee", "req": 71, "lid": 109947627, "yt": "sSbHYzYgYfA", "pc": 599, "rated": true}, {"p": 126, "rp": null, "name": "blight", "pub": "xSlendy", "ver": "[ARMED] zRickyy", "req": 100, "lid": 146392813, "yt": "2y1GVoPZjhU", "pc": 738, "rated": false}, {"p": 127, "rp": 117, "name": "Natural Disaster", "pub": "[OG B] Laysah", "ver": "[OG B] Laysah", "req": 71, "lid": 107741051, "yt": "_0GqdSFmG_8", "pc": 583, "rated": true}, {"p": 128, "rp": 118, "name": "The Wonder of You", "pub": "HangerLord", "ver": "Helix", "req": 100, "lid": 94858072, "yt": "iQ3RzYCvLvA", "pc": 662, "rated": true}, {"p": 129, "rp": 119, "name": "Dualist", "pub": "SyncTM", "ver": "[HOLA] Draks_Loves_U", "req": 100, "lid": 130464801, "yt": "6ntYaDqBqu4", "pc": 678, "rated": true}, {"p": 130, "rp": 120, "name": "Sanctity", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 100, "lid": 135547923, "yt": "rtU2oDBz9X0", "pc": 710, "rated": true}, {"p": 131, "rp": 121, "name": "The Golden", "pub": "BoBoBoBoBoBoBo", "ver": "nSwish", "req": 72, "lid": 60978746, "yt": "Ah-PcqwqRTQ", "pc": 274, "rated": true}, {"p": 132, "rp": 122, "name": "Oblivion", "pub": "[DLNW] Dice88", "ver": "[DLNW] Dice88", "req": 72, "lid": 71025973, "yt": "ZcmDAm50BB0", "pc": 425, "rated": true}, {"p": 133, "rp": 123, "name": "Viprin UFO", "pub": "hawkyre", "ver": "[BHO] Cookie", "req": 66, "lid": 107238250, "yt": "LTMW9Py-nHE", "pc": 578, "rated": true}, {"p": 134, "rp": 124, "name": "NETWORK", "pub": "Agat3", "ver": "vulcanium4", "req": 76, "lid": 95176417, "yt": "K7wJi01J5D8", "pc": 539, "rated": true}, {"p": 135, "rp": 125, "name": "ATOMIC CANNON Mk III", "pub": "Lieb", "ver": "Zeronium", "req": 66, "lid": 104672501, "yt": "xlAI_wVvnx8", "pc": 568, "rated": true}, {"p": 136, "rp": 126, "name": "Terminal Rampancy", "pub": "Xyriak", "ver": "Bigthunder556", "req": 73, "lid": 90057148, "yt": "29hRhhqQTLc", "pc": 497, "rated": true}, {"p": 137, "rp": 127, "name": "Verdant Landscape", "pub": "Nisha", "ver": "Nisha", "req": 63, "lid": 76543324, "yt": "wjZxkS5KC0A", "pc": 393, "rated": true}, {"p": 138, "rp": 128, "name": "Levigo", "pub": "Swib", "ver": "[DTC] Kandai", "req": 100, "lid": 97086864, "yt": "AROmUo7DNkE", "pc": 665, "rated": true}, {"p": 139, "rp": 129, "name": "Checked Steam", "pub": "gruzy", "ver": "[IQB7] Whizkid05", "req": 70, "lid": 105748155, "yt": "cq6047eYGXs", "pc": 582, "rated": true}, {"p": 140, "rp": 130, "name": "Heavenly Sakupen", "pub": "Youknowwho", "ver": "[BHO] bazettuk", "req": 100, "lid": 123467310, "yt": "4uwSVZBrtfg", "pc": 716, "rated": true}, {"p": 141, "rp": 131, "name": "UNKNOWN", "pub": "NineDice", "ver": "[TCD] Diamond", "req": 83, "lid": 88203501, "yt": "a1sQxQqU6EM", "pc": 475, "rated": true}, {"p": 142, "rp": 132, "name": "SPIRIT OVERCLOCK", "pub": "TheRealXFuture", "ver": "[ABA] Riley", "req": 100, "lid": 132751236, "yt": "WECBlbM0LJk", "pc": 714, "rated": true}, {"p": 143, "rp": 133, "name": "Shukketsu", "pub": "[SKG] Madison Yuko", "ver": "[YAHO] Baeru", "req": 78, "lid": 75286957, "yt": "nkG4hKJIz2g", "pc": 435, "rated": true}, {"p": 144, "rp": 134, "name": "Breakcore", "pub": "WoofelGD", "ver": "[IQB7] Breakcore", "req": 100, "lid": 123674931, "yt": "_H3KOVLE6gs", "pc": 729, "rated": true}, {"p": 145, "rp": 135, "name": "idontknowwhatthisis", "pub": "YeldA", "ver": "YeldA", "req": 100, "lid": 137334994, "yt": "Dg9Q6s8EOlg", "pc": 703, "rated": true}, {"p": 146, "rp": 136, "name": "Critical Heat", "pub": "Zeniux", "ver": "[WBT] hstorm", "req": 69, "lid": 88442157, "yt": "UjYIt2jy_BY", "pc": 478, "rated": true}, {"p": 147, "rp": 138, "name": "WOBBLING MACHINE", "pub": "Smarted", "ver": "[POB2P] conski", "req": 100, "lid": 87130877, "yt": "RKX6VOsICOg", "pc": 637, "rated": true}, {"p": 148, "rp": 139, "name": "Crystal Crusher", "pub": "Zeniux", "ver": "GuitGuit", "req": 67, "lid": 93732702, "yt": "qirwgz-haVQ", "pc": 617, "rated": true}, {"p": 149, "rp": 140, "name": "limbo but uwu ig idk", "pub": "Akunakunn", "ver": "[JOB] ViperVenom95", "req": 77, "lid": 110705712, "yt": "3B36N-qfOD8", "pc": 625, "rated": true}, {"p": 150, "rp": 141, "name": "Graceful", "pub": "[1319] D A G", "ver": "[1319] D A G", "req": 100, "lid": 71885708, "yt": "5kOD37vQHKE", "pc": 651, "rated": true}, {"p": 151, "rp": 142, "name": "paranoia", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 100, "lid": 113364415, "yt": "Aw83i8Zmh_0", "pc": 664, "rated": true}, {"p": 152, "rp": 143, "name": "Starlit Stroll", "pub": "[TCC] Enfur", "ver": "[TCC] TheButcher", "req": 100, "lid": 115380769, "yt": "U7MM74dTXuI", "pc": 618, "rated": true}, {"p": 153, "rp": 144, "name": "The Paroxysm of Rage", "pub": "Zacanaii", "ver": "[RF] turtle", "req": 65, "lid": 87071894, "yt": "nq3i1qJQeEk", "pc": 572, "rated": true}, {"p": 154, "rp": 145, "name": "Blood Echo", "pub": "Farva", "ver": "[1319] swiborg", "req": 100, "lid": 112242564, "yt": "fSvk4tLlQzQ", "pc": 636, "rated": true}, {"p": 155, "rp": 146, "name": "Aerial Gleam", "pub": "Endlevel", "ver": "[TCD] Doggie", "req": 63, "lid": 79771070, "yt": "eyZjKtrGVYw", "pc": 412, "rated": true}, {"p": 156, "rp": 147, "name": "DISCONNECT", "pub": "MCres", "ver": "Elinore", "req": 100, "lid": 127023313, "yt": "HxHo-LzwSao", "pc": 654, "rated": true}, {"p": 157, "rp": 148, "name": "VOID", "pub": "nikoberry", "ver": "[IQB7] Whizkid05", "req": 100, "lid": 100990392, "yt": "kN1FUoucoSc", "pc": 631, "rated": true}, {"p": 158, "rp": 149, "name": "Henken", "pub": "PLoLek", "ver": "Gokill", "req": 100, "lid": 80714349, "yt": "M--2oQKrV68", "pc": 646, "rated": true}, {"p": 159, "rp": 150, "name": "Starlight Summit", "pub": "[BDAY] hazelmrow", "ver": "[BDAY] hazelmrow", "req": 100, "lid": 114530859, "yt": "LB9xx41M4Ns", "pc": 628, "rated": true}, {"p": 160, "rp": 151, "name": "Trueffet", "pub": "SyQual", "ver": "[YAHO] Baeru", "req": 69, "lid": 71434979, "yt": "yHESkazVD4Q", "pc": 361, "rated": true}, {"p": 161, "rp": 137, "name": "adjunto adnominal", "pub": "soumpeixe", "ver": "soumpeixe", "req": 100, "lid": 137400971, "yt": "YsFOtI9DACQ", "pc": 723, "rated": true}, {"p": 162, "rp": 152, "name": "azure blast", "pub": "[tq] AlbinoSnail", "ver": "[YAHO] DNM121", "req": 100, "lid": 120060187, "yt": "TN0FQ3KBv4w", "pc": 641, "rated": true}, {"p": 163, "rp": 153, "name": "Kenos", "pub": "npesta", "ver": "npesta", "req": 69, "lid": 58673581, "yt": "Bs1kVySdUtI", "pc": 238, "rated": true}, {"p": 164, "rp": 154, "name": "Fragile", "pub": "Endlevel", "ver": "[PRIME] vaen", "req": 64, "lid": 65588448, "yt": "XfXzGv0oALw", "pc": 335, "rated": true}, {"p": 165, "rp": 155, "name": "chrome hearts", "pub": "Roadbose", "ver": "[tq] Sangalchi", "req": 100, "lid": 128385946, "yt": "7o3I45B8-yY", "pc": 656, "rated": true}, {"p": 166, "rp": 156, "name": "Esfera", "pub": "SyQual", "ver": "[YAHO] Baeru", "req": 77, "lid": 78435955, "yt": "GK0Z8rgziH4", "pc": 420, "rated": true}, {"p": 167, "rp": 157, "name": "Silent Lunch", "pub": "DreamTide", "ver": "[DL] LordVadercraft", "req": 100, "lid": 137586316, "yt": "V8pu6Rrer8M", "pc": 686, "rated": true}, {"p": 168, "rp": 158, "name": "Destruction 19", "pub": "bosjoker", "ver": "[DAMN!] razsta4ax", "req": 82, "lid": 99495619, "yt": "UUyzGg_4mqs", "pc": 573, "rated": true}, {"p": 169, "rp": 159, "name": "in this", "pub": "enci", "ver": "[ETPS] Xplode", "req": 100, "lid": 122389640, "yt": "gQiOdxOyNGg", "pc": 647, "rated": true}, {"p": 170, "rp": 160, "name": "NEUTRA", "pub": "Jenkins GD", "ver": "AeonAir", "req": 80, "lid": 88611404, "yt": "0fNBFwNS1qg", "pc": 481, "rated": true}, {"p": 171, "rp": 161, "name": "ROCKBOTTOM", "pub": "bims", "ver": "[BLKHL] ZaZa GD", "req": 100, "lid": 122196131, "yt": "HAyxOJ1XuBk", "pc": 685, "rated": true}, {"p": 172, "rp": 162, "name": "Dark Dimension", "pub": "ThePurgatory", "ver": "TheNixuzGD200", "req": 100, "lid": 125617849, "yt": "g2DrT9bHjOI", "pc": 644, "rated": true}, {"p": 173, "rp": 163, "name": "Swing Swing", "pub": "[COMET] Kaza", "ver": "[IQB7] Whizkid05", "req": 67, "lid": 112231282, "yt": "_hL9hFU3WI4", "pc": 629, "rated": true}, {"p": 174, "rp": 164, "name": "Guideless Goobering", "pub": "[TCC] Enfur", "ver": "Zytrox", "req": 100, "lid": 105625871, "yt": "pFxdGKYQrcg", "pc": 576, "rated": true}, {"p": 175, "rp": 165, "name": "Hard Machine", "pub": "Komp", "ver": "Varium", "req": 79, "lid": 72744364, "yt": "6i0pdTDAo1c", "pc": 365, "rated": true}, {"p": 176, "rp": 166, "name": "DISSONANCE", "pub": "[meow] ivyteal", "ver": "[COMET] zSquidKnight", "req": 73, "lid": 108141323, "yt": "IfFser-f9c0", "pc": 584, "rated": true}, {"p": 177, "rp": 167, "name": "Crackhead Circles", "pub": "AlrexX", "ver": "[OG B] teraaa", "req": 67, "lid": 95524621, "yt": "_4MDq8Us5gM", "pc": 553, "rated": true}, {"p": 178, "rp": 168, "name": "Time Lapse", "pub": "HappyMoby", "ver": "chloechu", "req": 100, "lid": 97705490, "yt": "QWrDOemVBLk", "pc": 657, "rated": true}, {"p": 179, "rp": 169, "name": "Zodiac", "pub": "Bianox", "ver": "-", "req": 75, "lid": 52374843, "yt": "HCQK_y8JutU", "pc": 219, "rated": true}, {"p": 180, "rp": 170, "name": "Lotus Flower", "pub": "StarkytheSalad", "ver": "BrianTheBurger", "req": 70, "lid": 75813671, "yt": "pTgOHcwJhd0", "pc": 389, "rated": true}, {"p": 181, "rp": 171, "name": "Scream Machine", "pub": "TMco", "ver": "WatchPiggy", "req": 72, "lid": 96035641, "yt": "n-KeSGEX7Jg", "pc": 556, "rated": true}, {"p": 182, "rp": 172, "name": "Goober Rage Stage", "pub": "bonscarrot", "ver": "trenbabypaleo", "req": 100, "lid": 130183035, "yt": "1rrouUCPXhY", "pc": 661, "rated": true}, {"p": 183, "rp": 173, "name": "Axinie", "pub": "[IQB7] SaturMan", "ver": "[IQB7] SaturMan", "req": 77, "lid": 107299600, "yt": "LjfO2fqnozI", "pc": 581, "rated": true}, {"p": 184, "rp": 174, "name": "GLUNGUS ADVENTURES", "pub": "bims", "ver": "[TCD] Conix", "req": 100, "lid": 138615726, "yt": "0a2BX5I3v94", "pc": 689, "rated": true}, {"p": 185, "rp": 175, "name": "Judgement Knights", "pub": "HangerLord", "ver": "Helix", "req": 72, "lid": 110913375, "yt": "MzzY8nWfxnk", "pc": 596, "rated": true}, {"p": 186, "rp": 176, "name": "BLITZ", "pub": "chloechu", "ver": "[COMET] sock", "req": 100, "lid": 137248479, "yt": "p5NquHWeWZ0", "pc": 688, "rated": true}, {"p": 187, "rp": 177, "name": "Widestep", "pub": "｛出見塩｝", "ver": "｛出見塩｝", "req": 79, "lid": 69289606, "yt": "GhLFsr9skXs", "pc": 494, "rated": true}, {"p": 188, "rp": 178, "name": "Lithium", "pub": "L4tezk", "ver": "[SARK] Bamvie", "req": 100, "lid": 97364686, "yt": "IfVM56qNVdA", "pc": 597, "rated": true}, {"p": 189, "rp": 179, "name": "Keres", "pub": "ItsHybrid", "ver": "Crisis", "req": 64, "lid": 74391640, "yt": "MFFIjZP7PxQ", "pc": 377, "rated": true}, {"p": 190, "rp": 180, "name": "IRIS", "pub": "[COMET] Kaza", "ver": "[COMET] bnuuy", "req": 100, "lid": 123853954, "yt": "WiFwAU8pgr4", "pc": 632, "rated": true}, {"p": 191, "rp": 181, "name": "Galeforce", "pub": "OniLink", "ver": "[DL] Blitzer", "req": 100, "lid": 115313314, "yt": "G6VF2Gvmpz0", "pc": 666, "rated": true}, {"p": 192, "rp": 182, "name": "Cold Sweat", "pub": "para", "ver": "Kapinapi", "req": 61, "lid": 63996127, "yt": "tBpEPXGhQug", "pc": 293, "rated": true}, {"p": 193, "rp": 183, "name": "Frost Spirit", "pub": "Quaybus", "ver": "Varium", "req": 77, "lid": 95767653, "yt": "KXbaRnRpm58", "pc": 542, "rated": true}, {"p": 194, "rp": 184, "name": "Ascent", "pub": "Rimexon", "ver": "[DL] LordVadercraft", "req": 63, "lid": 112046512, "yt": "sII8zQZIJlg", "pc": 601, "rated": true}, {"p": 195, "rp": 185, "name": "Promethean", "pub": "Endlevel", "ver": "RicoLP", "req": 85, "lid": 69333212, "yt": "19kE_Yo8puE", "pc": 351, "rated": true}, {"p": 196, "rp": 186, "name": "Thinking Space", "pub": "Atomic", "ver": "Atomic", "req": 84, "lid": 54953085, "yt": "iHf2nanWjvE", "pc": 273, "rated": true}, {"p": 197, "rp": 187, "name": "Dry Out Copyable 2", "pub": "[FaZe] tenzk", "ver": "s3batr0nic", "req": 77, "lid": 106522770, "yt": "FXW9J9CaREU", "pc": 575, "rated": true}, {"p": 198, "rp": 188, "name": "Calculator Core", "pub": "Walroose", "ver": "-", "req": 59, "lid": 58355141, "yt": "VrgNFsF2NGw", "pc": 244, "rated": true}, {"p": 199, "rp": 189, "name": "Renevant", "pub": "nikroplays", "ver": "rori", "req": 60, "lid": 58161496, "yt": "2Y8kBw8YxO8", "pc": 239, "rated": true}, {"p": 200, "rp": 190, "name": "ConClusion", "pub": "DreamZoneGD", "ver": "Browar", "req": 58, "lid": 96471171, "yt": "wpuPFFqnJFY", "pc": 552, "rated": true}], "notes": {"1": "5 Ekim 2026'da #1 oldu ve Kenos'u yaklaşık 7 yıl sonra listeden düşürdü. Doğrulayan [TCD] Doggie. Yerleştirme, listenin en çok beğenilen değişikliği.", "4": "CairoX sürümü. CoCyMain'in aynı isimli level'ı ile karıştırılmasın; Kızıl ismin yanına yayınlayanı yazar.", "17": "23 Ekim 2026, Rated+ #17. Klasik liste hâlâ göstermiyor. Liste ekibi: doğrulayan ve level'ı 2 koşuda tutan oyuncu, Silent clubstep'ten en az daha zor diyor. Kızıl zorluk sırasına alır, puan yazmaz.", "18": "1.9 fiziği, bug'lar ve düşük keyif yıllardır tartışılıyor. Zorluk sırasını keyifsizlik bahanesiyle kaydırmadım; etiket duruyor, sıra duruyor.", "19": "Eşik %37, bu listedeki en düşük. Level kolay demek değil: kabul edilen rekor çok erken başlıyor. Komşu levellerde %40 sıradan bir ölümdür.", "20": "Eşik %80. Rekor ancak geç bir yüzdede açılıyor; erken ölümler listeye girmez.", "26": "Wiki'nin, öncelikle listeye girmek için yapılmış level örneklerinden biri. Sıra bugünkü verilere göre duruyor.", "28": "Eylül 2022'de #2'ye konması listenin en çok dislike alan değişikliği (2.427). Bugünkü sıra bunun çok altında.", "38": "Eşik %85. Zor kısım sonda; yüksek yüzde bile rekor sayılmayabilir.", "39": "CoCyMain sürümü, CairoX'in Thinking Space II'si değil. 23 Ekim 2026'da Slaughterhouse'un hemen üstüne kondu. Unrated: sırada var, puanda yok.", "51": "Eşik %83. Geç eşik; %80 ölüm hâlâ rekor değil.", "57": "Eşik %90, ana listedeki en yüksek. Bitmeye çok yakın ölümler bile eşiğin altında kalır.", "163": "Yaklaşık 7 yıl listenin zirvesinde ve çevresinde kaldı. 5 Ekim 2026'da GRIEF ile klasik listeden de düştü. 2010'ların işareti kapandı.", "161": "24 Ekim 2026: Rated+ ilk 150’de görünmüyor, Rated+ legacy’de duruyor. Klasik listede hâlâ #137. Önceki Kızıl sürümünde #147’deydi; yani bu level iki liste arasında ayrışan bir örnek. Kızıl, Rated+ sırasını izler."}, "players": [[1, "Zoink", "67", 7177.26], [2, "wPopoff", "WBT", 4981.21], [3, "zLevii", "MEALY", 3846.86], [4, "Trick", "TCD", 3558.86], [5, "Netermind", "SARK", 3456.1], [6, "Sharkified", "GTS", 2424.78], [7, "kloone", "OG B", 2298.24], [8, "Thnnder", "THNDR", 2249.61], [9, "eastshark", "—", 2243.29], [10, "Slaughter", "—", 2052.64], [11, "pizi", "UCH", 2015.8], [12, "rediio", "—", 1963.03], [13, "Cookie", "BHO", 1843.67], [14, "xmercurylamp", "—", 1817.08], [15, "weyolll3", "HOLA", 1740.07], [16, "Taiago", "WBT", 1732.22], [17, "LAMINGTON", "MEALY", 1674.02], [18, "Laysah", "OG B", 1638.26], [19, "Whizkid05", "IQB7", 1599.16], [20, "PoCle", "ILUV", 1580.94]], "nations": [[1, "Amerika Birleşik Devletleri", 8985.82], [2, "Güney Kore", 6187.53], [3, "İspanya", 5372.27], [4, "Rusya", 5099.56], [5, "Polonya", 4957.87], [6, "Birleşik Krallık", 4492.77], [7, "Kanada", 4429.57], [8, "Avustralya", 4053.01], [9, "Yeni Zelanda", 4023.11], [10, "Finlandiya", 3850.65]], "date": "2026-10-24", "notes_en": {"1": "Became #1 on 5 October 2026 and pushed Kenos off the list after about 7 years. Verified by [TCD] Doggie. The placement is the most-liked change in the list’s history.", "4": "CairoX’s version. Not to be confused with CoCyMain’s level of the same name; Crimson writes the publisher next to the name.", "17": "23 October 2026, Rated+ #17. The classic list still does not show it. List team: the verifier and the player holding the level in 2 runs say it is harder than Silent clubstep, at the very least. Crimson puts it in the difficulty order and awards no points.", "18": "The 1.9 physics, bugs and low enjoyment have been debated for years. I did not move the difficulty order because of enjoyment; the label stays, the rank stays.", "19": "Threshold 37%, the lowest on this list. That does not make the level easy: the accepted record starts very early. At the neighbouring levels, 40% is an ordinary death.", "20": "Threshold 80%. A record only opens at a late percentage; early deaths do not count.", "26": "One of the wiki’s examples of levels made primarily to get on the list. The rank follows today’s data.", "28": "Its placement at #2 in September 2022 is the most-disliked change in the list’s history (2,427). Today’s rank is far below that.", "38": "Threshold 85%. The hard part is at the end; even a high percentage may not count as a record.", "39": "CoCyMain’s version, not CairoX’s Thinking Space II. Placed right above Slaughterhouse on 23 October 2026. Unrated: it has a rank, but no points.", "51": "Threshold 83%. A late threshold; an 80% death still isn’t a record.", "57": "Threshold 90%, the highest in the main list. Even deaths very close to the end fall below the threshold.", "161": "24 October 2026: not in the Rated+ top 150, it sits in Rated+ legacy. Still #137 in the classic list. It was #147 in the previous Crimson version, so it is a level where the two lists diverge. Crimson follows the Rated+ order.", "163": "Stayed at or near the top of the list for about 7 years. Fell off the classic list too on 5 October 2026 with GRIEF. The mark of the 2010s is closed."}, "nations_en": ["United States", "South Korea", "Spain", "Russia", "Poland", "United Kingdom", "Canada", "Australia", "New Zealand", "Finland"]}</script>
 <script>
 "use strict";
 const DATA = JSON.parse(document.getElementById("payload").textContent);
 const byP = new Map(DATA.rows.map(d => [d.p, d]));
 const $ = id => document.getElementById(id);
 const KEY = "kizil.progress.v1";
-const TABS = ["list","mine","stats","players","calc","method"];
+const TABS = ["list","submit","stats","players","calc","method"];
+const FILTERS = ["ana","ext","leg","unrated","outlier","border","note","all"];
+
+/* ---------- settings ---------- */
+const CONFIG = {
+  repo: "",                // "owner/repo" for record submissions. Empty = auto-detect on GitHub Pages.
+  template: "record.yml",  // file name in .github/ISSUE_TEMPLATE/
+  globalApi: "https://api.demonlist.org/levels/classic"  // Global Demonlist (demonlist.org)
+};
+const BRAND = { tr:"Kızıl", en:"Crimson" };  // the list’s name in each language
 
 /* ---------- i18n: [turkish, english]; a value may be a function ---------- */
 const D = {
   skip:["İçeriğe geç","Skip to content"],
   kick:["GEOMETRY DASH · DEMON SIRASI","GEOMETRY DASH · DEMON RANKING"],
-  h1:["KIZIL LİSTE","KIZIL LIST"],
+  h1:["KIZIL LİSTE","CRIMSON LIST"],
   langTitle:["Switch to English","Türkçe’ye geç"],
   themeAria:["Tema değiştir","Switch theme"],
   heroAria:["Listenin zirvesi","Top of the list"],
@@ -414,13 +453,13 @@ const D = {
   statUnrated:["unrated, puansız","unrated, no points"],
   statBorder:["sınırda level","borderline levels"],
   statDup:["isim çakışması","name clash"],
-  tabList:["Sıralama","Ranking"], tabMine:["İlerlemem","My progress"], tabStats:["İstatistik","Stats"],
+  tabList:["Sıralama","Ranking"], tabSubmit:["Rekor gönder","Submit a record"], tabStats:["İstatistik","Stats"],
   tabPlayers:["Oyuncular","Players"], tabCalc:["Puan","Points"], tabMethod:["Ne düzelttim","What I fixed"],
   searchPh:["Level, yayınlayan, doğrulayan veya ID","Level, publisher, verifier or ID"],
   search:["Ara","Search"], filter:["Filtre","Filter"],
   fAna:["Ana 1–75","Main 1–75"], fExt:["Extended 76–150","Extended 76–150"], fLeg:["Düşenler","Legacy"],
   fUnrated:["Unrated","Unrated"], fOutlier:["Eşik aykırı","Odd threshold"], fBorder:["Sınırda","Borderline"],
-  fNote:["Notlu","Noted"], fDone:["Bitirdiklerim","Beaten"], fTodo:["Bitirmediklerim","Not beaten"], fAll:["Hepsi","All"],
+  fNote:["Notlu","Noted"], fAll:["Hepsi","All"],
   random:["🎲 Rastgele","🎲 Random"], csv:["CSV indir","Download CSV"], sort:["Sırala","Sort"],
   sKizil:["Kızıl sırası","Kızıl order"], sClassic:["Klasik rated sırası","Classic rated order"], sName:["İsim","Name"],
   sReq:["Eşik, düşükten","Threshold, low to high"], sReqd:["Eşik, yüksekten","Threshold, high to low"],
@@ -436,7 +475,7 @@ const D = {
   noClassic:["klasik yok","not in classic"], classicN:[n=>"klasik #"+n,n=>"classic #"+n],
   shift:[n=>" · +"+n+" kayma",n=>" · +"+n+" shift"],
   ptsN:[s=>s+" puan",s=>s+" pts"], noPts:["puan yok","no points"],
-  tBeaten:["Bitirdim","Beaten"], tUnrated:["Unrated","Unrated"], tThr:["Eşik","Threshold"], tName:["İsim","Name"],
+  tUnrated:["Unrated","Unrated"], tThr:["Eşik","Threshold"], tName:["İsim","Name"],
   tBorder:["Sınırda","Borderline"], tNote:["Not","Note"], tMain:["Ana","Main"], tExt:["Extended","Extended"], tLeg:["Düşen","Legacy"],
   /* detail */
   borderNote:[(p,rp,s)=>`Sınırda: Kızıl sırasında #${p} (düşen), klasik sırada #${rp} ve hâlâ ${s} puan. İki liste bugün aynı level için iki farklı kapı gösteriyor.`,
@@ -447,30 +486,49 @@ const D = {
   scoreOut:[rp=>`Klasik sırası #${rp}. 150’nin dışında, puan 0.`,rp=>`Classic rank #${rp}. Outside 150, 0 points.`],
   idLine:[(id,p,v)=>`Level ID <b>${id}</b>. Oyunda aratmak için kopyala. Yayınlayan ${p}, doğrulayan ${v}.`,
           (id,p,v)=>`Level ID <b>${id}</b>. Copy it to search in-game. Published by ${p}, verified by ${v}.`],
-  myBest:["En iyi yüzdem","My best %"], myPh:["0–100","0–100"], myFull:["%100 bitirdim","I beat it (100%)"], clear:["Temizle","Clear"],
-  myNoPts:["puan yok (eşik altı veya puansız)","no points (below threshold or unscored)"],
   copyId:["ID kopyala","Copy ID"], copyLink:["Bağlantıyı kopyala","Copy link"], verif:["Doğrulama","Verification"],
   copied:["Kopyalandı","Copied"], idCopied:["Level ID kopyalandı","Level ID copied"], linkCopied:["Bağlantı kopyalandı","Link copied"],
-  cantSave:["Tarayıcı kaydetmeye izin vermiyor","Your browser blocks saving"], copyPrompt:["Kopyala:","Copy:"],
+  copyPrompt:["Kopyala:","Copy:"],
   csvHead:[["Kızıl","Klasik","Level","Yayınlayan","Doğrulayan","Eşik","Puan","Level ID"],["Kızıl","Classic","Level","Publisher","Verifier","Threshold","Points","Level ID"]],
-  /* mine */
-  mineLead:["Bir level’ı sıralamada açıp en iyi yüzdeni gir. Veri yalnızca bu tarayıcıda (localStorage) durur; hiçbir yere gönderilmez. Puan Kızıl’ın kendi hesabıdır, resmi skor değil.",
-            "Open a level in the ranking and enter your best percentage. Data stays only in this browser (localStorage) and is never sent anywhere. Points are Kızıl’s own calculation, not the official score."],
-  mineScore:["Kızıl puanım","my Kızıl points"], mineDone:["bitirilen level","levels beaten"], mineParts:["yüzdeli kayıt","partial records"],
-  mineEmpty:["Henüz kayıt yok. Sıralamada bir level’ı aç, yüzdeni gir veya “%100 bitirdim”e bas.","No records yet. Open a level in the ranking, enter your percentage or press “I beat it (100%)”."],
-  thLevel:["Level","Level"], thPts:["Puan","Points"],
-  backup:["Yedekle / taşı","Back up / move"],
-  backupLead:["Başka cihaza taşımak için dışa aktar, orada yapıştırıp içe aktar.","To move to another device, export here, then paste and import there."],
-  ioAria:["İlerleme verisi","Progress data"], ioPh:["JSON burada görünür veya buraya yapıştır","JSON appears here, or paste it here"],
-  export:["Dışa aktar","Export"], import:["İçe aktar","Import"], wipe:["Hepsini sil","Delete all"],
-  exported:["Dışa aktarma kopyalandı","Export copied"], imported:[n=>n+" kayıt içe aktarıldı",n=>n+" records imported"],
-  badJson:["Geçerli bir JSON değil","Not valid JSON"], confirmWipe:["Tüm ilerleme kayıtların silinsin mi?","Delete all your progress records?"],
+  /* record submission */
+  subLead:["Rekorunu kanıt videosuyla gönder. Gönderim GitHub’da önceden doldurulmuş bir kayıt (issue) olarak açılır; liste yöneticisi GitHub bildirimiyle haberdar olur ve kaydı inceler. Kanıtsız yüzde puan yazmaz.",
+            "Send your record with video proof. It opens as a pre-filled GitHub issue; the list maintainer is notified by GitHub and reviews it. A percentage without proof earns no points."],
+  subHowT:["Nasıl işliyor","How it works"],
+  subHow:["<ol><li>Formu doldur ve “GitHub’da aç”a bas. GitHub hesabınla giriş yapman gerekir.</li><li>Açılan kaydı “Submit new issue” ile gönder.</li><li>Yönetici GitHub bildirimiyle haberdar olur; kanıt videosu izlenir.</li><li>Onaylanan rekor listeye işlenir.</li></ol><p>Kayıtlar GitHub’da herkese açıktır. E-posta, telefon gibi özel bilgi yazma.</p>",
+          "<ol><li>Fill in the form and press “Open on GitHub”. You need to be signed in to GitHub.</li><li>Send the opened issue with “Submit new issue”.</li><li>The maintainer is notified by GitHub and watches the proof video.</li><li>An approved record is added to the list.</li></ol><p>Records are public on GitHub. Do not write private details such as email or phone.</p>"],
+  fPlayer:["Oyuncu adı","Player name"], fVideo:["Kanıt videosu (https)","Proof video (https)"],
+  fRaw:["Ham kayıt / ek bağlantı (isteğe bağlı)","Raw footage / extra link (optional)"], fNotes:["Not (isteğe bağlı)","Notes (optional)"],
+  fConsent:["Rekorumun GitHub’da herkese açık olacağını anlıyorum","I understand my record will be public on GitHub"],
+  recHint:[r=>`Bu level için en az %${r}.`,r=>`At least ${r}% for this level.`],
+  recEst:[s=>`Tahmini puan: ${s} (inceleme sonrası kesinleşir)`,s=>`Estimated points: ${s} (final after review)`],
+  recNoPts:["Bu rekor puan yazmaz (unrated, klasik 150 dışı veya extended’da %100 altı).","This record earns no points (unrated, outside classic 150, or under 100% in extended)."],
+  recOpen:["GitHub’da aç","Open on GitHub"], recCopy:["Metni kopyala","Copy as text"],
+  ePlayer:["Oyuncu adı gerekli.","Player name is required."],
+  ePercent:[r=>`Yüzde ${r}–100 arasında tam sayı olmalı.`,r=>`Percent must be a whole number from ${r} to 100.`],
+  eVideo:["Geçerli bir https video bağlantısı gerekli.","A valid https video link is required."],
+  eRaw:["Ek bağlantı geçerli bir https adresi olmalı.","The extra link must be a valid https URL."],
+  eConsent:["Onay kutusunu işaretle.","Please tick the consent box."],
+  eRepo:["Depo adresi bulunamadı. Sayfadaki CONFIG.repo alanına “kullanici/depo” yaz. Şimdilik “Metni kopyala”yı kullanabilirsin.","Repository not found. Set CONFIG.repo in the page to “owner/repo”. For now you can use “Copy as text”."],
+  eLong:["Bağlantı çok uzun; notu kısalt.","The link is too long; shorten the notes."],
+  recOpened:["GitHub açıldı. Kaydı orada göndermeyi unutma.","GitHub opened. Remember to submit the issue there."],
+  recCopied:["Kayıt metni kopyalandı.","Record text copied."],
+  recTitle:["Rekor","Record"],
+  subBtn:["Rekor gönder","Submit a record"],
+  globalN:[n=>"Global Demonlist #"+n,n=>"Global Demonlist #"+n],
   /* stats */
   statsLead:["Bu dosyadaki 200 levelden hesaplanır.","Calculated from the 200 levels in this file."],
   liveTitle:["Güncellik kontrolü","Freshness check"],
-  liveLead:["Pointercrate’in canlı klasik sırasını, bu dosyadaki klasik sıralarla karşılaştırır. Liste değiştiyse hangi level’ların kaydığını gösterir.",
-            "Compares Pointercrate’s live classic order with the classic ranks in this file. If the list changed, it shows which levels moved."],
-  liveBtn:["Şimdi karşılaştır","Compare now"],
+  liveLead:["İki kaynağı canlı kontrol eder. Pointercrate: klasik 1–150, dosyadaki klasik sıralarla karşılaştırılır. Global Demonlist (demonlist.org): kendi sıralaması farklıdır, bu yüzden hata değil “ikinci görüş” gösterir; ayrıca her level için Global sırası listeye eklenir.",
+            "Checks two sources live. Pointercrate: the classic 1–150, compared with the classic ranks in this file. Global Demonlist (demonlist.org): it ranks differently, so it shows a “second opinion”, not errors; it also adds each level’s Global rank to the list."],
+  liveBtnP:["Pointercrate ile karşılaştır","Compare with Pointercrate"], liveBtnG:["Global Demonlist ile karşılaştır","Compare with Global Demonlist"],
+  gConn:["Global Demonlist’e bağlanılıyor…","Connecting to Global Demonlist…"],
+  gErr:[m=>"Global Demonlist’e bağlanılamadı ("+m+"). Tarayıcı (CORS) veya ağ kısıtı olabilir; bu liste verisi hâlâ dosyadan geliyor.",
+        m=>"Could not reach Global Demonlist ("+m+"). It may be a browser (CORS) or network restriction; the list data still comes from this file."],
+  gOk:[(n,k)=>`<b style='color:var(--ok)'>${n} level okundu.</b> ${k} tanesinin Global sırası listede gösteriliyor.`,(n,k)=>`<b style='color:var(--ok)'>Read ${n} levels.</b> Global ranks of ${k} of them are now shown in the list.`],
+  gMissing:[n=>"Global ilk 150’de olup dosyada olmayan ("+n+"):",n=>"In the Global top 150 but not in this file ("+n+"):"],
+  gNoMissing:["Global ilk 150’deki her level dosyada var.","Every level in the Global top 150 is in this file."],
+  gApart:[n=>"Sıra farkı en büyük ("+n+"):",n=>"Biggest rank gaps ("+n+"):"],
+  gNote:["İki liste farklı yöntemlerle sıralanır; fark otomatik olarak hata demek değildir.","The two lists are ranked by different methods; a gap is not automatically an error."],
   liveConn:["Pointercrate’e bağlanılıyor…","Connecting to Pointercrate…"],
   liveOk:["<b style='color:var(--ok)'>Uyumlu.</b> Klasik ilk 150 bu dosyayla aynı.","<b style='color:var(--ok)'>In sync.</b> The classic top 150 matches this file."],
   liveDiff:["<b style='color:var(--warn)'>Fark var.</b> Veriyi güncelleme zamanı.","<b style='color:var(--warn)'>Differences found.</b> Time to update the data."],
@@ -520,9 +578,9 @@ const D = {
   heroMain:["Ana liste","Main list"],
   footer:["Resmi Pointercrate listesi değildir. Sıra ve puan verisi <span id=\"foot-date\"></span> tarihli bu dosyadan gelir; canlı farkı “İstatistik → Güncellik kontrolü” gösterir. Veriyi güncellemek için aşağıdaki <code>payload</code> JSON’unu düzenle; sayfa kendiliğinden yeniden hesaplanır.",
           "Not the official Pointercrate list. Ranking and points come from this file, dated <span id=\"foot-date\"></span>; the live difference is shown in “Stats → Freshness check”. To update the data, edit the <code>payload</code> JSON in this file; the page recalculates by itself."],
-  pageTitle:["Kızıl Liste — Geometry Dash Demon Sıralaması","Kızıl List — Geometry Dash Demon Ranking"],
-  pageDesc:["Güncel Geometry Dash demon listesi: unrated levelleri gizlemeyen, aynı isimli levelleri ayıran ve doğru puan eğrisini kullanan tek dosyalık liste. Arama, filtre, kişisel ilerleme ve puan hesabı.",
-            "Up-to-date Geometry Dash demon list: a single-file list that does not hide unrated levels, tells same-named levels apart and uses the correct points curve. Search, filters, personal progress and a points calculator."]
+  pageTitle:["Kızıl Liste — Geometry Dash Demon Sıralaması","Crimson List — Geometry Dash Demon Ranking"],
+  pageDesc:["Güncel Geometry Dash demon listesi: unrated levelleri gizlemeyen, aynı isimli levelleri ayıran ve doğru puan eğrisini kullanan tek dosyalık liste. Arama, filtre, rekor gönderme ve puan hesabı.",
+            "Up-to-date Geometry Dash demon list: a single-file list that does not hide unrated levels, tells same-named levels apart and uses the correct points curve. Search, filters, record submission and a points calculator."]
 };
 let LANG = "en";
 function detectLang(){
@@ -531,7 +589,7 @@ function detectLang(){
   const first = (navigator.languages && navigator.languages[0]) || navigator.language || "en";
   return /^tr(\b|-|_)/i.test(first) ? "tr" : "en";
 }
-const T = (k, ...a) => { const v = D[k][LANG==="tr"?0:1]; return typeof v==="function" ? v(...a) : v; };
+const T = (k, ...a) => { const v = D[k][LANG==="tr"?0:1]; const r = typeof v==="function" ? v(...a) : v; return typeof r==="string" ? r.replace(/Kızıl/g, BRAND[LANG]) : r; };
 const N = () => (LANG==="tr" ? DATA.notes : DATA.notes_en) || {};
 const fdate = () => new Date(DATA.date+"T12:00:00").toLocaleDateString(LANG==="tr"?"tr-TR":"en-GB",{day:"numeric",month:"long",year:"numeric"});
 function applyStatic(){
@@ -576,13 +634,7 @@ async function copy(text, msg){
   catch(e){ window.prompt(T("copyPrompt"), text); }
 }
 
-/* ---------- progress ---------- */
-let prog = {};
-try{ prog = JSON.parse(localStorage.getItem(KEY)||"{}") || {}; }catch(e){ prog = {}; }
-function saveProg(){ try{ localStorage.setItem(KEY, JSON.stringify(prog)); }catch(e){ toast(T("cantSave")); } }
-const myPct = d => prog[d.lid] || 0;
-const isDone = d => myPct(d) >= 100;
-const mineScore = () => DATA.rows.reduce((a,d)=> a + (myPct(d) ? points(d, myPct(d)) : 0), 0);
+let GL = new Map();   // Global Demonlist ranks by level id (filled by the live check)
 
 /* ---------- state + hash ---------- */
 const S = { tab:"list", f:"ana", s:"kizil", q:"", l:null };
@@ -591,7 +643,7 @@ function readHash(){
   if(/^\d+$/.test(h)){ S.l = +h; S.f = "all"; return; }
   const p = new URLSearchParams(h);
   if(TABS.includes(p.get("t"))) S.tab = p.get("t");
-  if(p.get("f")) S.f = p.get("f");
+  if(FILTERS.includes(p.get("f"))) S.f = p.get("f");
   if(p.get("s")) S.s = p.get("s");
   if(p.get("q")) S.q = p.get("q");
   if(p.get("l") && byP.has(+p.get("l"))) S.l = +p.get("l");
@@ -611,8 +663,6 @@ function writeHash(){
 /* ---------- list ---------- */
 function tags(d){
   const t = [];
-  if(isDone(d)) t.push('<span class="tag ok">'+T("tBeaten")+'</span>');
-  else if(myPct(d)) t.push('<span class="tag ok">'+myPct(d)+'%</span>');
   if(!d.rated) t.push('<span class="tag hot">'+T("tUnrated")+'</span>');
   if(outlier(d)) t.push('<span class="tag hot">'+T("tThr")+'</span>');
   if(dupName(d)) t.push('<span class="tag warn">'+T("tName")+'</span>');
@@ -628,8 +678,6 @@ function passes(d){
   else if(f==="outlier" && !outlier(d)) return false;
   else if(f==="border" && !border(d)) return false;
   else if(f==="note" && !(N()[d.p] || border(d))) return false;
-  else if(f==="done" && !isDone(d)) return false;
-  else if(f==="todo" && isDone(d)) return false;
   const q = S.q.trim().toLowerCase();
   if(!q) return true;
   const blob = [d.name, named(d), d.pub, d.ver, d.lid, "#"+d.p, d.p, d.rp||""].join(" ").toLowerCase();
@@ -662,7 +710,7 @@ function render(){
     const classic = d.rp==null ? T("noClassic") : T("classicN", d.rp);
     const shift = d.rp!=null ? d.p-d.rp : 0;
     const opened = S.l===d.p;
-    return `<button type="button" class="row${d.p<=3?" top":""}${opened?" open":""}${isDone(d)?" done":""}" data-p="${d.p}" aria-expanded="${opened}" aria-controls="d${d.p}">
+    return `<button type="button" class="row${d.p<=3?" top":""}${opened?" open":""}" data-p="${d.p}" aria-expanded="${opened}" aria-controls="d${d.p}">
         <div class="rank">${d.p}</div>
         <div class="body">
           <div class="topline">
@@ -673,7 +721,7 @@ function render(){
             <span class="meter${outlier(d)?" odd":""}" title="${esc(T("thrTitle", d.req))}"><i style="width:${d.req}%"></i></span>
             <span>${T("thr", d.req)}</span>
             <span>${classic}${shift>0 ? T("shift", shift) : ""}</span>
-            <span>${pts ? T("ptsN", fmt(pts)) : T("noPts")}</span>
+            <span>${pts ? T("ptsN", fmt(pts)) : T("noPts")}</span>${GL.has(d.lid) ? "<span>"+T("globalN", GL.get(d.lid))+"</span>" : ""}
           </div>
         </div>
       </button>
@@ -691,30 +739,16 @@ function detailHTML(d){
   const scoreNote = !d.rated ? `<p>${T("scoreUnrated", d.req)}</p>`
     : pts ? `<p>${T("scoreCompl", fmt(pts), d.rp, d.req, d.rp<=75, fmt(min))}</p>`
     : `<p>${T("scoreOut", d.rp)}</p>`;
-  const mine = myPct(d);
-  const mineNow = mine ? (points(d,mine) ? T("ptsN", fmt(points(d,mine))) : T("myNoPts")) : "";
   return `<div class="detail-grid">${shot}<div>
     ${note ? `<p>${esc(note)}</p>` : ""}${borderNote}${scoreNote}
     <p>${T("idLine", d.lid, `<a href="#" data-who="${esc(d.pub)}">${esc(d.pub)}</a>`, `<a href="#" data-who="${esc(d.ver)}">${esc(d.ver)}</a>`)}</p>
-    <div class="mine-edit">
-      <label for="my${d.p}">${T("myBest")}</label>
-      <input id="my${d.p}" type="number" min="0" max="100" inputmode="numeric" value="${mine||""}" placeholder="${T("myPh")}" data-mine="${d.p}">
-      <button type="button" class="ghost" data-full="${d.p}">${T("myFull")}</button>
-      ${mine ? `<button type="button" class="ghost" data-clear="${d.p}">${T("clear")}</button><span style="color:var(--ok);font-size:13px">${mineNow}</span>` : ""}
-    </div>
     <div class="actions">
+      <button type="button" class="primary" data-submit="${d.p}">${T("subBtn")}</button>
       <button type="button" class="ghost" data-copy="${d.lid}">${T("copyId")}</button>
       <button type="button" class="ghost" data-share="${d.p}">${T("copyLink")}</button>
       ${yt}${pc}
     </div>
   </div></div>`;
-}
-function setMine(p, v){
-  const d = byP.get(p); if(!d) return;
-  v = Math.max(0, Math.min(100, Math.round(Number(v)||0)));
-  if(v) prog[d.lid] = v; else delete prog[d.lid];
-  saveProg(); render(); renderMine();
-  const el = $("d"+p); if(el) el.scrollIntoView({block:"nearest"});
 }
 $("list").addEventListener("click", e=>{
   const who = e.target.closest("[data-who]");
@@ -723,10 +757,8 @@ $("list").addEventListener("click", e=>{
   if(c){ copy(c.dataset.copy, T("idCopied")); return; }
   const sh = e.target.closest("[data-share]");
   if(sh){ S.l = +sh.dataset.share; writeHash(); copy(location.href, T("linkCopied")); return; }
-  const full = e.target.closest("[data-full]");
-  if(full){ setMine(+full.dataset.full, 100); return; }
-  const clr = e.target.closest("[data-clear]");
-  if(clr){ setMine(+clr.dataset.clear, 0); return; }
+  const sub = e.target.closest("[data-submit]");
+  if(sub){ openSubmit(+sub.dataset.submit); return; }
   if(e.target.closest(".detail")) return;
   const row = e.target.closest(".row");
   if(!row) return;
@@ -735,10 +767,6 @@ $("list").addEventListener("click", e=>{
   writeHash(); render();
   if(S.l){ const el = $("d"+S.l); if(el) el.scrollIntoView({block:"nearest"}); }
 });
-$("list").addEventListener("change", e=>{
-  const i = e.target.closest("[data-mine]");
-  if(i) setMine(+i.dataset.mine, i.value);
-});
 $("q").addEventListener("input", e=>{ S.q = e.target.value; S.l = null; writeHash(); render(); });
 $("sort").addEventListener("change", e=>{ S.s = e.target.value; writeHash(); render(); });
 $("chips").addEventListener("click", e=>{
@@ -746,8 +774,7 @@ $("chips").addEventListener("click", e=>{
   S.f = b.dataset.filter; S.l = null; syncUI();
 });
 function pickRandom(){
-  const pool = visible().filter(d => !isDone(d));
-  const src = pool.length ? pool : visible();
+  const src = visible();
   if(!src.length){ toast(T("noLevels")); return; }
   const d = src[Math.floor(Math.random()*src.length)];
   S.l = d.p; writeHash(); render();
@@ -761,7 +788,7 @@ $("csv").addEventListener("click", ()=>{
     [d.p, d.rp==null?"":d.rp, named(d), d.pub, d.ver, d.req, fmt(completion(d)), d.lid].map(q).join(",")));
   const blob = new Blob(["\ufeff"+lines.join("\n")], {type:"text/csv;charset=utf-8"});
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob); a.download = "kizil-list.csv";
+  a.href = URL.createObjectURL(blob); a.download = LANG==="tr" ? "kizil-liste.csv" : "crimson-list.csv";
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
 });
@@ -776,7 +803,7 @@ function showTab(id, focus){
     $("panel-"+n).classList.toggle("show", on);
     if(on && focus) t.focus();
   });
-  if(id==="mine") renderMine();
+  if(id==="submit") paintRec();
   writeHash();
 }
 $("tabs").addEventListener("click", e=>{
@@ -792,45 +819,77 @@ $("tabs").addEventListener("keydown", e=>{
   if(n!==null){ e.preventDefault(); showTab(TABS[n], true); }
 });
 
-/* ---------- my progress ---------- */
-function renderMine(){
-  const entries = DATA.rows.filter(d => myPct(d));
-  const done = entries.filter(isDone).length;
-  $("mineSum").innerHTML =
-    `<div><b>${fmt(mineScore())}</b><span>${T("mineScore")}</span></div>
-     <div><b>${done}</b><span>${T("mineDone")}</span></div>
-     <div><b>${entries.length-done}</b><span>${T("mineParts")}</span></div>`;
-  if(!entries.length){ $("mineList").innerHTML = '<p class="empty">'+T("mineEmpty")+'</p>'; return; }
-  const rows = entries.slice().sort((a,b)=> points(b,myPct(b))-points(a,myPct(a)) || a.p-b.p);
-  $("mineList").innerHTML = '<table><thead><tr><th>#</th><th>'+T("thLevel")+'</th><th class="num">%</th><th class="num">'+T("thPts")+'</th></tr></thead><tbody>'+
-    rows.map(d=>`<tr><td>${d.p}</td><td><a href="#l=${d.p}" data-go="${d.p}">${esc(named(d))}</a></td><td class="num">${myPct(d)}</td><td class="num">${fmt(points(d,myPct(d)))}</td></tr>`).join("")+'</tbody></table>';
+/* ---------- record submission (GitHub issue -> email via Actions) ---------- */
+function repoSlug(){
+  if(CONFIG.repo) return CONFIG.repo;
+  const m = location.hostname.match(/^([a-z0-9-]+)\.github\.io$/i);
+  if(!m) return "";
+  const seg = location.pathname.split("/").filter(Boolean)[0];
+  return m[1] + "/" + (seg && !/\.html?$/i.test(seg) ? seg : m[1]+".github.io");
 }
-$("mineList").addEventListener("click", e=>{
-  const a = e.target.closest("[data-go]"); if(!a) return;
-  e.preventDefault(); S.l = +a.dataset.go; S.f = "all"; S.q = ""; S.tab = "list"; syncUI();
-  const row = document.querySelector('.row[data-p="'+S.l+'"]'); if(row) row.scrollIntoView({block:"center"});
+const httpsUrl = v => { try{ const u = new URL(v); return u.protocol==="https:"; }catch(e){ return false; } };
+function recLevel(){ return byP.get(Number($("recLevel").value)); }
+function paintRec(){
+  const d = recLevel(); if(!d) return;
+  $("recHint").textContent = T("recHint", d.req);
+  $("recPercent").min = d.req;
+  const v = Math.round(Number($("recPercent").value));
+  const pts = v>=d.req && v<=100 ? points(d, v) : 0;
+  $("recEst").textContent = pts ? T("recEst", fmt(pts)) : T("recNoPts");
+}
+function readRec(){
+  const d = recLevel(), err = [];
+  const player = $("recPlayer").value.trim().replace(/\s+/g," ");
+  const percent = Number($("recPercent").value);
+  const video = $("recVideo").value.trim(), raw = $("recRaw").value.trim();
+  const notes = $("recNotes").value.trim();
+  if(!player) err.push(T("ePlayer"));
+  if(!Number.isInteger(percent) || percent<d.req || percent>100) err.push(T("ePercent", d.req));
+  if(!httpsUrl(video)) err.push(T("eVideo"));
+  if(raw && !httpsUrl(raw)) err.push(T("eRaw"));
+  if(!$("recConsent").checked) err.push(T("eConsent"));
+  return { d, player, percent, video, raw, notes, err };
+}
+function recText(r){
+  return ["Level: #"+r.d.p+" "+named(r.d)+" (ID "+r.d.lid+")", "Player: "+r.player, "Percent: "+r.percent+"%",
+          "Video: "+r.video, r.raw ? "Extra: "+r.raw : "", r.notes ? "Notes: "+r.notes : ""].filter(Boolean).join("\n");
+}
+function issueUrl(r, slug){
+  const p = new URLSearchParams({
+    template: CONFIG.template,
+    title: ("["+T("recTitle")+"] "+r.d.name+" — "+r.percent+"% — "+r.player).slice(0,120),
+    level: "#"+r.d.p+" "+named(r.d), lid: String(r.d.lid), player: r.player, percent: String(r.percent), video: r.video
+  });
+  if(r.raw) p.set("raw", r.raw);
+  if(r.notes) p.set("notes", r.notes);
+  return "https://github.com/"+slug+"/issues/new?"+p.toString();
+}
+function openSubmit(p){
+  $("recLevel").value = String(p);
+  S.l = p; showTab("submit"); paintRec();
+  $("recPlayer").focus();
+}
+$("recLevel").addEventListener("change", ()=>{ S.l = recLevel().p; writeHash(); paintRec(); });
+$("recPercent").addEventListener("input", paintRec);
+$("recForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  const msg = $("recMsg"), r = readRec();
+  if(r.err.length){ msg.innerHTML = '<span class="err">'+r.err.map(esc).join("<br>")+'</span>'; return; }
+  const slug = repoSlug();
+  if(!slug){ msg.innerHTML = '<span class="err">'+esc(T("eRepo"))+'</span>'; return; }
+  const url = issueUrl(r, slug);
+  if(url.length>7500){ msg.innerHTML = '<span class="err">'+esc(T("eLong"))+'</span>'; return; }
+  try{ localStorage.setItem("kizil.player", r.player); }catch(e2){}
+  window.open(url, "_blank", "noopener");
+  msg.textContent = T("recOpened");
 });
-$("exp").addEventListener("click", ()=>{
-  $("io").value = JSON.stringify({ app:"kizil-liste", v:1, progress:prog });
-  copy($("io").value, T("exported"));
+$("recCopy").addEventListener("click", ()=>{
+  const r = readRec(), msg = $("recMsg");
+  const blocking = r.err.filter(x => x!==T("eConsent"));
+  if(blocking.length){ msg.innerHTML = '<span class="err">'+blocking.map(esc).join("<br>")+'</span>'; return; }
+  copy(recText(r), T("recCopied")); msg.textContent = "";
 });
-$("imp").addEventListener("click", ()=>{
-  try{
-    const o = JSON.parse($("io").value);
-    const src = o && o.progress ? o.progress : o;
-    const clean = {};
-    Object.keys(src).forEach(k=>{
-      const lid = Number(k), v = Math.round(Number(src[k]));
-      if(DATA.rows.some(d=>d.lid===lid) && v>0 && v<=100) clean[lid] = v;
-    });
-    prog = clean; saveProg(); render(); renderMine();
-    toast(T("imported", Object.keys(clean).length));
-  }catch(err){ toast(T("badJson")); }
-});
-$("wipe").addEventListener("click", ()=>{
-  if(!Object.keys(prog).length) return;
-  if(window.confirm(T("confirmWipe"))){ prog = {}; saveProg(); render(); renderMine(); }
-});
+try{ const pl = localStorage.getItem("kizil.player"); if(pl) $("recPlayer").value = pl; }catch(e){}
 
 /* ---------- stats ---------- */
 function barRows(items){
@@ -890,6 +949,34 @@ $("live").addEventListener("click", async ()=>{
       (dropped.length ? "<p>"+T("liveGone",dropped.length)+"</p><ul>"+li(dropped.map(d=>esc(d.name)))+"</ul>" : "");
   }catch(err){ out.textContent = T("liveErr", err.message); }
 });
+$("liveG").addEventListener("click", async ()=>{
+  const out = $("liveOutG"); out.textContent = T("gConn");
+  try{
+    const arr = [];
+    for(let off=0; off<150; off+=50){
+      const r = await fetch(CONFIG.globalApi+"?limit=50&offset="+off, {headers:{Accept:"application/json"}});
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      const j = await r.json();
+      const part = Array.isArray(j) ? j : j.data;
+      if(!Array.isArray(part)) throw new Error("unexpected response");
+      arr.push(...part);
+      if(part.length<50) break;
+    }
+    if(!arr.length) throw new Error("empty response");
+    const list = arr.map(x=>({ lid:Number(x.level_id), place:Number(x.place), name:String(x.name||"") })).filter(x=>x.lid && x.place);
+    GL = new Map(list.map(x=>[x.lid, x.place]));
+    const byLid = new Map(DATA.rows.map(d=>[d.lid,d]));
+    const missing = list.filter(x=>!byLid.has(x.lid)).sort((a,b)=>a.place-b.place);
+    const apart = DATA.rows.filter(d=>GL.has(d.lid)).map(d=>({d, g:GL.get(d.lid), gap:Math.abs(GL.get(d.lid)-d.p)}))
+      .filter(x=>x.gap>=15).sort((a,b)=>b.gap-a.gap).slice(0,10);
+    const li = a => "<ul>"+a.map(s=>"<li>"+s+"</li>").join("")+"</ul>";
+    out.innerHTML = T("gOk", list.length, list.filter(x=>byLid.has(x.lid)).length)+
+      (missing.length ? "<p>"+T("gMissing",missing.length)+"</p>"+li(missing.slice(0,15).map(x=>esc(x.name)+" (Global #"+x.place+")")) : "<p>"+T("gNoMissing")+"</p>")+
+      (apart.length ? "<p>"+T("gApart",apart.length)+"</p>"+li(apart.map(x=>esc(named(x.d))+": Kızıl #"+x.d.p+" ↔ Global #"+x.g)) : "")+
+      "<p>"+T("gNote")+"</p>";
+    render();
+  }catch(err){ out.textContent = T("gErr", err.message); }
+});
 
 /* ---------- players / calc ---------- */
 function bars(rows, idx){
@@ -907,7 +994,7 @@ function fillPlayers(){
 }
 function options(){
   const opts = DATA.rows.map(d=>`<option value="${d.p}">#${d.p} ${esc(named(d))}</option>`).join("");
-  ["level","cmpA","cmpB"].forEach(id=>$(id).innerHTML = opts);
+  ["level","cmpA","cmpB","recLevel"].forEach(id=>$(id).innerHTML = opts);
   $("cmpB").value = "2";
 }
 function paintCalc(src){
@@ -980,7 +1067,7 @@ function applyTheme(t){
 function setLang(l, remember){
   LANG = l;
   if(remember){ try{ localStorage.setItem("kizil.lang", l); }catch(e){} }
-  applyStatic(); paintHeader(); fillPlayers(); renderStats(); paintCalc(); paintCmp(); renderMine(); syncUI();
+  applyStatic(); paintHeader(); fillPlayers(); renderStats(); paintCalc(); paintCmp(); paintRec(); syncUI();
 }
 $("lang").addEventListener("click", ()=> setLang(LANG==="tr" ? "en" : "tr", true));
 
@@ -1007,8 +1094,8 @@ function syncUI(){
 }
 LANG = detectLang();
 options();
-applyStatic(); paintHeader(); fillPlayers(); renderStats(); paintCalc(); paintCmp();
-readHash(); syncUI();
+applyStatic(); paintHeader(); fillPlayers(); renderStats(); paintCalc(); paintCmp(); paintRec();
+readHash(); if(S.l && S.tab==="submit") $("recLevel").value = String(S.l); syncUI();
 if(S.l){ const row = document.querySelector('.row[data-p="'+S.l+'"]'); if(row) row.scrollIntoView({block:"center"}); }
 window.addEventListener("hashchange", ()=>{ S.l=null; S.q=""; readHash(); syncUI(); });
 </script>
