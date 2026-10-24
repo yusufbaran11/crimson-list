@@ -1,0 +1,50 @@
+name: Record submission / Rekor gönderimi
+description: Submit a record with video proof / Kanıt videosuyla rekor gönder
+title: "[Record] "
+labels: ["record"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Records are public on GitHub. Do not write private details (email, phone).
+        Kayıtlar GitHub'da herkese açıktır. E-posta, telefon gibi özel bilgi yazma.
+  - type: input
+    id: level
+    attributes:
+      label: Level
+      placeholder: "#17 Old Orochi"
+    validations:
+      required: true
+  - type: input
+    id: lid
+    attributes:
+      label: Level ID
+    validations:
+      required: true
+  - type: input
+    id: player
+    attributes:
+      label: Player name / Oyuncu adı
+    validations:
+      required: true
+  - type: input
+    id: percent
+    attributes:
+      label: Percent / Yüzde
+      placeholder: "100"
+    validations:
+      required: true
+  - type: input
+    id: video
+    attributes:
+      label: Proof video (https) / Kanıt videosu
+    validations:
+      required: true
+  - type: input
+    id: raw
+    attributes:
+      label: Raw footage / extra link (optional) / Ham kayıt (isteğe bağlı)
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional) / Not (isteğe bağlı)
