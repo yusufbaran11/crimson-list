@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kızıl List — Geometry Dash Demon Ranking</title>
+<meta name="description" content="Up-to-date Geometry Dash demon list: a single-file list that does not hide unrated levels, tells same-named levels apart and uses the correct points curve. Search, filters, personal progress and a points calculator.">
+<meta name="theme-color" content="#0e0c0b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kızıl List — Geometry Dash Demon Ranking">
+<meta property="og:description" content="Unrated levels included, same-named levels told apart, correct points formula.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230e0c0b'/%3E%3Cpath d='M32 6 58 32 32 58 6 32Z' fill='%23ff3b2f'/%3E%3Cpath d='M32 20 44 32 32 44 20 32Z' fill='%230e0c0b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0c0b;--bg-2:#161311;--bg-3:#1d1815;--line:#2c2622;--text:#f4eee6;--muted:#a89c92;
+  --hot:#ff3b2f;--hot-ink:#1a0908;--soft:#c9b8aa;--ok:#5fd08a;--warn:#ffb347;--hover:#14110f;
+  --display:"Bebas Neue",Impact,"Arial Narrow",sans-serif;
+  --sans:Outfit,"Segoe UI",system-ui,-apple-system,sans-serif;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#faf6f1;--bg-2:#f1eae2;--bg-3:#e9e0d6;--line:#d8cdc1;--text:#1c1512;--muted:#6f625a;
+  --hot:#d92418;--hot-ink:#fff;--soft:#4a3e37;--ok:#1d8a4b;--warn:#b86a00;--hover:#f4ede5;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 var(--sans);min-height:100vh}
+button,select,input,textarea{font:inherit;color:inherit}
+button,[role=tab],select,summary{cursor:pointer}
+:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+a{color:var(--text)}
+.strip{height:6px;background:var(--hot)}
+.wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--hot);color:var(--hot-ink);padding:8px 12px;z-index:20}
+header.mast{padding:26px 0 18px;border-bottom:1px solid var(--line)}
+.kicker{display:flex;justify-content:space-between;gap:16px;align-items:center;color:var(--hot);font:15px var(--display);letter-spacing:.18em}
+.kicker .right{display:flex;gap:10px;align-items:center}
+.iconbtn{background:transparent;border:1px solid var(--line);color:var(--soft);min-height:36px;min-width:36px;padding:0 10px;font-size:13px;letter-spacing:.04em}
+.iconbtn:hover{border-color:var(--hot);color:var(--text)}
+h1{font:400 clamp(64px,12vw,112px)/.84 var(--display);letter-spacing:.01em;margin:8px 0 10px}
+.dek{max-width:68ch;color:var(--soft);margin:0;font-size:16.5px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);margin:22px 0 0}
+.stat{padding:12px 14px;border-right:1px solid var(--line)}.stat:last-child{border-right:0}
+.stat b{display:block;font:400 34px/1 var(--display);letter-spacing:.03em}
+.stat span{color:var(--muted);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+.hero{display:grid;grid-template-columns:1.4fr .8fr;margin:22px 0 8px;border:1px solid var(--line);background:var(--bg-2)}
+.hero-copy{padding:22px 22px 18px}
+.eyebrow{color:var(--hot);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.hero h2{font:400 clamp(56px,8vw,88px)/.86 var(--display);margin:6px 0 8px}
+.hero p{margin:0;color:var(--soft)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.hero-shot{position:relative;min-height:220px;background:var(--bg-3)}
+.hero-shot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.hero-shot::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg-2) 0%,transparent 55%);pointer-events:none}
+nav.views{display:flex;margin-top:22px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+nav.views button{background:transparent;color:var(--muted);border:0;border-bottom:2px solid transparent;padding:12px 16px;font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;min-height:44px}
+nav.views button[aria-selected=true]{color:var(--text);border-bottom-color:var(--hot)}
+.panel{display:none}.panel.show{display:block}
+.controls{position:sticky;top:0;z-index:4;background:color-mix(in srgb,var(--bg) 96%,transparent);padding:12px 0 10px;border-bottom:1px solid var(--line)}
+.searchrow{display:flex;gap:8px}
+input[type=search],input[type=number],select,textarea{background:var(--bg-2);color:var(--text);border:1px solid var(--line);border-radius:0;padding:10px 12px;min-height:44px;width:100%}
+select{width:auto;max-width:100%}
+textarea{min-height:90px;font:13px/1.4 ui-monospace,Menlo,Consolas,monospace}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chips button,.ghost,.primary{background:transparent;color:var(--soft);border:1px solid var(--line);min-height:44px;padding:8px 12px;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center}
+.chips button:hover,.ghost:hover{border-color:var(--hot);color:var(--text)}
+.chips button[aria-pressed=true]{background:var(--hot);color:var(--hot-ink);border-color:var(--hot)}
+.primary{background:var(--hot);color:var(--hot-ink);border-color:var(--hot)}
+.bar-tools{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:8px;color:var(--muted);font-size:13px;flex-wrap:wrap}
+.bar-tools .grp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row{width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);padding:12px 2px;display:grid;grid-template-columns:4.25rem 1fr;gap:2px 12px;align-items:start}
+.row:hover{background:var(--hover)}.row.open{background:var(--bg-3)}
+.rank{font:34px/1 var(--display)}
+.row.top .rank{color:var(--hot)}
+.row.done .rank::after{content:"✓";font:600 14px var(--sans);color:var(--ok);margin-left:4px;vertical-align:top}
+.name{font-weight:600;font-size:16.5px;letter-spacing:-.01em;overflow-wrap:anywhere}
+.sub{color:var(--muted);font-size:14px;margin-top:2px}
+.body{min-width:0}
+.topline{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.tags{display:flex;gap:4px;flex-wrap:wrap}
+.tag{display:inline-block;border:1px solid var(--line);color:var(--soft);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;font-weight:600}
+.tag.hot{border-color:var(--hot);color:var(--hot)}.tag.warn{border-color:var(--warn);color:var(--warn)}.tag.ok{border-color:var(--ok);color:var(--ok)}
+.side{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;color:var(--muted);font-size:13px;margin-top:6px}
+.meter{display:inline-block;width:70px;height:6px;background:var(--line);position:relative}
+.meter i{position:absolute;left:0;top:0;bottom:0;background:var(--soft)}.meter.odd i{background:var(--hot)}
+.detail{display:none;background:var(--bg-3);border-bottom:1px solid var(--line);padding:14px 12px 16px}
+.detail.show{display:block}
+.detail-grid{display:grid;grid-template-columns:240px 1fr;gap:18px}
+.shot{aspect-ratio:16/9;background:var(--bg-2);border:1px solid var(--line)}
+.shot img{width:100%;height:100%;object-fit:cover}
+.detail p{margin:0 0 10px;color:var(--soft)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.mine-edit{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0;padding:10px;border:1px dashed var(--line)}
+.mine-edit label{font-size:13px;color:var(--muted)}.mine-edit input{width:90px}
+.empty{color:var(--muted);padding:30px 0}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+h2.sec{font:400 36px/1 var(--display);margin:0 0 8px}
+.lead{color:var(--muted);margin-top:0}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{text-align:left;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tbar{display:block;height:4px;background:var(--hot);margin-top:4px;opacity:.8}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{border:1px solid var(--line);background:var(--bg-2);padding:18px}
+.card h2{font:400 32px/1 var(--display);margin:0 0 10px}
+.card label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:12px 0 4px}
+.big{font:400 72px/1 var(--display);color:var(--hot);margin:14px 0 6px}
+.wrong{color:var(--warn);text-decoration:line-through}
+.formula{white-space:pre-wrap;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;color:var(--soft);border-left:2px solid var(--hot);padding-left:12px;margin-top:12px}
+input[type=range]{width:100%;accent-color:var(--hot);min-height:30px;padding:0;border:0;background:transparent}
+.prose{max-width:74ch;margin-top:18px}
+.prose h2{font:400 44px/1 var(--display);margin:0 0 10px}
+.prose h3{font-size:18px;margin:22px 0 4px}
+.prose p,.prose li{color:var(--soft)}
+.bars{display:grid;gap:6px}
+.bars .b{display:grid;grid-template-columns:7.5rem 1fr 3rem;gap:10px;align-items:center;font-size:14px}
+.bars .b span.t{color:var(--soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bars .b span.v{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.bars .tr{height:14px;background:var(--bg-3);position:relative}
+.bars .tr i{position:absolute;left:0;top:0;bottom:0;background:var(--hot)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.live{margin-top:10px;color:var(--soft);font-size:14px}
+.live ul{margin:6px 0;padding-left:18px}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);margin:18px 0}
+.sum div{padding:14px;border-right:1px solid var(--line)}.sum div:last-child{border-right:0}
+.sum b{display:block;font:400 40px/1 var(--display);color:var(--hot)}.sum span{color:var(--muted);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+footer{margin:48px 0 40px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+kbd{border:1px solid var(--line);padding:0 5px;font:12px ui-monospace,Menlo,monospace;background:var(--bg-2)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+.toast.on{opacity:1}
+@media (max-width:760px){
+  .stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .hero,.split,.calc,.grid2,.detail-grid{grid-template-columns:1fr}
+  .hero-shot{min-height:160px}.hero-shot::after{background:linear-gradient(0deg,var(--bg-2),transparent 60%)}
+  .detail-grid .shot{max-width:320px}
+  .bars .b{grid-template-columns:6rem 1fr 2.5rem}
+  .big{font-size:60px}.sum b{font-size:30px}
+  .kbdhint{display:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast{transition:none}}
+@media print{.controls,nav.views,.strip,.iconbtn{display:none}body{background:#fff;color:#000}}
+.prose[data-lang]{display:none}
+html[lang=tr] .prose[data-lang=tr],html[lang=en] .prose[data-lang=en]{display:block}
+.iconbtn{font-family:var(--sans);font-weight:600}
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-i="skip">Skip to content</a>
+<div class="strip"></div>
+<div class="wrap">
+  <header class="mast">
+    <div class="kicker"><span data-i="kick">GEOMETRY DASH · DEMON RANKING</span>
+      <span class="right"><span id="updated"></span>
+        <button class="iconbtn" id="lang" type="button" data-ti="langTitle" aria-label="Language">TR</button>
+        <button class="iconbtn" id="theme" type="button" data-ar="themeAria" data-ti="themeAria">◐</button></span></div>
+    <h1 data-i="h1">KIZIL LIST</h1>
+    <p class="dek" data-i="dek"></p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section class="hero" id="hero" data-ar="heroAria"></section>
+
+  <nav class="views" role="tablist" data-ar="sections" id="tabs">
+    <button type="button" role="tab" id="tab-list" aria-selected="true" aria-controls="panel-list" data-i="tabList">Ranking</button>
+    <button type="button" role="tab" id="tab-mine" aria-selected="false" aria-controls="panel-mine" tabindex="-1" data-i="tabMine">My progress</button>
+    <button type="button" role="tab" id="tab-stats" aria-selected="false" aria-controls="panel-stats" tabindex="-1" data-i="tabStats">Stats</button>
+    <button type="button" role="tab" id="tab-players" aria-selected="false" aria-controls="panel-players" tabindex="-1" data-i="tabPlayers">Players</button>
+    <button type="button" role="tab" id="tab-calc" aria-selected="false" aria-controls="panel-calc" tabindex="-1" data-i="tabCalc">Points</button>
+    <button type="button" role="tab" id="tab-method" aria-selected="false" aria-controls="panel-method" tabindex="-1" data-i="tabMethod">What I fixed</button>
+  </nav>
+
+  <main id="main">
+  <noscript><p class="empty">This list needs JavaScript. / Bu liste JavaScript ile çalışır.</p></noscript>
+
+  <section class="panel show" id="panel-list" role="tabpanel" aria-labelledby="tab-list">
+    <div class="controls">
+      <div class="searchrow">
+        <input id="q" type="search" data-ph="searchPh" data-ar="search" autocomplete="off" enterkeyhint="search">
+      </div>
+      <div class="chips" role="group" data-ar="filter" id="chips">
+        <button type="button" data-filter="ana" aria-pressed="true" data-i="fAna"></button>
+        <button type="button" data-filter="ext" aria-pressed="false" data-i="fExt"></button>
+        <button type="button" data-filter="leg" aria-pressed="false" data-i="fLeg"></button>
+        <button type="button" data-filter="unrated" aria-pressed="false" data-i="fUnrated"></button>
+        <button type="button" data-filter="outlier" aria-pressed="false" data-i="fOutlier"></button>
+        <button type="button" data-filter="border" aria-pressed="false" data-i="fBorder"></button>
+        <button type="button" data-filter="note" aria-pressed="false" data-i="fNote"></button>
+        <button type="button" data-filter="done" aria-pressed="false" data-i="fDone"></button>
+        <button type="button" data-filter="todo" aria-pressed="false" data-i="fTodo"></button>
+        <button type="button" data-filter="all" aria-pressed="false" data-i="fAll"></button>
+      </div>
+      <div class="bar-tools">
+        <span id="count" aria-live="polite">—</span>
+        <span class="grp">
+          <button type="button" class="ghost" id="rand" style="min-height:36px;padding:4px 10px" data-i="random"></button>
+          <button type="button" class="ghost" id="csv" style="min-height:36px;padding:4px 10px" data-i="csv"></button>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)"><span data-i="sort"></span>
+            <select id="sort" style="min-height:36px;padding:4px 8px">
+              <option value="kizil" data-i="sKizil"></option>
+              <option value="classic" data-i="sClassic"></option>
+              <option value="name" data-i="sName"></option>
+              <option value="req" data-i="sReq"></option>
+              <option value="reqd" data-i="sReqd"></option>
+              <option value="pts" data-i="sPts"></option>
+              <option value="lid" data-i="sLid"></option>
+            </select>
+          </label>
+        </span>
+      </div>
+      <div class="kbdhint" style="margin-top:6px;color:var(--muted);font-size:12px" data-ih="kbd"></div>
+    </div>
+    <div id="list"></div>
+  </section>
+
+  <section class="panel" id="panel-mine" role="tabpanel" aria-labelledby="tab-mine">
+    <div style="margin-top:18px">
+      <h2 class="sec" data-i="tabMine"></h2>
+      <p class="lead" data-i="mineLead"></p>
+      <div class="sum" id="mineSum"></div>
+      <div id="mineList"></div>
+      <div class="card" style="margin-top:18px">
+        <h2 data-i="backup"></h2>
+        <p class="lead" style="margin-top:0" data-i="backupLead"></p>
+        <textarea id="io" data-ar="ioAria" spellcheck="false" data-ph="ioPh"></textarea>
+        <div class="actions">
+          <button type="button" class="ghost" id="exp" data-i="export"></button>
+          <button type="button" class="ghost" id="imp" data-i="import"></button>
+          <button type="button" class="ghost" id="wipe" data-i="wipe"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-stats" role="tabpanel" aria-labelledby="tab-stats">
+    <div style="margin-top:18px">
+      <h2 class="sec" data-i="tabStats"></h2>
+      <p class="lead" data-i="statsLead"></p>
+      <div class="card">
+        <h2 data-i="liveTitle"></h2>
+        <p class="lead" style="margin-top:0" data-i="liveLead"></p>
+        <button type="button" class="primary" id="live" data-i="liveBtn"></button>
+        <div class="live" id="liveOut" aria-live="polite"></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><h2 data-i="stReq"></h2><div class="bars" id="stReq"></div></div>
+        <div class="card"><h2 data-i="stTier"></h2><div class="bars" id="stTier"></div></div>
+        <div class="card"><h2 data-i="stPub"></h2><div class="bars" id="stPub"></div></div>
+        <div class="card"><h2 data-i="stVer"></h2><div class="bars" id="stVer"></div></div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h2 data-i="curve"></h2>
+        <svg id="curve" viewBox="0 0 600 200" width="100%" role="img" data-ar="curveAria"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-players" role="tabpanel" aria-labelledby="tab-players">
+    <div class="split" style="margin-top:18px">
+      <div>
+        <h2 class="sec" data-i="tabPlayers"></h2>
+        <p class="lead" data-i="playersLead"></p>
+        <table id="players"></table>
+      </div>
+      <div>
+        <h2 class="sec" data-i="nations"></h2>
+        <p class="lead" data-i="nationsLead"></p>
+        <table id="nations"></table>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-calc" role="tabpanel" aria-labelledby="tab-calc">
+    <div class="calc" style="margin-top:18px">
+      <div class="card">
+        <h2 data-i="calcTitle"></h2>
+        <p style="color:var(--soft);margin-top:0" data-ih="calcLead"></p>
+        <label for="level" data-i="level"></label><select id="level"></select>
+        <label for="prog" data-i="percent"></label>
+        <input id="prog" type="number" min="0" max="100" value="100" inputmode="numeric">
+        <input id="progr" type="range" min="0" max="100" value="100" data-ar="sliderAria">
+        <div class="big" id="out">—</div>
+        <div id="break"></div>
+      </div>
+      <div class="card">
+        <h2 data-i="compare"></h2>
+        <label for="cmpA" data-i="first"></label><select id="cmpA"></select>
+        <label for="cmpB" data-i="second"></label><select id="cmpB"></select>
+        <p id="cmpOut" style="color:var(--soft)"></p>
+        <div class="formula" data-i="formula"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-method" role="tabpanel" aria-labelledby="tab-method">
+    <div class="prose" data-lang="tr">
+      <h2>Ne düzelttim</h2>
+      <p>Bu resmi Pointercrate değil. Sıra, 23 Ekim 2026 sabahı Pointercrate API'sindeki Rated+ yerleştirmesinden geliyor. Üstüne kendi kuralımı koydum. Zorluğu kafama göre yeniden yazmadım; veri olmayan bir kaydırma, düzelttiğim hatadan daha kötü olur.</p>
+      <h3>1. Unrated artık yok sayılmıyor</h3>
+      <p>Klasik liste yalnız rate'li level alır. Bugün Old Orochi, Silent clubstep'ten zor diye #17'ye kondu ama klasik sitede hâlâ yok. Kızıl zorluk sırasında onu gösterir. Puan yazmaz: rate gelmeden skor tahtasına puan basmak, Rated+'ın henüz oturmamış tarafı.</p>
+      <h3>2. Aynı isim, iki level</h3>
+      <p>İki ayrı “Thinking Space II” var. CairoX'inki klasik #4. CoCyMain'inki bugün unrated #39. Diğer listeler ikisini de aynı adla basıyor. Kızıl yayınlayanı ismin yanına koyar.</p>
+      <h3>3. Puan formülü</h3>
+      <p>Birçok 2026 rehberi puanı <span class="wrong">(ilerleme/100)×(eşik/100)×500</span> diye anlatıyor. GRIEF'te %76 rekor bu formülle 288.80 puan çıkar. Pointercrate'in sayfada yazdığı skor 35.00. Doğrusu: tamamlama puanı yalnız sıraya bağlı; eşikteki rekor o puanın %10'u; %100'de tamamı; ara doğrusal. Extended'da yüzde rekoru yok, yalnız bitiş.</p>
+      <h3>4. Eşik, zorluk değildir</h3>
+      <p>Ultra Paracosm eşiği %37. Bu level'ın yumuşak olduğu anlamına gelmez; zor kısım erken biter. Through The Gates %90, Penumbral %80, Master of Puppets %83, Maniacal Chains %85: zor kısım sonda, yüksek yüzde bile rekor sayılmaz. Ana listedeki bu beşine “eşik” etiketi koydum. Extended'da %100 eşiği kuraldır, aykırılık değil.</p>
+      <h3>5. Bugün kim düştü, gizli değil</h3>
+      <p>Rated+, 10 unrated'i top 150'ye sokunca klasik #142–150 arasını kendi legacy'sine itti. Starlight Summit klasik listede hâlâ #150 ve 18.71 puan. Rated+'ta #159, puan yok. Kızıl buna “sınırda” der. Tek sayı gösteren liste bu çelişkiyi siler.</p>
+      <h3>6. Keyifsiz diye sıra uydurmadım</h3>
+      <p>Silent clubstep, Acheron ve Avernus yıllardır keyif ve “liste için üretildi” tartışmasının içindeler. Acheron'un 2022'de #2'ye konması listenin en çok dislike alan hareketi. Bugünkü yerlerini oyuncu karşılaştırması belirliyor; ben onu bozmadım, notu ekledim.</p>
+      <h3>Sıra kuralları</h3>
+      <ol>
+        <li>Kızıl sırası = Rated+ sırası (son kontrol: 24 Ekim 2026).</li>
+        <li>Puan = level rate'liyse ve klasik sırası 1–150 ise o sıranın resmi eğrisi. Değilse 0.</li>
+        <li>Ana / Extended / Düşen dilimleri Kızıl sırasına göredir (1–75, 76–150, 151–200).</li>
+        <li>Yayınlayan ile doğrulayan ayrı yazılır. Listedeki isim çoğu zaman tek yaratıcı değildir.</li>
+        <li>Legacy'nin “sırasız çöplük” hali yerine, yeni düşen 50 level durur. Daha eskiler bu dosyada yok.</li>
+      </ol>
+      <h3>23 Ekim 2026 yerleştirmeleri</h3>
+      <ul>
+        <li>Old Orochi #17, Silent clubstep üstü, eşik %60</li>
+        <li>Thinking Space II (CoCyMain) #39, Slaughterhouse üstü, eşik %74</li>
+        <li>BASSLINE JUNKIE #48, Sakupen Circles üstü, eşik %71</li>
+        <li>Lost in Time 2 #52, Silentlocked üstü, eşik %66</li>
+        <li>Shadow Of The Past #58, ace üstü, eşik %76</li>
+        <li>ace #59, Firework üstü, eşik %64</li>
+        <li>Blooming Blossoms #71, Pinnacle of Life üstü, eşik %77</li>
+        <li>ETERNALtheory #83, Solar Flare üstü</li>
+        <li>Marks #105, Sinister Silence üstü</li>
+        <li>blight #125, Natural Disaster üstü</li>
+      </ul>
+      <p>Bunlar Deadlier Clubstep, BRITNEY NO SCLEARS, Stellar Night, Gaggatrondra, Sevvend Clubstep, Edge of Destiny ve Losing Your Mind'ı Kızıl extended'a; paranoia'dan Starlight Summit'e kadar dokuz level'ı, bir de adjunto adnominal'ı sınır bandına itti. Graceful ise Rated+ #150 ile içeride kaldı.</p>
+      <h3>24 Ekim 2026 güncellemesi</h3>
+      <p>Pointercrate'in canlı klasik ve Rated+ sayfalarını dünkü dosyayla karşılaştırdım. Klasik 1–150 değişmemiş. Rated+ tarafında tek fark var: adjunto adnominal (klasik #137) Rated+ ilk 150'den çıkıp Rated+ legacy'ye geçmiş. Bu yüzden Kızıl #147'den #161'e indi, aradaki dokuz level bir yer yukarı kaydı ve Graceful #150'ye girdi. Nedenini sayfa söylemiyor; ben de uydurmadım.</p>
+      <h3>GitHub Pages</h3>
+      <p>Bu sayfa tek dosya. Repoyu aç, <b>index.html</b> dosyasını kök dizine koy, Settings → Pages → branch kökü. Başka bir şey kurmana gerek yok. Ağ yokken arama, filtre ve puan hesabı yine çalışır; yazı tipleri ve video kareleri o zaman yedek görünüme düşer.</p>
+    </div>
+  
+    <div class="prose" data-lang="en">
+      <h2>What I fixed</h2>
+      <p>This is not the official Pointercrate. The order comes from the Rated+ placement in the Pointercrate API on the morning of 23 October 2026. On top of it I put my own rules. I did not rewrite difficulty to taste; a shift with no data behind it would be worse than the mistake I am fixing.</p>
+      <h3>1. Unrated is no longer ignored</h3>
+      <p>The classic list only takes rated levels. Today Old Orochi was placed at #17 as harder than Silent clubstep, but the classic site still does not have it. Kızıl shows it in the difficulty order. It awards no points: putting points on the scoreboard before a rate arrives is the part of Rated+ that has not settled yet.</p>
+      <h3>2. Same name, two levels</h3>
+      <p>There are two different “Thinking Space II”s. CairoX’s is classic #4. CoCyMain’s is unrated #39 today. Other lists print both under the same name. Kızıl puts the publisher next to the name.</p>
+      <h3>3. The points formula</h3>
+      <p>Many 2026 guides describe points as <span class="wrong">(progress/100)×(threshold/100)×500</span>. On GRIEF, a 76% record gives 288.80 points with that formula. The score Pointercrate prints on the page is 35.00. The truth: completion points depend only on the rank; a record at the threshold is 10% of that; at 100% it is all of it; linear in between. Extended has no percentage records, only completions.</p>
+      <h3>4. Threshold is not difficulty</h3>
+      <p>Ultra Paracosm’s threshold is 37%. That does not mean the level is soft; the hard part ends early. Through The Gates 90%, Penumbral 80%, Master of Puppets 83%, Maniacal Chains 85%: the hard part is at the end, and even a high percentage does not count as a record. I put a “Threshold” label on these five in the main list. In Extended a 100% threshold is the rule, not an outlier.</p>
+      <h3>5. Who fell off today is not hidden</h3>
+      <p>When Rated+ pushed 10 unrated levels into the top 150, it moved classic #142–150 into its own legacy. Starlight Summit is still classic #150 with 18.71 points. In Rated+ it is #159, with no points. Kızıl calls this “borderline”. A list that shows a single number hides this contradiction.</p>
+      <h3>6. I did not invent a rank because a level isn’t fun</h3>
+      <p>Silent clubstep, Acheron and Avernus have been in the “fun” and “made for the list” debate for years. Acheron’s 2022 placement at #2 is the list’s most-disliked move. Where they sit today is set by player comparison; I did not break that, I added a note.</p>
+      <h3>Ranking rules</h3>
+      <ol>
+        <li>Kızıl order = Rated+ order (last checked: 24 October 2026).</li>
+        <li>Points = if the level is rated and its classic rank is 1–150, that rank’s official curve. Otherwise 0.</li>
+        <li>The Main / Extended / Legacy tiers follow the Kızıl order (1–75, 76–150, 151–200).</li>
+        <li>Publisher and verifier are written separately. The name on the list is often not the only creator.</li>
+        <li>Instead of Legacy’s “unordered dump”, the 50 most recently dropped levels are shown. Older ones are not in this file.</li>
+      </ol>
+      <h3>23 October 2026 placements</h3>
+      <ul>
+        <li>Old Orochi #17, above Silent clubstep, threshold 60%</li>
+        <li>Thinking Space II (CoCyMain) #39, above Slaughterhouse, threshold 74%</li>
+        <li>BASSLINE JUNKIE #48, above Sakupen Circles, threshold 71%</li>
+        <li>Lost in Time 2 #52, above Silentlocked, threshold 66%</li>
+        <li>Shadow Of The Past #58, above ace, threshold 76%</li>
+        <li>ace #59, above Firework, threshold 64%</li>
+        <li>Blooming Blossoms #71, above Pinnacle of Life, threshold 77%</li>
+        <li>ETERNALtheory #83, above Solar Flare</li>
+        <li>Marks #105, above Sinister Silence</li>
+        <li>blight #125, above Natural Disaster</li>
+      </ul>
+      <p>These pushed Deadlier Clubstep, BRITNEY NO SCLEARS, Stellar Night, Gaggatrondra, Sevvend Clubstep, Edge of Destiny and Losing Your Mind into Kızıl Extended; they pushed nine levels from paranoia to Starlight Summit, plus adjunto adnominal, into the borderline band. Graceful stayed inside at Rated+ #150.</p>
+      <h3>24 October 2026 update</h3>
+      <p>I compared Pointercrate’s live classic and Rated+ pages with yesterday’s file. Classic 1–150 has not changed. On the Rated+ side there is one difference: adjunto adnominal (classic #137) left the Rated+ top 150 and moved to Rated+ legacy. So Kızıl moved it from #147 to #161, the nine levels in between moved up one place, and Graceful entered at #150. The page does not say why; I did not make up a reason.</p>
+      <h3>GitHub Pages</h3>
+      <p>This page is a single file. Open your repo, put <b>index.html</b> in the root, then Settings → Pages → branch root. You need nothing else. Without a network, search, filters and the points calculator still work; fonts and video frames fall back to a plain look.</p>
+    </div>
+  </section>
+  </main>
+
+  <footer data-ih="footer"></footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script id="payload" type="application/json">{"updated": "24 Ekim 2026", "scores": [0.0, 350.0, 331.71, 313.42, 291.7, 271.78, 253.53, 236.8, 221.47, 207.42, 194.54, 182.73, 171.91, 161.99, 152.89, 144.56, 136.92, 129.92, 123.5, 117.62, 112.23, 110.81, 109.39, 107.99, 106.61, 105.24, 103.88, 102.54, 101.21, 99.89, 98.58, 97.29, 96.01, 94.75, 93.49, 92.25, 89.95, 87.73, 85.58, 83.51, 81.51, 79.58, 77.72, 75.92, 74.19, 72.52, 70.9, 69.34, 67.83, 66.38, 64.98, 63.62, 62.31, 61.05, 59.83, 58.66, 57.6, 56.47, 55.37, 54.3, 53.26, 52.25, 51.26, 50.3, 49.37, 48.46, 47.57, 46.71, 45.87, 45.06, 44.26, 43.49, 42.74, 42.01, 41.3, 40.6, 39.93, 39.27, 38.63, 38.01, 37.41, 36.82, 36.24, 35.69, 35.14, 34.61, 34.1, 33.6, 33.11, 32.64, 32.18, 31.73, 31.29, 30.87, 30.45, 30.05, 29.66, 29.28, 28.91, 28.55, 28.19, 27.85, 27.52, 27.19, 26.88, 26.57, 26.27, 25.98, 25.7, 25.42, 25.16, 24.9, 24.64, 24.39, 24.15, 23.92, 23.69, 23.47, 23.26, 23.05, 22.84, 22.64, 22.45, 22.26, 22.08, 21.9, 21.73, 21.56, 21.39, 21.23, 21.08, 20.92, 20.78, 20.63, 20.49, 20.36, 20.23, 20.1, 19.97, 19.85, 19.73, 19.62, 19.5, 19.39, 19.29, 19.18, 19.08, 18.99, 18.89, 18.8, 18.71], "rows": [{"p": 1, "rp": 1, "name": "GRIEF", "pub": "icedcave", "ver": "[TCD] Doggie", "req": 76, "lid": 149992717, "yt": "gB8slBPlOjc", "pc": 728, "rated": true}, {"p": 2, "rp": 2, "name": "Artemis 13", "pub": "Mvngo", "ver": "[67] Zoink", "req": 73, "lid": 148598469, "yt": "FgjOM0ef1N8", "pc": 730, "rated": true}, {"p": 3, "rp": 3, "name": "Society", "pub": "Neomarbilan", "ver": "[WBT] wPopoff", "req": 66, "lid": 127323087, "yt": "3CoEaH1CM7o", "pc": 698, "rated": true}, {"p": 4, "rp": 4, "name": "Thinking Space II", "pub": "CairoX", "ver": "[67] Zoink", "req": 79, "lid": 119544028, "yt": "CELNmHwln_c", "pc": 635, "rated": true}, {"p": 5, "rp": 5, "name": "Amethyst", "pub": "iMist", "ver": "[WBT] wPopoff", "req": 59, "lid": 119550490, "yt": "4lfkzz1VCbA", "pc": 623, "rated": true}, {"p": 6, "rp": 6, "name": "Flamewall", "pub": "Narwall", "ver": "[400] CuatrocientosYT", "req": 68, "lid": 126242564, "yt": "x4Io4zkWVRw", "pc": 638, "rated": true}, {"p": 7, "rp": 7, "name": "Tidal Wave", "pub": "OniLink", "ver": "[67] Zoink", "req": 72, "lid": 86407629, "yt": "9fsZ014qB3s", "pc": 562, "rated": true}, {"p": 8, "rp": 8, "name": "Green Bullet", "pub": "cherryteam", "ver": "[UFA] Nickname09", "req": 68, "lid": 142896409, "yt": "JG-qcvVkZFw", "pc": 702, "rated": true}, {"p": 9, "rp": 9, "name": "ORBIT", "pub": "MindCap", "ver": "[67] Zoink", "req": 65, "lid": 133175713, "yt": "QKcv8DkNPd0", "pc": 671, "rated": true}, {"p": 10, "rp": 10, "name": "Antarctic Lights", "pub": "declanlc", "ver": "Axinity", "req": 75, "lid": 144988390, "yt": "Uue4ZRhVf-I", "pc": 711, "rated": true}, {"p": 11, "rp": 11, "name": "Nullscapes", "pub": "Kiba", "ver": "[67] Zoink", "req": 68, "lid": 109780665, "yt": "EztneTPp5CU", "pc": 589, "rated": true}, {"p": 12, "rp": 12, "name": "Quanteuse processing", "pub": "Renn241", "ver": "[67] Zoink", "req": 60, "lid": 117692518, "yt": "j5NC0u1Q91Q", "pc": 660, "rated": true}, {"p": 13, "rp": 13, "name": "BOOBAWAMBA", "pub": "Akunakunn", "ver": "eastshark", "req": 63, "lid": 110816181, "yt": "20fYiqLAo_E", "pc": 594, "rated": true}, {"p": 14, "rp": 14, "name": "The Bloop", "pub": "[TARIQ] murkkat", "ver": "[67] Zoink", "req": 67, "lid": 135661111, "yt": "ROuXHSKEhHA", "pc": 700, "rated": true}, {"p": 15, "rp": 15, "name": "Every End", "pub": "MindCap", "ver": "[FOWL] Hqmy", "req": 67, "lid": 116174063, "yt": "AO--mVVFtKI", "pc": 620, "rated": true}, {"p": 16, "rp": 16, "name": "Ashley Wave Trials", "pub": "oddmod", "ver": "[67] Zoink", "req": 77, "lid": 62912799, "yt": "aTxt76U3e2Q", "pc": 669, "rated": true}, {"p": 17, "rp": null, "name": "Old Orochi", "pub": "Platnuu", "ver": "Volumni", "req": 60, "lid": 136742562, "yt": "YxtFAQtLYQY", "pc": 736, "rated": false}, {"p": 18, "rp": 17, "name": "Silent clubstep", "pub": "TheRealSailent", "ver": "[DL] zoe", "req": 63, "lid": 4125776, "yt": "GR4OMkS3SN8", "pc": 428, "rated": true}, {"p": 19, "rp": 18, "name": "Ultra Paracosm", "pub": "declanlc", "ver": "[HOLA] Wity", "req": 37, "lid": 138704906, "yt": "4V24spYQWuE", "pc": 704, "rated": true}, {"p": 20, "rp": 19, "name": "Penumbral", "pub": "cherryteam", "ver": "[UFA] w3rty", "req": 80, "lid": 134942736, "yt": "nVHPFf13M-I", "pc": 680, "rated": true}, {"p": 21, "rp": 20, "name": "andromeda", "pub": "Insxne97", "ver": "[WBT] Taiago", "req": 66, "lid": 114283297, "yt": "mk3TDemdkC0", "pc": 613, "rated": true}, {"p": 22, "rp": 21, "name": "KILLSTEALER", "pub": "rynoxious", "ver": "[OG B] kloone", "req": 69, "lid": 138781722, "yt": "uhH4oqWrsfo", "pc": 696, "rated": true}, {"p": 23, "rp": 22, "name": "Subsuming Vortex", "pub": "[TCD] Cursed", "ver": "[TCD] Cursed", "req": 66, "lid": 127997391, "yt": "0eYG1ogJpIQ", "pc": 649, "rated": true}, {"p": 24, "rp": 23, "name": "Anathema", "pub": "nikroplays", "ver": "[IQB7] Whizkid05", "req": 77, "lid": 112313819, "yt": "_uKwmjHmySI", "pc": 602, "rated": true}, {"p": 25, "rp": 24, "name": "Defeated Circles", "pub": "GXQ", "ver": "[67] Zoink", "req": 73, "lid": 120012581, "yt": "nU5AQPzd2YA", "pc": 639, "rated": true}, {"p": 26, "rp": 25, "name": "Avernus", "pub": "PockeWindfish", "ver": "[67] Zoink", "req": 67, "lid": 89496627, "yt": "16Zh8jssanc", "pc": 486, "rated": true}, {"p": 27, "rp": 26, "name": "FOREST OF SPIKES", "pub": "bims", "ver": "Brian_Cheese", "req": 66, "lid": 145709435, "yt": "WJYh3dW8Bfo", "pc": 715, "rated": true}, {"p": 28, "rp": 27, "name": "Acheron", "pub": "ryamu", "ver": "[67] Zoink", "req": 70, "lid": 73667628, "yt": "sBKR6aUorzA", "pc": 442, "rated": true}, {"p": 29, "rp": 28, "name": "Spectre", "pub": "xander", "ver": "PersonHuman42", "req": 75, "lid": 110815379, "yt": "MzsSLKJrLSI", "pc": 592, "rated": true}, {"p": 30, "rp": 29, "name": "Menace", "pub": "Arraegen", "ver": "[IQB7] Whizkid05", "req": 73, "lid": 107805281, "yt": "nnkgghxxsEE", "pc": 577, "rated": true}, {"p": 31, "rp": 30, "name": "Abyss of Darkness", "pub": "Exen", "ver": "[TCD] Cursed", "req": 75, "lid": 49896559, "yt": "ejJkpqcMMCY", "pc": 413, "rated": true}, {"p": 32, "rp": 31, "name": "Tunnel of Despair", "pub": "Exen", "ver": "[67] Zoink", "req": 79, "lid": 91351939, "yt": "LpS4JREhW98", "pc": 520, "rated": true}, {"p": 33, "rp": 32, "name": "Kyouki", "pub": "｛出見塩｝", "ver": "｛出見塩｝", "req": 72, "lid": 86018142, "yt": "KDa5c0CJTHs", "pc": 468, "rated": true}, {"p": 34, "rp": 33, "name": "Sacrifice", "pub": "Laniakea", "ver": "Laniakea", "req": 72, "lid": 141052363, "yt": "Sth67PA8XBU", "pc": 706, "rated": true}, {"p": 35, "rp": 34, "name": "Based After Based", "pub": "Akunakunn", "ver": "DiamondSplash", "req": 74, "lid": 110534288, "yt": "yQBFyUvB3lY", "pc": 668, "rated": true}, {"p": 36, "rp": 35, "name": "cognitohazard", "pub": "MercuryDT", "ver": "[IQB7] Whizkid05", "req": 75, "lid": 130891319, "yt": "T5g0r16X_ZA", "pc": 709, "rated": true}, {"p": 37, "rp": 36, "name": "The Lightning Rod", "pub": "Lavatrex", "ver": "Lavatrex", "req": 63, "lid": 93917076, "yt": "nQDTi077O6M", "pc": 528, "rated": true}, {"p": 38, "rp": 37, "name": "Maniacal Chains", "pub": "LordDivinity", "ver": "spcreat", "req": 85, "lid": 48991380, "yt": "TzeMJeIu6bY", "pc": 697, "rated": true}, {"p": 39, "rp": null, "name": "Thinking Space II", "pub": "CoCyMain", "ver": "Zeronium", "req": 74, "lid": 132854166, "yt": "RJedeB2wHCA", "pc": 733, "rated": false}, {"p": 40, "rp": 38, "name": "Slaughterhouse", "pub": "icedcave", "ver": "[TCD] Doggie", "req": 75, "lid": 27690100, "yt": "kpcF1-QAHQc", "pc": 380, "rated": true}, {"p": 41, "rp": 39, "name": "Subterminal Point", "pub": "SyQual", "ver": "[ILUV] PoCle", "req": 71, "lid": 113599729, "yt": "h2wmRMgACH4", "pc": 612, "rated": true}, {"p": 42, "rp": 40, "name": "KOCMOC", "pub": "cherryteam", "ver": "[67] Zoink", "req": 73, "lid": 87665224, "yt": "2CxE-UWCIG4", "pc": 501, "rated": true}, {"p": 43, "rp": 41, "name": "BEING HOME", "pub": "Turtl123", "ver": "[OG] goobs", "req": 73, "lid": 130327668, "yt": "kt7FnUzK8CY", "pc": 679, "rated": true}, {"p": 44, "rp": 42, "name": "Deimos", "pub": "ItsHybrid", "ver": "[TCD] Doggie", "req": 70, "lid": 93091893, "yt": "b2yHaIk5zio", "pc": 516, "rated": true}, {"p": 45, "rp": 43, "name": "CHIL", "pub": "McCoco", "ver": "McCoco", "req": 78, "lid": 114281093, "yt": "DROMiCc2ZRM", "pc": 652, "rated": true}, {"p": 46, "rp": 44, "name": "zorin", "pub": "태리", "ver": "[미소노 미카] 구아이", "req": 62, "lid": 134541844, "yt": "U19vmpenb9g", "pc": 677, "rated": true}, {"p": 47, "rp": 45, "name": "Prismline", "pub": "ItsHarryy", "ver": "Wain", "req": 71, "lid": 135148907, "yt": "pIHOHz3i0Rw", "pc": 708, "rated": true}, {"p": 48, "rp": null, "name": "BASSLINE JUNKIE", "pub": "MCBIGMACPLAYZ", "ver": "[MOON] Karma", "req": 71, "lid": 143300771, "yt": "db_V19gW0rI", "pc": 731, "rated": false}, {"p": 49, "rp": 46, "name": "Sakupen Circles", "pub": "[TCD] Diamond", "ver": "[TCD] Diamond", "req": 69, "lid": 76962930, "yt": "ofG2mJi9kEA", "pc": 391, "rated": true}, {"p": 50, "rp": 47, "name": "The Salt Factory", "pub": "[UFA] Nickname09", "ver": "[UFA] Nickname09", "req": 66, "lid": 113045735, "yt": "lQ7M-Sgov24", "pc": 655, "rated": true}, {"p": 51, "rp": 48, "name": "Master of Puppets", "pub": "TheZinkYT", "ver": "[TMG] Scotchtape", "req": 83, "lid": 136396693, "yt": "JBZ-lrBgkl0", "pc": 695, "rated": true}, {"p": 52, "rp": null, "name": "Lost in Time 2", "pub": "Zeronium", "ver": "Zeronium", "req": 66, "lid": 148297431, "yt": "8i5GfTqb6oE", "pc": 737, "rated": false}, {"p": 53, "rp": 49, "name": "Silentlocked", "pub": "GDSkele", "ver": "TFIBB", "req": 68, "lid": 113959291, "yt": "O-IQeUdEGvI", "pc": 648, "rated": true}, {"p": 54, "rp": 50, "name": "Eyes in the Water", "pub": "hawkyre", "ver": "[DL] LordVadercraft", "req": 71, "lid": 95851008, "yt": "yvLwiOy3KEA", "pc": 545, "rated": true}, {"p": 55, "rp": 51, "name": "KOSETSU", "pub": "fwe", "ver": "[WBT] Taiago", "req": 68, "lid": 109439644, "yt": "hZ8vFX8z_BU", "pc": 587, "rated": true}, {"p": 56, "rp": 52, "name": "CONVULSION", "pub": "stellar", "ver": "[IQB7] Whizkid05", "req": 64, "lid": 113322063, "yt": "qeRKuyU3eGI", "pc": 640, "rated": true}, {"p": 57, "rp": 53, "name": "Through The Gates", "pub": "TeamTheDashers", "ver": "[67] Zoink", "req": 90, "lid": 49072489, "yt": "4yHA6jux5UI", "pc": 663, "rated": true}, {"p": 58, "rp": null, "name": "Shadow Of The Past", "pub": "ViZeris", "ver": "LennyFeus", "req": 76, "lid": 143909846, "yt": "LEyo0LJV8os", "pc": 739, "rated": false}, {"p": 59, "rp": null, "name": "ace", "pub": "TheBigCheese69", "ver": "[TSC] aidsen", "req": 64, "lid": 138215607, "yt": "7uYghOdos8I", "pc": 740, "rated": false}, {"p": 60, "rp": 54, "name": "Firework", "pub": "[TCD] Trick", "ver": "[TCD] Trick", "req": 71, "lid": 75206202, "yt": "QBe5x2o9v2w", "pc": 379, "rated": true}, {"p": 61, "rp": 55, "name": "Voltage", "pub": "ThePurgatory", "ver": "[OG B] maybee", "req": 57, "lid": 131599104, "yt": "wBRvBN9tmlc", "pc": 667, "rated": true}, {"p": 62, "rp": 56, "name": "NOMAD", "pub": "ReeseVT", "ver": "Laniakea", "req": 72, "lid": 115077305, "yt": "H2TkHbEX__A", "pc": 673, "rated": true}, {"p": 63, "rp": 57, "name": "Snowbound", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 68, "lid": 120289520, "yt": "cjHwgbtAkXU", "pc": 658, "rated": true}, {"p": 64, "rp": 58, "name": "NervHell", "pub": "ASVTeam", "ver": "ChopBlox", "req": 64, "lid": 143718114, "yt": "1zrvPgDAoaA", "pc": 705, "rated": true}, {"p": 65, "rp": 59, "name": "poocubed", "pub": "Liisp", "ver": "Kyasshukodo", "req": 66, "lid": 85133223, "yt": "fzL31vai1ms", "pc": 464, "rated": true}, {"p": 66, "rp": 60, "name": "Calibrate", "pub": "[SARK] Bamvie", "ver": "[아기엔더맨] Blebae", "req": 63, "lid": 136981369, "yt": "6WYnZryX_mg", "pc": 683, "rated": true}, {"p": 67, "rp": 61, "name": "MINUSdry", "pub": "CDMusic", "ver": "Varium", "req": 75, "lid": 89414220, "yt": "YvA8ehhzz0Q", "pc": 487, "rated": true}, {"p": 68, "rp": 62, "name": "Saul Goodman", "pub": "Renn241", "ver": "bloom", "req": 70, "lid": 90477539, "yt": "hjs5PjUaw9k", "pc": 496, "rated": true}, {"p": 69, "rp": 63, "name": "Apocalyptic Trilogy", "pub": "APTeamOfficial", "ver": "Polterghast", "req": 73, "lid": 113443235, "yt": "RUBbpsTR5eU", "pc": 614, "rated": true}, {"p": 70, "rp": 64, "name": "The Hallucination", "pub": "SyQual", "ver": "VoTcHi", "req": 66, "lid": 81139702, "yt": "tYbXsNkO9HE", "pc": 427, "rated": true}, {"p": 71, "rp": null, "name": "Blooming Blossoms", "pub": "nikoberry", "ver": "[!MUTE] piesy", "req": 77, "lid": 130293163, "yt": "GU-qfLRoDMo", "pc": 735, "rated": false}, {"p": 72, "rp": 65, "name": "Pinnacle of Life", "pub": "skzyl", "ver": "[DL] vonic", "req": 71, "lid": 144012996, "yt": "gQl5iY1ekyE", "pc": 707, "rated": true}, {"p": 73, "rp": 66, "name": "COMBUSTION", "pub": "[SKWAD] Cersia", "ver": "[SKWAD] Slithium", "req": 76, "lid": 94359172, "yt": "3cTR4XUcA28", "pc": 526, "rated": true}, {"p": 74, "rp": 67, "name": "Haunted Ship", "pub": "awesomeme360", "ver": "[SWOON] Gnamolor", "req": 61, "lid": 143523624, "yt": "22l59QGmL48", "pc": 713, "rated": true}, {"p": 75, "rp": 68, "name": "Loops of Fury", "pub": "[TCC] Enfur", "ver": "[TCC] Cork", "req": 73, "lid": 126571887, "yt": "9HBG3i5zbw8", "pc": 642, "rated": true}, {"p": 76, "rp": 69, "name": "Deadlier Clubstep", "pub": "HeroZombie80", "ver": "Jenath", "req": 70, "lid": 96314787, "yt": "eRhgaF0r5Q0", "pc": 558, "rated": true}, {"p": 77, "rp": 70, "name": "BRITNEY NO SCLEARS", "pub": "wabas", "ver": "[TMG] Scotchtape", "req": 76, "lid": 125317359, "yt": "ff_mQSXwjhU", "pc": 684, "rated": true}, {"p": 78, "rp": 71, "name": "Stellar Night", "pub": "icedcave", "ver": "Tuggy", "req": 78, "lid": 83244159, "yt": "XpBY-eMYZTE", "pc": 674, "rated": true}, {"p": 79, "rp": 72, "name": "Gaggatrondra", "pub": "JCMoon", "ver": "Zeronium", "req": 68, "lid": 114990369, "yt": "A4G41vw6Cf0", "pc": 615, "rated": true}, {"p": 80, "rp": 73, "name": "Sevvend Clubstep", "pub": "cherryteam", "ver": "[UFA] Vorten", "req": 66, "lid": 120255728, "yt": "TvA8EJTJFCc", "pc": 630, "rated": true}, {"p": 81, "rp": 74, "name": "Edge of Destiny", "pub": "CDMusic", "ver": "Polterghast", "req": 73, "lid": 89187968, "yt": "rUphe3H59yU", "pc": 485, "rated": true}, {"p": 82, "rp": 75, "name": "Losing Your Mind", "pub": "GDgalaxygaming", "ver": "[OG B] Laysah", "req": 67, "lid": 139508889, "yt": "LXp7t5gjyX8", "pc": 699, "rated": true}, {"p": 83, "rp": null, "name": "ETERNALtheory", "pub": "[AUF] Hyperlith", "ver": "[AUF] Hyperlith", "req": 100, "lid": 92196326, "yt": "3LfjQWk9Hyg", "pc": 734, "rated": false}, {"p": 84, "rp": 76, "name": "Solar Flare", "pub": "Linear", "ver": "[1319] swiborg", "req": 69, "lid": 90390075, "yt": "eHQNgty8ypY", "pc": 495, "rated": true}, {"p": 85, "rp": 77, "name": "The Catacombs", "pub": "[SKWAD] Cersia", "ver": "[SKWAD] Slithium", "req": 60, "lid": 104232191, "yt": "T9-75lfKVQg", "pc": 670, "rated": true}, {"p": 86, "rp": 78, "name": "LIMBO", "pub": "MindCap", "ver": "[1319] BUNNYGRAM", "req": 64, "lid": 86084399, "yt": "kXYMbaMVOZg", "pc": 467, "rated": true}, {"p": 87, "rp": 79, "name": "Make Paul Dance", "pub": "Bemq", "ver": "Airi~", "req": 57, "lid": 115860808, "yt": "XQoF35hNKpg", "pc": 712, "rated": true}, {"p": 88, "rp": 80, "name": "Belladonna", "pub": "cherryteam", "ver": "[PRIME] exsii", "req": 70, "lid": 94969889, "yt": "saHSgoU1JQQ", "pc": 551, "rated": true}, {"p": 89, "rp": 81, "name": "Codependence", "pub": "TCTeam", "ver": "[IH82P] Pukklez", "req": 78, "lid": 62556400, "yt": "IKGk41hSnDo", "pc": 511, "rated": true}, {"p": 90, "rp": 82, "name": "Collapse", "pub": "[Hi] Nexel", "ver": "[Hi] Nexel", "req": 66, "lid": 113256247, "yt": "RCFpXyf6bn0", "pc": 606, "rated": true}, {"p": 91, "rp": 83, "name": "Mayhem", "pub": "[DL] LordVadercraft", "ver": "[DL] LordVadercraft", "req": 57, "lid": 82544060, "yt": "U6e6DD32noM", "pc": 439, "rated": true}, {"p": 92, "rp": 84, "name": "CHROMACAVE", "pub": "HappyMoby", "ver": "[FOWL] geodom", "req": 82, "lid": 131497860, "yt": "tfpsMZI6z-o", "pc": 672, "rated": true}, {"p": 93, "rp": 85, "name": "The Plunge", "pub": "Dolabill", "ver": "Gokill", "req": 67, "lid": 113220284, "yt": "8gW1-_u1K0Y", "pc": 610, "rated": true}, {"p": 94, "rp": 86, "name": "Fracture", "pub": "Arrow", "ver": "Dezstro", "req": 66, "lid": 99703915, "yt": "R_-chk3SRFI", "pc": 681, "rated": true}, {"p": 95, "rp": 87, "name": "Wavterminal", "pub": "Skyavoxii", "ver": "Frice", "req": 73, "lid": 128093374, "yt": "dlvsCE3xYkQ", "pc": 650, "rated": true}, {"p": 96, "rp": 88, "name": "walter white", "pub": "Renn241", "ver": "[OG B] Laysah", "req": 65, "lid": 81011195, "yt": "KzK62PkWOJ0", "pc": 429, "rated": true}, {"p": 97, "rp": 89, "name": "Infinite Chaos", "pub": "CairoX", "ver": "Victurkey", "req": 70, "lid": 119689515, "yt": "wOMVERxU5IA", "pc": 653, "rated": true}, {"p": 98, "rp": 90, "name": "Operation Evolution", "pub": "Halzion", "ver": "cobrablitz", "req": 76, "lid": 114999625, "yt": "WsVF-ayipvY", "pc": 627, "rated": true}, {"p": 99, "rp": 91, "name": "Damascus", "pub": "Dzeser", "ver": "Timo", "req": 69, "lid": 93339534, "yt": "MWQyCUGt76Y", "pc": 521, "rated": true}, {"p": 100, "rp": 92, "name": "Decks Dark", "pub": "[SKG] Madison Yuko", "ver": "[IQB7] Whizkid05", "req": 77, "lid": 95719795, "yt": "l52ApE4HWkY", "pc": 659, "rated": true}, {"p": 101, "rp": 93, "name": "SARYYX NEVER CLEAR", "pub": "artos", "ver": "skzyl", "req": 74, "lid": 95998005, "yt": "rRlyvmjcz_4", "pc": 547, "rated": true}, {"p": 102, "rp": 94, "name": "The Yangire", "pub": "Dorami", "ver": "Dorami", "req": 73, "lid": 110500920, "yt": "V3FjIorIfWg", "pc": 590, "rated": true}, {"p": 103, "rp": 95, "name": "Climax", "pub": "HushLC", "ver": "Wain", "req": 70, "lid": 95049815, "yt": "E4ppq2WeAAs", "pc": 540, "rated": true}, {"p": 104, "rp": 96, "name": "ORDINARY", "pub": "vit12", "ver": "[WBT] wPopoff", "req": 74, "lid": 105593215, "yt": "4QiHP3jpGnk", "pc": 579, "rated": true}, {"p": 105, "rp": null, "name": "Marks", "pub": "HazelSZL", "ver": "[MEALY] oozerdonkey", "req": 100, "lid": 144895744, "yt": "CxYXfCvNZtQ", "pc": 732, "rated": false}, {"p": 106, "rp": 97, "name": "Sinister Silence", "pub": "Wahffle", "ver": "DarkTD", "req": 69, "lid": 82249742, "yt": "dJCdTMQxHMo", "pc": 469, "rated": true}, {"p": 107, "rp": 98, "name": "THE JET ENGINE", "pub": "[TARIQ] Billzer", "ver": "[TARIQ] eviljoe", "req": 71, "lid": 122941596, "yt": "8Q20XU__LoQ", "pc": 633, "rated": true}, {"p": 108, "rp": 99, "name": "Coalescence", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 69, "lid": 108708033, "yt": "do-a2EzZ4R8", "pc": 588, "rated": true}, {"p": 109, "rp": 100, "name": "Trickshot", "pub": "[DL] vonic", "ver": "[DL] vonic", "req": 100, "lid": 136135870, "yt": "IMLjnmnIWRc", "pc": 687, "rated": true}, {"p": 110, "rp": 101, "name": "Midnight", "pub": "[SKG] Madison Yuko", "ver": "[BLOOM] nei", "req": 74, "lid": 96083028, "yt": "NhkN_a9cNi8", "pc": 549, "rated": true}, {"p": 111, "rp": 102, "name": "Doppler", "pub": "At424", "ver": "[IH82P] Danieljgd", "req": 100, "lid": 133489881, "yt": "xSP43i61SLM", "pc": 701, "rated": true}, {"p": 112, "rp": 103, "name": "Cimmerian Shade", "pub": "spcreat", "ver": "spcreat", "req": 81, "lid": 93340783, "yt": "lUNvV1k19HA", "pc": 622, "rated": true}, {"p": 113, "rp": 104, "name": "PSYCHOPATH", "pub": "DeniPol", "ver": "[USSR] BONN GD", "req": 70, "lid": 103925676, "yt": "1luL7tTE8p8", "pc": 570, "rated": true}, {"p": 114, "rp": 105, "name": "TrakineS", "pub": "Laranjoo", "ver": "[WBT] mariner", "req": 77, "lid": 125788781, "yt": "oKuoI-_JzKU", "pc": 676, "rated": true}, {"p": 115, "rp": 106, "name": "arcturus", "pub": "Maxfs", "ver": "ultrakawaHD", "req": 74, "lid": 72315402, "yt": "a_Bqa8l9Xtc", "pc": 383, "rated": true}, {"p": 116, "rp": 107, "name": "Diabolic ClubStep", "pub": "Sevant", "ver": "Sevant", "req": 100, "lid": 73214186, "yt": "BN7DxkMaQfg", "pc": 675, "rated": true}, {"p": 117, "rp": 108, "name": "BEELINE", "pub": "[DOOBY] Galaxxyss", "ver": "[IH82P] Motor8", "req": 71, "lid": 93792764, "yt": "nt6T9YDb6gw", "pc": 605, "rated": true}, {"p": 118, "rp": 109, "name": "DreamStep", "pub": "[MOON] Blaster1337", "ver": "[LARP] youngs6", "req": 100, "lid": 129235528, "yt": "EK5-0OB1tmc", "pc": 682, "rated": true}, {"p": 119, "rp": 110, "name": "Sonic Wave Infinity", "pub": "APTeamOfficial", "ver": "[1319] Xanii", "req": 68, "lid": 69685815, "yt": "C3-l_fFikpQ", "pc": 349, "rated": true}, {"p": 120, "rp": 111, "name": "Tartarus", "pub": "-", "ver": "-", "req": 64, "lid": 59075347, "yt": "JptG7rwti1U", "pc": 250, "rated": true}, {"p": 121, "rp": 112, "name": "Waterfall", "pub": "cherryteam", "ver": "[DL] LordVadercraft", "req": 71, "lid": 110991117, "yt": "VKuVdqneG9Y", "pc": 595, "rated": true}, {"p": 122, "rp": 113, "name": "Jigsaw", "pub": "NekonGames", "ver": "Gokill", "req": 70, "lid": 95031870, "yt": "FPfSqlI0T30", "pc": 555, "rated": true}, {"p": 123, "rp": 114, "name": "Delta", "pub": "[FaZe] Drakosa", "ver": "[TCD] Doggie", "req": 69, "lid": 93917362, "yt": "_rr3J8DkIm4", "pc": 525, "rated": true}, {"p": 124, "rp": 115, "name": "Between Duality", "pub": "[Hi] Nexel", "ver": "[TSC] destr", "req": 100, "lid": 137757402, "yt": "uOb-ajQ4bgw", "pc": 690, "rated": true}, {"p": 125, "rp": 116, "name": "BPATA MPAKA", "pub": "Inex", "ver": "[OG B] maybee", "req": 71, "lid": 109947627, "yt": "sSbHYzYgYfA", "pc": 599, "rated": true}, {"p": 126, "rp": null, "name": "blight", "pub": "xSlendy", "ver": "[ARMED] zRickyy", "req": 100, "lid": 146392813, "yt": "2y1GVoPZjhU", "pc": 738, "rated": false}, {"p": 127, "rp": 117, "name": "Natural Disaster", "pub": "[OG B] Laysah", "ver": "[OG B] Laysah", "req": 71, "lid": 107741051, "yt": "_0GqdSFmG_8", "pc": 583, "rated": true}, {"p": 128, "rp": 118, "name": "The Wonder of You", "pub": "HangerLord", "ver": "Helix", "req": 100, "lid": 94858072, "yt": "iQ3RzYCvLvA", "pc": 662, "rated": true}, {"p": 129, "rp": 119, "name": "Dualist", "pub": "SyncTM", "ver": "[HOLA] Draks_Loves_U", "req": 100, "lid": 130464801, "yt": "6ntYaDqBqu4", "pc": 678, "rated": true}, {"p": 130, "rp": 120, "name": "Sanctity", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 100, "lid": 135547923, "yt": "rtU2oDBz9X0", "pc": 710, "rated": true}, {"p": 131, "rp": 121, "name": "The Golden", "pub": "BoBoBoBoBoBoBo", "ver": "nSwish", "req": 72, "lid": 60978746, "yt": "Ah-PcqwqRTQ", "pc": 274, "rated": true}, {"p": 132, "rp": 122, "name": "Oblivion", "pub": "[DLNW] Dice88", "ver": "[DLNW] Dice88", "req": 72, "lid": 71025973, "yt": "ZcmDAm50BB0", "pc": 425, "rated": true}, {"p": 133, "rp": 123, "name": "Viprin UFO", "pub": "hawkyre", "ver": "[BHO] Cookie", "req": 66, "lid": 107238250, "yt": "LTMW9Py-nHE", "pc": 578, "rated": true}, {"p": 134, "rp": 124, "name": "NETWORK", "pub": "Agat3", "ver": "vulcanium4", "req": 76, "lid": 95176417, "yt": "K7wJi01J5D8", "pc": 539, "rated": true}, {"p": 135, "rp": 125, "name": "ATOMIC CANNON Mk III", "pub": "Lieb", "ver": "Zeronium", "req": 66, "lid": 104672501, "yt": "xlAI_wVvnx8", "pc": 568, "rated": true}, {"p": 136, "rp": 126, "name": "Terminal Rampancy", "pub": "Xyriak", "ver": "Bigthunder556", "req": 73, "lid": 90057148, "yt": "29hRhhqQTLc", "pc": 497, "rated": true}, {"p": 137, "rp": 127, "name": "Verdant Landscape", "pub": "Nisha", "ver": "Nisha", "req": 63, "lid": 76543324, "yt": "wjZxkS5KC0A", "pc": 393, "rated": true}, {"p": 138, "rp": 128, "name": "Levigo", "pub": "Swib", "ver": "[DTC] Kandai", "req": 100, "lid": 97086864, "yt": "AROmUo7DNkE", "pc": 665, "rated": true}, {"p": 139, "rp": 129, "name": "Checked Steam", "pub": "gruzy", "ver": "[IQB7] Whizkid05", "req": 70, "lid": 105748155, "yt": "cq6047eYGXs", "pc": 582, "rated": true}, {"p": 140, "rp": 130, "name": "Heavenly Sakupen", "pub": "Youknowwho", "ver": "[BHO] bazettuk", "req": 100, "lid": 123467310, "yt": "4uwSVZBrtfg", "pc": 716, "rated": true}, {"p": 141, "rp": 131, "name": "UNKNOWN", "pub": "NineDice", "ver": "[TCD] Diamond", "req": 83, "lid": 88203501, "yt": "a1sQxQqU6EM", "pc": 475, "rated": true}, {"p": 142, "rp": 132, "name": "SPIRIT OVERCLOCK", "pub": "TheRealXFuture", "ver": "[ABA] Riley", "req": 100, "lid": 132751236, "yt": "WECBlbM0LJk", "pc": 714, "rated": true}, {"p": 143, "rp": 133, "name": "Shukketsu", "pub": "[SKG] Madison Yuko", "ver": "[YAHO] Baeru", "req": 78, "lid": 75286957, "yt": "nkG4hKJIz2g", "pc": 435, "rated": true}, {"p": 144, "rp": 134, "name": "Breakcore", "pub": "WoofelGD", "ver": "[IQB7] Breakcore", "req": 100, "lid": 123674931, "yt": "_H3KOVLE6gs", "pc": 729, "rated": true}, {"p": 145, "rp": 135, "name": "idontknowwhatthisis", "pub": "YeldA", "ver": "YeldA", "req": 100, "lid": 137334994, "yt": "Dg9Q6s8EOlg", "pc": 703, "rated": true}, {"p": 146, "rp": 136, "name": "Critical Heat", "pub": "Zeniux", "ver": "[WBT] hstorm", "req": 69, "lid": 88442157, "yt": "UjYIt2jy_BY", "pc": 478, "rated": true}, {"p": 147, "rp": 138, "name": "WOBBLING MACHINE", "pub": "Smarted", "ver": "[POB2P] conski", "req": 100, "lid": 87130877, "yt": "RKX6VOsICOg", "pc": 637, "rated": true}, {"p": 148, "rp": 139, "name": "Crystal Crusher", "pub": "Zeniux", "ver": "GuitGuit", "req": 67, "lid": 93732702, "yt": "qirwgz-haVQ", "pc": 617, "rated": true}, {"p": 149, "rp": 140, "name": "limbo but uwu ig idk", "pub": "Akunakunn", "ver": "[JOB] ViperVenom95", "req": 77, "lid": 110705712, "yt": "3B36N-qfOD8", "pc": 625, "rated": true}, {"p": 150, "rp": 141, "name": "Graceful", "pub": "[1319] D A G", "ver": "[1319] D A G", "req": 100, "lid": 71885708, "yt": "5kOD37vQHKE", "pc": 651, "rated": true}, {"p": 151, "rp": 142, "name": "paranoia", "pub": "[JUICE] Amplitron", "ver": "[JUICE] Amplitron", "req": 100, "lid": 113364415, "yt": "Aw83i8Zmh_0", "pc": 664, "rated": true}, {"p": 152, "rp": 143, "name": "Starlit Stroll", "pub": "[TCC] Enfur", "ver": "[TCC] TheButcher", "req": 100, "lid": 115380769, "yt": "U7MM74dTXuI", "pc": 618, "rated": true}, {"p": 153, "rp": 144, "name": "The Paroxysm of Rage", "pub": "Zacanaii", "ver": "[RF] turtle", "req": 65, "lid": 87071894, "yt": "nq3i1qJQeEk", "pc": 572, "rated": true}, {"p": 154, "rp": 145, "name": "Blood Echo", "pub": "Farva", "ver": "[1319] swiborg", "req": 100, "lid": 112242564, "yt": "fSvk4tLlQzQ", "pc": 636, "rated": true}, {"p": 155, "rp": 146, "name": "Aerial Gleam", "pub": "Endlevel", "ver": "[TCD] Doggie", "req": 63, "lid": 79771070, "yt": "eyZjKtrGVYw", "pc": 412, "rated": true}, {"p": 156, "rp": 147, "name": "DISCONNECT", "pub": "MCres", "ver": "Elinore", "req": 100, "lid": 127023313, "yt": "HxHo-LzwSao", "pc": 654, "rated": true}, {"p": 157, "rp": 148, "name": "VOID", "pub": "nikoberry", "ver": "[IQB7] Whizkid05", "req": 100, "lid": 100990392, "yt": "kN1FUoucoSc", "pc": 631, "rated": true}, {"p": 158, "rp": 149, "name": "Henken", "pub": "PLoLek", "ver": "Gokill", "req": 100, "lid": 80714349, "yt": "M--2oQKrV68", "pc": 646, "rated": true}, {"p": 159, "rp": 150, "name": "Starlight Summit", "pub": "[BDAY] hazelmrow", "ver": "[BDAY] hazelmrow", "req": 100, "lid": 114530859, "yt": "LB9xx41M4Ns", "pc": 628, "rated": true}, {"p": 160, "rp": 151, "name": "Trueffet", "pub": "SyQual", "ver": "[YAHO] Baeru", "req": 69, "lid": 71434979, "yt": "yHESkazVD4Q", "pc": 361, "rated": true}, {"p": 161, "rp": 137, "name": "adjunto adnominal", "pub": "soumpeixe", "ver": "soumpeixe", "req": 100, "lid": 137400971, "yt": "YsFOtI9DACQ", "pc": 723, "rated": true}, {"p": 162, "rp": 152, "name": "azure blast", "pub": "[tq] AlbinoSnail", "ver": "[YAHO] DNM121", "req": 100, "lid": 120060187, "yt": "TN0FQ3KBv4w", "pc": 641, "rated": true}, {"p": 163, "rp": 153, "name": "Kenos", "pub": "npesta", "ver": "npesta", "req": 69, "lid": 58673581, "yt": "Bs1kVySdUtI", "pc": 238, "rated": true}, {"p": 164, "rp": 154, "name": "Fragile", "pub": "Endlevel", "ver": "[PRIME] vaen", "req": 64, "lid": 65588448, "yt": "XfXzGv0oALw", "pc": 335, "rated": true}, {"p": 165, "rp": 155, "name": "chrome hearts", "pub": "Roadbose", "ver": "[tq] Sangalchi", "req": 100, "lid": 128385946, "yt": "7o3I45B8-yY", "pc": 656, "rated": true}, {"p": 166, "rp": 156, "name": "Esfera", "pub": "SyQual", "ver": "[YAHO] Baeru", "req": 77, "lid": 78435955, "yt": "GK0Z8rgziH4", "pc": 420, "rated": true}, {"p": 167, "rp": 157, "name": "Silent Lunch", "pub": "DreamTide", "ver": "[DL] LordVadercraft", "req": 100, "lid": 137586316, "yt": "V8pu6Rrer8M", "pc": 686, "rated": true}, {"p": 168, "rp": 158, "name": "Destruction 19", "pub": "bosjoker", "ver": "[DAMN!] razsta4ax", "req": 82, "lid": 99495619, "yt": "UUyzGg_4mqs", "pc": 573, "rated": true}, {"p": 169, "rp": 159, "name": "in this", "pub": "enci", "ver": "[ETPS] Xplode", "req": 100, "lid": 122389640, "yt": "gQiOdxOyNGg", "pc": 647, "rated": true}, {"p": 170, "rp": 160, "name": "NEUTRA", "pub": "Jenkins GD", "ver": "AeonAir", "req": 80, "lid": 88611404, "yt": "0fNBFwNS1qg", "pc": 481, "rated": true}, {"p": 171, "rp": 161, "name": "ROCKBOTTOM", "pub": "bims", "ver": "[BLKHL] ZaZa GD", "req": 100, "lid": 122196131, "yt": "HAyxOJ1XuBk", "pc": 685, "rated": true}, {"p": 172, "rp": 162, "name": "Dark Dimension", "pub": "ThePurgatory", "ver": "TheNixuzGD200", "req": 100, "lid": 125617849, "yt": "g2DrT9bHjOI", "pc": 644, "rated": true}, {"p": 173, "rp": 163, "name": "Swing Swing", "pub": "[COMET] Kaza", "ver": "[IQB7] Whizkid05", "req": 67, "lid": 112231282, "yt": "_hL9hFU3WI4", "pc": 629, "rated": true}, {"p": 174, "rp": 164, "name": "Guideless Goobering", "pub": "[TCC] Enfur", "ver": "Zytrox", "req": 100, "lid": 105625871, "yt": "pFxdGKYQrcg", "pc": 576, "rated": true}, {"p": 175, "rp": 165, "name": "Hard Machine", "pub": "Komp", "ver": "Varium", "req": 79, "lid": 72744364, "yt": "6i0pdTDAo1c", "pc": 365, "rated": true}, {"p": 176, "rp": 166, "name": "DISSONANCE", "pub": "[meow] ivyteal", "ver": "[COMET] zSquidKnight", "req": 73, "lid": 108141323, "yt": "IfFser-f9c0", "pc": 584, "rated": true}, {"p": 177, "rp": 167, "name": "Crackhead Circles", "pub": "AlrexX", "ver": "[OG B] teraaa", "req": 67, "lid": 95524621, "yt": "_4MDq8Us5gM", "pc": 553, "rated": true}, {"p": 178, "rp": 168, "name": "Time Lapse", "pub": "HappyMoby", "ver": "chloechu", "req": 100, "lid": 97705490, "yt": "QWrDOemVBLk", "pc": 657, "rated": true}, {"p": 179, "rp": 169, "name": "Zodiac", "pub": "Bianox", "ver": "-", "req": 75, "lid": 52374843, "yt": "HCQK_y8JutU", "pc": 219, "rated": true}, {"p": 180, "rp": 170, "name": "Lotus Flower", "pub": "StarkytheSalad", "ver": "BrianTheBurger", "req": 70, "lid": 75813671, "yt": "pTgOHcwJhd0", "pc": 389, "rated": true}, {"p": 181, "rp": 171, "name": "Scream Machine", "pub": "TMco", "ver": "WatchPiggy", "req": 72, "lid": 96035641, "yt": "n-KeSGEX7Jg", "pc": 556, "rated": true}, {"p": 182, "rp": 172, "name": "Goober Rage Stage", "pub": "bonscarrot", "ver": "trenbabypaleo", "req": 100, "lid": 130183035, "yt": "1rrouUCPXhY", "pc": 661, "rated": true}, {"p": 183, "rp": 173, "name": "Axinie", "pub": "[IQB7] SaturMan", "ver": "[IQB7] SaturMan", "req": 77, "lid": 107299600, "yt": "LjfO2fqnozI", "pc": 581, "rated": true}, {"p": 184, "rp": 174, "name": "GLUNGUS ADVENTURES", "pub": "bims", "ver": "[TCD] Conix", "req": 100, "lid": 138615726, "yt": "0a2BX5I3v94", "pc": 689, "rated": true}, {"p": 185, "rp": 175, "name": "Judgement Knights", "pub": "HangerLord", "ver": "Helix", "req": 72, "lid": 110913375, "yt": "MzzY8nWfxnk", "pc": 596, "rated": true}, {"p": 186, "rp": 176, "name": "BLITZ", "pub": "chloechu", "ver": "[COMET] sock", "req": 100, "lid": 137248479, "yt": "p5NquHWeWZ0", "pc": 688, "rated": true}, {"p": 187, "rp": 177, "name": "Widestep", "pub": "｛出見塩｝", "ver": "｛出見塩｝", "req": 79, "lid": 69289606, "yt": "GhLFsr9skXs", "pc": 494, "rated": true}, {"p": 188, "rp": 178, "name": "Lithium", "pub": "L4tezk", "ver": "[SARK] Bamvie", "req": 100, "lid": 97364686, "yt": "IfVM56qNVdA", "pc": 597, "rated": true}, {"p": 189, "rp": 179, "name": "Keres", "pub": "ItsHybrid", "ver": "Crisis", "req": 64, "lid": 74391640, "yt": "MFFIjZP7PxQ", "pc": 377, "rated": true}, {"p": 190, "rp": 180, "name": "IRIS", "pub": "[COMET] Kaza", "ver": "[COMET] bnuuy", "req": 100, "lid": 123853954, "yt": "WiFwAU8pgr4", "pc": 632, "rated": true}, {"p": 191, "rp": 181, "name": "Galeforce", "pub": "OniLink", "ver": "[DL] Blitzer", "req": 100, "lid": 115313314, "yt": "G6VF2Gvmpz0", "pc": 666, "rated": true}, {"p": 192, "rp": 182, "name": "Cold Sweat", "pub": "para", "ver": "Kapinapi", "req": 61, "lid": 63996127, "yt": "tBpEPXGhQug", "pc": 293, "rated": true}, {"p": 193, "rp": 183, "name": "Frost Spirit", "pub": "Quaybus", "ver": "Varium", "req": 77, "lid": 95767653, "yt": "KXbaRnRpm58", "pc": 542, "rated": true}, {"p": 194, "rp": 184, "name": "Ascent", "pub": "Rimexon", "ver": "[DL] LordVadercraft", "req": 63, "lid": 112046512, "yt": "sII8zQZIJlg", "pc": 601, "rated": true}, {"p": 195, "rp": 185, "name": "Promethean", "pub": "Endlevel", "ver": "RicoLP", "req": 85, "lid": 69333212, "yt": "19kE_Yo8puE", "pc": 351, "rated": true}, {"p": 196, "rp": 186, "name": "Thinking Space", "pub": "Atomic", "ver": "Atomic", "req": 84, "lid": 54953085, "yt": "iHf2nanWjvE", "pc": 273, "rated": true}, {"p": 197, "rp": 187, "name": "Dry Out Copyable 2", "pub": "[FaZe] tenzk", "ver": "s3batr0nic", "req": 77, "lid": 106522770, "yt": "FXW9J9CaREU", "pc": 575, "rated": true}, {"p": 198, "rp": 188, "name": "Calculator Core", "pub": "Walroose", "ver": "-", "req": 59, "lid": 58355141, "yt": "VrgNFsF2NGw", "pc": 244, "rated": true}, {"p": 199, "rp": 189, "name": "Renevant", "pub": "nikroplays", "ver": "rori", "req": 60, "lid": 58161496, "yt": "2Y8kBw8YxO8", "pc": 239, "rated": true}, {"p": 200, "rp": 190, "name": "ConClusion", "pub": "DreamZoneGD", "ver": "Browar", "req": 58, "lid": 96471171, "yt": "wpuPFFqnJFY", "pc": 552, "rated": true}], "notes": {"1": "5 Ekim 2026'da #1 oldu ve Kenos'u yaklaşık 7 yıl sonra listeden düşürdü. Doğrulayan [TCD] Doggie. Yerleştirme, listenin en çok beğenilen değişikliği.", "4": "CairoX sürümü. CoCyMain'in aynı isimli level'ı ile karıştırılmasın; Kızıl ismin yanına yayınlayanı yazar.", "17": "23 Ekim 2026, Rated+ #17. Klasik liste hâlâ göstermiyor. Liste ekibi: doğrulayan ve level'ı 2 koşuda tutan oyuncu, Silent clubstep'ten en az daha zor diyor. Kızıl zorluk sırasına alır, puan yazmaz.", "18": "1.9 fiziği, bug'lar ve düşük keyif yıllardır tartışılıyor. Zorluk sırasını keyifsizlik bahanesiyle kaydırmadım; etiket duruyor, sıra duruyor.", "19": "Eşik %37, bu listedeki en düşük. Level kolay demek değil: kabul edilen rekor çok erken başlıyor. Komşu levellerde %40 sıradan bir ölümdür.", "20": "Eşik %80. Rekor ancak geç bir yüzdede açılıyor; erken ölümler listeye girmez.", "26": "Wiki'nin, öncelikle listeye girmek için yapılmış level örneklerinden biri. Sıra bugünkü verilere göre duruyor.", "28": "Eylül 2022'de #2'ye konması listenin en çok dislike alan değişikliği (2.427). Bugünkü sıra bunun çok altında.", "38": "Eşik %85. Zor kısım sonda; yüksek yüzde bile rekor sayılmayabilir.", "39": "CoCyMain sürümü, CairoX'in Thinking Space II'si değil. 23 Ekim 2026'da Slaughterhouse'un hemen üstüne kondu. Unrated: sırada var, puanda yok.", "51": "Eşik %83. Geç eşik; %80 ölüm hâlâ rekor değil.", "57": "Eşik %90, ana listedeki en yüksek. Bitmeye çok yakın ölümler bile eşiğin altında kalır.", "163": "Yaklaşık 7 yıl listenin zirvesinde ve çevresinde kaldı. 5 Ekim 2026'da GRIEF ile klasik listeden de düştü. 2010'ların işareti kapandı.", "161": "24 Ekim 2026: Rated+ ilk 150’de görünmüyor, Rated+ legacy’de duruyor. Klasik listede hâlâ #137. Önceki Kızıl sürümünde #147’deydi; yani bu level iki liste arasında ayrışan bir örnek. Kızıl, Rated+ sırasını izler."}, "players": [[1, "Zoink", "67", 7177.26], [2, "wPopoff", "WBT", 4981.21], [3, "zLevii", "MEALY", 3846.86], [4, "Trick", "TCD", 3558.86], [5, "Netermind", "SARK", 3456.1], [6, "Sharkified", "GTS", 2424.78], [7, "kloone", "OG B", 2298.24], [8, "Thnnder", "THNDR", 2249.61], [9, "eastshark", "—", 2243.29], [10, "Slaughter", "—", 2052.64], [11, "pizi", "UCH", 2015.8], [12, "rediio", "—", 1963.03], [13, "Cookie", "BHO", 1843.67], [14, "xmercurylamp", "—", 1817.08], [15, "weyolll3", "HOLA", 1740.07], [16, "Taiago", "WBT", 1732.22], [17, "LAMINGTON", "MEALY", 1674.02], [18, "Laysah", "OG B", 1638.26], [19, "Whizkid05", "IQB7", 1599.16], [20, "PoCle", "ILUV", 1580.94]], "nations": [[1, "Amerika Birleşik Devletleri", 8985.82], [2, "Güney Kore", 6187.53], [3, "İspanya", 5372.27], [4, "Rusya", 5099.56], [5, "Polonya", 4957.87], [6, "Birleşik Krallık", 4492.77], [7, "Kanada", 4429.57], [8, "Avustralya", 4053.01], [9, "Yeni Zelanda", 4023.11], [10, "Finlandiya", 3850.65]], "date": "2026-10-24", "notes_en": {"1": "Became #1 on 5 October 2026 and pushed Kenos off the list after about 7 years. Verified by [TCD] Doggie. The placement is the most-liked change in the list’s history.", "4": "CairoX’s version. Not to be confused with CoCyMain’s level of the same name; Kızıl writes the publisher next to the name.", "17": "23 October 2026, Rated+ #17. The classic list still does not show it. List team: the verifier and the player holding the level in 2 runs say it is harder than Silent clubstep, at the very least. Kızıl puts it in the difficulty order and awards no points.", "18": "The 1.9 physics, bugs and low enjoyment have been debated for years. I did not move the difficulty order because of enjoyment; the label stays, the rank stays.", "19": "Threshold 37%, the lowest on this list. That does not make the level easy: the accepted record starts very early. At the neighbouring levels, 40% is an ordinary death.", "20": "Threshold 80%. A record only opens at a late percentage; early deaths do not count.", "26": "One of the wiki’s examples of levels made primarily to get on the list. The rank follows today’s data.", "28": "Its placement at #2 in September 2022 is the most-disliked change in the list’s history (2,427). Today’s rank is far below that.", "38": "Threshold 85%. The hard part is at the end; even a high percentage may not count as a record.", "39": "CoCyMain’s version, not CairoX’s Thinking Space II. Placed right above Slaughterhouse on 23 October 2026. Unrated: it has a rank, but no points.", "51": "Threshold 83%. A late threshold; an 80% death still isn’t a record.", "57": "Threshold 90%, the highest in the main list. Even deaths very close to the end fall below the threshold.", "161": "24 October 2026: not in the Rated+ top 150, it sits in Rated+ legacy. Still #137 in the classic list. It was #147 in the previous Kızıl version, so it is a level where the two lists diverge. Kızıl follows the Rated+ order.", "163": "Stayed at or near the top of the list for about 7 years. Fell off the classic list too on 5 October 2026 with GRIEF. The mark of the 2010s is closed."}, "nations_en": ["United States", "South Korea", "Spain", "Russia", "Poland", "United Kingdom", "Canada", "Australia", "New Zealand", "Finland"]}</script>
+<script>
+"use strict";
+const DATA = JSON.parse(document.getElementById("payload").textContent);
+const byP = new Map(DATA.rows.map(d => [d.p, d]));
+const $ = id => document.getElementById(id);
+const KEY = "kizil.progress.v1";
+const TABS = ["list","mine","stats","players","calc","method"];
+
+/* ---------- i18n: [turkish, english]; a value may be a function ---------- */
+const D = {
+  skip:["İçeriğe geç","Skip to content"],
+  kick:["GEOMETRY DASH · DEMON SIRASI","GEOMETRY DASH · DEMON RANKING"],
+  h1:["KIZIL LİSTE","KIZIL LIST"],
+  langTitle:["Switch to English","Türkçe’ye geç"],
+  themeAria:["Tema değiştir","Switch theme"],
+  heroAria:["Listenin zirvesi","Top of the list"],
+  sections:["Bölümler","Sections"],
+  dek:["Klasik Pointercrate rate almamış levelleri saklıyor. Rated+ onları ekliyor ama aynı ismi, puanı ve “kim listeden düştü”yü birbirine karıştırıyor. Kızıl tek sıra kullanır: zorlukta unrated durur, puanda durmaz. İki Thinking Space II ayrılır. Rehberlerde dolaşan puan formülü çöpe gider.",
+       "Classic Pointercrate hides levels that have not been rated. Rated+ adds them, but it mixes up same-named levels, points and “who fell off the list”. Kızıl uses a single order: unrated levels sit in the difficulty order but earn no points. The two Thinking Space II’s are told apart. The point formula circulating in guides goes in the bin."],
+  statLevels:["level bu dosyada","levels in this file"],
+  statUnrated:["unrated, puansız","unrated, no points"],
+  statBorder:["sınırda level","borderline levels"],
+  statDup:["isim çakışması","name clash"],
+  tabList:["Sıralama","Ranking"], tabMine:["İlerlemem","My progress"], tabStats:["İstatistik","Stats"],
+  tabPlayers:["Oyuncular","Players"], tabCalc:["Puan","Points"], tabMethod:["Ne düzelttim","What I fixed"],
+  searchPh:["Level, yayınlayan, doğrulayan veya ID","Level, publisher, verifier or ID"],
+  search:["Ara","Search"], filter:["Filtre","Filter"],
+  fAna:["Ana 1–75","Main 1–75"], fExt:["Extended 76–150","Extended 76–150"], fLeg:["Düşenler","Legacy"],
+  fUnrated:["Unrated","Unrated"], fOutlier:["Eşik aykırı","Odd threshold"], fBorder:["Sınırda","Borderline"],
+  fNote:["Notlu","Noted"], fDone:["Bitirdiklerim","Beaten"], fTodo:["Bitirmediklerim","Not beaten"], fAll:["Hepsi","All"],
+  random:["🎲 Rastgele","🎲 Random"], csv:["CSV indir","Download CSV"], sort:["Sırala","Sort"],
+  sKizil:["Kızıl sırası","Kızıl order"], sClassic:["Klasik rated sırası","Classic rated order"], sName:["İsim","Name"],
+  sReq:["Eşik, düşükten","Threshold, low to high"], sReqd:["Eşik, yüksekten","Threshold, high to low"],
+  sPts:["Puan, yüksekten","Points, high to low"], sLid:["Level ID, yeniden","Level ID, newest first"],
+  kbd:["<kbd>/</kbd> ara · <kbd>Esc</kbd> temizle · <kbd>R</kbd> rastgele","<kbd>/</kbd> search · <kbd>Esc</kbd> clear · <kbd>R</kbd> random"],
+  count:[n=>n+" level", n=>n+(n===1?" level":" levels")],
+  empty:["Bu filtrede level yok. Aramayı temizle veya “Hepsi”ne geç.","No levels in this filter. Clear the search or switch to “All”."],
+  noLevels:["Bu filtrede level yok","No levels in this filter"],
+  /* rows + tags */
+  verifiedBy:[(p,v)=>p+" · doğrulayan "+v,(p,v)=>p+" · verified by "+v],
+  thr:[n=>"eşik %"+n,n=>"threshold "+n+"%"],
+  thrTitle:[n=>"Eşik %"+n,n=>"Threshold "+n+"%"],
+  noClassic:["klasik yok","not in classic"], classicN:[n=>"klasik #"+n,n=>"classic #"+n],
+  shift:[n=>" · +"+n+" kayma",n=>" · +"+n+" shift"],
+  ptsN:[s=>s+" puan",s=>s+" pts"], noPts:["puan yok","no points"],
+  tBeaten:["Bitirdim","Beaten"], tUnrated:["Unrated","Unrated"], tThr:["Eşik","Threshold"], tName:["İsim","Name"],
+  tBorder:["Sınırda","Borderline"], tNote:["Not","Note"], tMain:["Ana","Main"], tExt:["Extended","Extended"], tLeg:["Düşen","Legacy"],
+  /* detail */
+  borderNote:[(p,rp,s)=>`Sınırda: Kızıl sırasında #${p} (düşen), klasik sırada #${rp} ve hâlâ ${s} puan. İki liste bugün aynı level için iki farklı kapı gösteriyor.`,
+              (p,rp,s)=>`Borderline: #${p} in Kızıl (legacy), #${rp} in the classic list and still worth ${s} points. Today the two lists show two different doors for the same level.`],
+  scoreUnrated:[r=>`Unrated. Zorluk sırasında duruyor, Kızıl puanı 0. Eşik %${r} Rated+ kaydı için.`,r=>`Unrated. It sits in the difficulty order, Kızıl points 0. The ${r}% threshold is for the Rated+ record.`],
+  scoreCompl:[(s,rp,r,main,m)=>`Tamamlama ${s} puan (klasik #${rp}). Eşikteki %${r} rekor ${main?m+" puan":"sayılmaz; extended yalnız %100"}.`,
+              (s,rp,r,main,m)=>`Completion ${s} points (classic #${rp}). A record at the ${r}% threshold ${main?"is worth "+m+" points":"does not count; extended takes 100% only"}.`],
+  scoreOut:[rp=>`Klasik sırası #${rp}. 150’nin dışında, puan 0.`,rp=>`Classic rank #${rp}. Outside 150, 0 points.`],
+  idLine:[(id,p,v)=>`Level ID <b>${id}</b>. Oyunda aratmak için kopyala. Yayınlayan ${p}, doğrulayan ${v}.`,
+          (id,p,v)=>`Level ID <b>${id}</b>. Copy it to search in-game. Published by ${p}, verified by ${v}.`],
+  myBest:["En iyi yüzdem","My best %"], myPh:["0–100","0–100"], myFull:["%100 bitirdim","I beat it (100%)"], clear:["Temizle","Clear"],
+  myNoPts:["puan yok (eşik altı veya puansız)","no points (below threshold or unscored)"],
+  copyId:["ID kopyala","Copy ID"], copyLink:["Bağlantıyı kopyala","Copy link"], verif:["Doğrulama","Verification"],
+  copied:["Kopyalandı","Copied"], idCopied:["Level ID kopyalandı","Level ID copied"], linkCopied:["Bağlantı kopyalandı","Link copied"],
+  cantSave:["Tarayıcı kaydetmeye izin vermiyor","Your browser blocks saving"], copyPrompt:["Kopyala:","Copy:"],
+  csvHead:[["Kızıl","Klasik","Level","Yayınlayan","Doğrulayan","Eşik","Puan","Level ID"],["Kızıl","Classic","Level","Publisher","Verifier","Threshold","Points","Level ID"]],
+  /* mine */
+  mineLead:["Bir level’ı sıralamada açıp en iyi yüzdeni gir. Veri yalnızca bu tarayıcıda (localStorage) durur; hiçbir yere gönderilmez. Puan Kızıl’ın kendi hesabıdır, resmi skor değil.",
+            "Open a level in the ranking and enter your best percentage. Data stays only in this browser (localStorage) and is never sent anywhere. Points are Kızıl’s own calculation, not the official score."],
+  mineScore:["Kızıl puanım","my Kızıl points"], mineDone:["bitirilen level","levels beaten"], mineParts:["yüzdeli kayıt","partial records"],
+  mineEmpty:["Henüz kayıt yok. Sıralamada bir level’ı aç, yüzdeni gir veya “%100 bitirdim”e bas.","No records yet. Open a level in the ranking, enter your percentage or press “I beat it (100%)”."],
+  thLevel:["Level","Level"], thPts:["Puan","Points"],
+  backup:["Yedekle / taşı","Back up / move"],
+  backupLead:["Başka cihaza taşımak için dışa aktar, orada yapıştırıp içe aktar.","To move to another device, export here, then paste and import there."],
+  ioAria:["İlerleme verisi","Progress data"], ioPh:["JSON burada görünür veya buraya yapıştır","JSON appears here, or paste it here"],
+  export:["Dışa aktar","Export"], import:["İçe aktar","Import"], wipe:["Hepsini sil","Delete all"],
+  exported:["Dışa aktarma kopyalandı","Export copied"], imported:[n=>n+" kayıt içe aktarıldı",n=>n+" records imported"],
+  badJson:["Geçerli bir JSON değil","Not valid JSON"], confirmWipe:["Tüm ilerleme kayıtların silinsin mi?","Delete all your progress records?"],
+  /* stats */
+  statsLead:["Bu dosyadaki 200 levelden hesaplanır.","Calculated from the 200 levels in this file."],
+  liveTitle:["Güncellik kontrolü","Freshness check"],
+  liveLead:["Pointercrate’in canlı klasik sırasını, bu dosyadaki klasik sıralarla karşılaştırır. Liste değiştiyse hangi level’ların kaydığını gösterir.",
+            "Compares Pointercrate’s live classic order with the classic ranks in this file. If the list changed, it shows which levels moved."],
+  liveBtn:["Şimdi karşılaştır","Compare now"],
+  liveConn:["Pointercrate’e bağlanılıyor…","Connecting to Pointercrate…"],
+  liveOk:["<b style='color:var(--ok)'>Uyumlu.</b> Klasik ilk 150 bu dosyayla aynı.","<b style='color:var(--ok)'>In sync.</b> The classic top 150 matches this file."],
+  liveDiff:["<b style='color:var(--warn)'>Fark var.</b> Veriyi güncelleme zamanı.","<b style='color:var(--warn)'>Differences found.</b> Time to update the data."],
+  liveMoved:[n=>"Sırası değişen ("+n+"):",n=>"Moved ("+n+"):"],
+  liveAdded:[n=>"Dosyada olmayan ("+n+"):",n=>"Not in this file ("+n+"):"],
+  liveGone:[n=>"Canlı listede artık yok ("+n+"):",n=>"No longer in the live list ("+n+"):"],
+  liveMore:[n=>"… ve "+n+" tane daha",n=>"… and "+n+" more"],
+  liveErr:[m=>"Bağlanılamadı ("+m+"). Ağ veya tarayıcı kısıtı olabilir; liste dosyadaki veriyle çalışmaya devam ediyor.",
+           m=>"Could not connect ("+m+"). It may be a network or browser restriction; the list keeps working with the data in this file."],
+  stReq:["Eşik dağılımı","Threshold distribution"], stTier:["Dilimler","Tiers"], stPub:["En çok yayınlayan","Top publishers"], stVer:["En çok doğrulayan","Top verifiers"],
+  tierMain:["Ana 1–75","Main 1–75"], tierExt:["Extended 76–150","Extended 76–150"], tierLeg:["Düşen 151+","Legacy 151+"], tierUnr:["Unrated","Unrated"],
+  curve:["Puan eğrisi (klasik 1–150)","Points curve (classic 1–150)"],
+  curveAria:["Klasik sıraya göre tamamlama puanı eğrisi","Completion points curve by classic rank"],
+  c350:["350 puan","350 points"], c75:["#75 — extended başlar","#75 — extended starts"],
+  /* players */
+  playersLead:["22 Ekim 2026, Pointercrate stats viewer. Bu Kızıl puanı değil; resmi skor. Profili olmayan oyuncular listede yok.",
+               "22 October 2026, Pointercrate stats viewer. This is not Kızıl points; it is the official score. Players without a profile are not listed."],
+  nations:["Ülkeler","Nations"],
+  nationsLead:["Ülke skoru, her levelde o ülkenin en iyi rekorunu bir kez sayar. Kalabalık olmak tek başına yetmez.",
+               "A nation’s score counts its best record on each level once. Being numerous is not enough on its own."],
+  thPlayer:["Oyuncu","Player"], thClan:["Klan","Clan"], thScore:["Skor","Score"], thNation:["Ülke","Nation"],
+  /* calc */
+  calcTitle:["Puan hesap","Points calculator"],
+  calcLead:["Klasik listedeki gerçek eğri. Rehberlerdeki <span class=\"wrong\">(yüzde ÷ 100) × (eşik ÷ 100) × 500</span> hesabı Pointercrate’in yazdığı skorla uyuşmaz.",
+            "The real curve of the classic list. The <span class=\"wrong\">(percent ÷ 100) × (threshold ÷ 100) × 500</span> calculation in guides does not match the score Pointercrate prints."],
+  level:["Level","Level"], percent:["Yüzde","Percent"], sliderAria:["Yüzde kaydırıcı","Percent slider"],
+  compare:["Karşılaştır","Compare"], first:["Birinci","First"], second:["İkinci","Second"],
+  formula:["100% puan = klasik sıranın eğrisi (1 → 350.00, 75 → 40.60, 150 → 18.71).\nAna liste (klasik 1–75): eşikte puanın %10’u, %100’de tamamı, arası doğrusal.\nExtended (klasik 76–150): yalnız %100.\nUnrated ve klasik 151+: 0.",
+           "100% points = the classic rank’s curve (1 → 350.00, 75 → 40.60, 150 → 18.71).\nMain list (classic 1–75): 10% of the points at the threshold, all at 100%, linear in between.\nExtended (classic 76–150): 100% only.\nUnrated and classic 151+: 0."],
+  whyUnrated:["Unrated. Kızıl puan yazmaz.","Unrated. Kızıl awards no points."],
+  whyOut:["Klasik sıra 150’nin dışında.","Classic rank is outside 150."],
+  whyBelow:[r=>"Eşik %"+r+". Bu yüzde rekor sayılmaz.",r=>"Threshold "+r+"%. A record at this percentage does not count."],
+  whyExt:[s=>"Klasik extended. Yalnız %100 puan verir. Tamamlama "+s+".",s=>"Classic extended. Only 100% earns points. Completion "+s+"."],
+  whyFull:[rp=>"Tamamlama, klasik #"+rp+".",rp=>"Completion, classic #"+rp+"."],
+  whyLin:[(a,b)=>"Eşikte "+a+", bitişte "+b+". Aralık doğrusal.",(a,b)=>a+" at the threshold, "+b+" at completion. Linear in between."],
+  wrongSays:[s=>"Yanlış formül bu yüzde için <span class=\"wrong\">"+s+"</span> derdi.",s=>"The wrong formula would say <span class=\"wrong\">"+s+"</span> for this percentage."],
+  cmpNone:["Klasik listede ikisi de yok.","Neither is in the classic list."],
+  cmpSame:["Klasik sıra aynı.","Same classic rank."],
+  cmpHarder:[(n,r)=>"Klasik listede daha zor olan "+n+" (#"+r+").",(n,r)=>"In the classic list, the harder one is "+n+" (#"+r+")."],
+  cmpOne:[(a,ra,b)=>a+" klasik #"+ra+". "+b+" klasik listede yok.",(a,ra,b)=>a+" is classic #"+ra+". "+b+" is not in the classic list."],
+  cmpMain:[(h,p,g,c,a,pa,b,pb)=>`Kızıl sırasında ${h} daha zor (#${p}, aradaki fark ${g}). ${c} Puanlar: ${a} ${pa}, ${b} ${pb}.`,
+           (h,p,g,c,a,pa,b,pb)=>`In Kızıl order ${h} is harder (#${p}, gap ${g}). ${c} Points: ${a} ${pa}, ${b} ${pb}.`],
+  /* hero */
+  heroEye:[(rp,rated)=>`Kızıl #1 · klasik #${rp} · ${rated?"rate’li":"unrated"}`,(rp,rated)=>`Kızıl #1 · classic #${rp} · ${rated?"rated":"unrated"}`],
+  heroP:[(p,v,r,s)=>`Yayınlayan ${p}. Doğrulayan ${v}. Eşik %${r}. Tamamlama ${s} puan. `,(p,v,r,s)=>`Published by ${p}. Verified by ${v}. Threshold ${r}%. Completion ${s} points. `],
+  heroImg:[n=>n+" doğrulama videosundan kare",n=>"Frame from the "+n+" verification video"],
+  heroMain:["Ana liste","Main list"],
+  footer:["Resmi Pointercrate listesi değildir. Sıra ve puan verisi <span id=\"foot-date\"></span> tarihli bu dosyadan gelir; canlı farkı “İstatistik → Güncellik kontrolü” gösterir. Veriyi güncellemek için aşağıdaki <code>payload</code> JSON’unu düzenle; sayfa kendiliğinden yeniden hesaplanır.",
+          "Not the official Pointercrate list. Ranking and points come from this file, dated <span id=\"foot-date\"></span>; the live difference is shown in “Stats → Freshness check”. To update the data, edit the <code>payload</code> JSON in this file; the page recalculates by itself."],
+  pageTitle:["Kızıl Liste — Geometry Dash Demon Sıralaması","Kızıl List — Geometry Dash Demon Ranking"],
+  pageDesc:["Güncel Geometry Dash demon listesi: unrated levelleri gizlemeyen, aynı isimli levelleri ayıran ve doğru puan eğrisini kullanan tek dosyalık liste. Arama, filtre, kişisel ilerleme ve puan hesabı.",
+            "Up-to-date Geometry Dash demon list: a single-file list that does not hide unrated levels, tells same-named levels apart and uses the correct points curve. Search, filters, personal progress and a points calculator."]
+};
+let LANG = "en";
+function detectLang(){
+  let s = null; try{ s = localStorage.getItem("kizil.lang"); }catch(e){}
+  if(s==="tr"||s==="en") return s;
+  const first = (navigator.languages && navigator.languages[0]) || navigator.language || "en";
+  return /^tr(\b|-|_)/i.test(first) ? "tr" : "en";
+}
+const T = (k, ...a) => { const v = D[k][LANG==="tr"?0:1]; return typeof v==="function" ? v(...a) : v; };
+const N = () => (LANG==="tr" ? DATA.notes : DATA.notes_en) || {};
+const fdate = () => new Date(DATA.date+"T12:00:00").toLocaleDateString(LANG==="tr"?"tr-TR":"en-GB",{day:"numeric",month:"long",year:"numeric"});
+function applyStatic(){
+  document.documentElement.lang = LANG;
+  document.title = T("pageTitle");
+  const md = document.querySelector('meta[name=description]'); if(md) md.content = T("pageDesc");
+  [["og:title","pageTitle"],["og:description","pageDesc"]].forEach(([p,k])=>{ const m=document.querySelector('meta[property="'+p+'"]'); if(m) m.content=T(k); });
+  document.querySelectorAll("[data-i]").forEach(e=>e.textContent = T(e.dataset.i));
+  document.querySelectorAll("[data-ih]").forEach(e=>e.innerHTML = T(e.dataset.ih));
+  document.querySelectorAll("[data-ph]").forEach(e=>e.placeholder = T(e.dataset.ph));
+  document.querySelectorAll("[data-ar]").forEach(e=>e.setAttribute("aria-label", T(e.dataset.ar)));
+  document.querySelectorAll("[data-ti]").forEach(e=>e.title = T(e.dataset.ti));
+  $("lang").textContent = LANG==="tr" ? "EN" : "TR";
+  $("lang").title = T("langTitle");
+  $("updated").textContent = fdate().toLocaleUpperCase(LANG==="tr"?"tr":"en");
+  $("foot-date").textContent = fdate();
+}
+
+/* ---------- helpers ---------- */
+const tier = p => p<=75 ? "ana" : p<=150 ? "ext" : "leg";
+const tierLabel = p => p<=75 ? T("tMain") : p<=150 ? T("tExt") : T("tLeg");
+const outlier = d => d.p<=75 && (d.req<=50 || d.req>=80);
+const border = d => !!(d.rated && d.rp!=null && d.rp<=150 && d.p>150);
+const dupName = d => DATA.rows.filter(x => x.name===d.name).length > 1;
+const named = d => dupName(d) ? d.name+" ("+d.pub+")" : d.name;
+const fmt = n => (Math.round(n*100)/100).toFixed(2);
+const esc = s => String(s).replace(/[&<>"']/g, c => "&#"+c.charCodeAt(0)+";");
+function completion(d){
+  if(!d.rated || d.rp==null || d.rp<1 || d.rp>150) return 0;
+  return DATA.scores[d.rp];
+}
+function points(d, progress){
+  const base = completion(d);
+  if(base<=0 || progress<d.req || progress>100) return 0;
+  if(d.rp>75) return progress===100 ? base : 0;
+  return base * (0.1 + 0.9 * (progress - d.req) / (100 - d.req));
+}
+const wrong = (progress, req) => (progress<req || progress>100) ? 0 : (progress/100)*(req/100)*500;
+function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(toast.t); toast.t=setTimeout(()=>t.classList.remove("on"),1600); }
+async function copy(text, msg){
+  try{ await navigator.clipboard.writeText(text); toast(msg||T("copied")); }
+  catch(e){ window.prompt(T("copyPrompt"), text); }
+}
+
+/* ---------- progress ---------- */
+let prog = {};
+try{ prog = JSON.parse(localStorage.getItem(KEY)||"{}") || {}; }catch(e){ prog = {}; }
+function saveProg(){ try{ localStorage.setItem(KEY, JSON.stringify(prog)); }catch(e){ toast(T("cantSave")); } }
+const myPct = d => prog[d.lid] || 0;
+const isDone = d => myPct(d) >= 100;
+const mineScore = () => DATA.rows.reduce((a,d)=> a + (myPct(d) ? points(d, myPct(d)) : 0), 0);
+
+/* ---------- state + hash ---------- */
+const S = { tab:"list", f:"ana", s:"kizil", q:"", l:null };
+function readHash(){
+  const h = location.hash.slice(1);
+  if(/^\d+$/.test(h)){ S.l = +h; S.f = "all"; return; }
+  const p = new URLSearchParams(h);
+  if(TABS.includes(p.get("t"))) S.tab = p.get("t");
+  if(p.get("f")) S.f = p.get("f");
+  if(p.get("s")) S.s = p.get("s");
+  if(p.get("q")) S.q = p.get("q");
+  if(p.get("l") && byP.has(+p.get("l"))) S.l = +p.get("l");
+}
+function writeHash(){
+  const p = new URLSearchParams();
+  if(S.tab!=="list") p.set("t", S.tab);
+  if(S.f!=="ana") p.set("f", S.f);
+  if(S.s!=="kizil") p.set("s", S.s);
+  if(S.q) p.set("q", S.q);
+  if(S.l) p.set("l", S.l);
+  const h = p.toString();
+  try{ history.replaceState(null, "", h ? "#"+h : location.pathname+location.search); }
+  catch(e){ /* preview/iframe: address bar cannot be changed */ }
+}
+
+/* ---------- list ---------- */
+function tags(d){
+  const t = [];
+  if(isDone(d)) t.push('<span class="tag ok">'+T("tBeaten")+'</span>');
+  else if(myPct(d)) t.push('<span class="tag ok">'+myPct(d)+'%</span>');
+  if(!d.rated) t.push('<span class="tag hot">'+T("tUnrated")+'</span>');
+  if(outlier(d)) t.push('<span class="tag hot">'+T("tThr")+'</span>');
+  if(dupName(d)) t.push('<span class="tag warn">'+T("tName")+'</span>');
+  if(border(d)) t.push('<span class="tag warn">'+T("tBorder")+'</span>');
+  if(N()[d.p] && !dupName(d)) t.push('<span class="tag">'+T("tNote")+'</span>');
+  t.push('<span class="tag">'+tierLabel(d.p)+'</span>');
+  return t.join("");
+}
+function passes(d){
+  const f = S.f;
+  if(f==="ana"||f==="ext"||f==="leg"){ if(tier(d.p)!==f) return false; }
+  else if(f==="unrated" && d.rated) return false;
+  else if(f==="outlier" && !outlier(d)) return false;
+  else if(f==="border" && !border(d)) return false;
+  else if(f==="note" && !(N()[d.p] || border(d))) return false;
+  else if(f==="done" && !isDone(d)) return false;
+  else if(f==="todo" && isDone(d)) return false;
+  const q = S.q.trim().toLowerCase();
+  if(!q) return true;
+  const blob = [d.name, named(d), d.pub, d.ver, d.lid, "#"+d.p, d.p, d.rp||""].join(" ").toLowerCase();
+  return q.split(/\s+/).every(w => blob.includes(w));
+}
+function sorted(list){
+  const arr = list.slice();
+  const cl = d => d.rp==null ? 9999 : d.rp;
+  arr.sort((a,b)=>{
+    switch(S.s){
+      case "name": return named(a).localeCompare(named(b), LANG);
+      case "req": return a.req-b.req || a.p-b.p;
+      case "reqd": return b.req-a.req || a.p-b.p;
+      case "pts": return completion(b)-completion(a) || a.p-b.p;
+      case "lid": return b.lid-a.lid || a.p-b.p;
+      case "classic": return cl(a)-cl(b) || a.p-b.p;
+      default: return a.p-b.p;
+    }
+  });
+  return arr;
+}
+const visible = () => sorted(DATA.rows.filter(passes));
+function render(){
+  const rows = visible();
+  $("count").textContent = T("count", rows.length);
+  const host = $("list");
+  if(!rows.length){ host.innerHTML = '<p class="empty">'+T("empty")+'</p>'; return; }
+  host.innerHTML = rows.map(d=>{
+    const pts = completion(d);
+    const classic = d.rp==null ? T("noClassic") : T("classicN", d.rp);
+    const shift = d.rp!=null ? d.p-d.rp : 0;
+    const opened = S.l===d.p;
+    return `<button type="button" class="row${d.p<=3?" top":""}${opened?" open":""}${isDone(d)?" done":""}" data-p="${d.p}" aria-expanded="${opened}" aria-controls="d${d.p}">
+        <div class="rank">${d.p}</div>
+        <div class="body">
+          <div class="topline">
+            <div><div class="name">${esc(named(d))}</div><div class="sub">${esc(T("verifiedBy", d.pub, d.ver))}</div></div>
+            <div class="tags">${tags(d)}</div>
+          </div>
+          <div class="side">
+            <span class="meter${outlier(d)?" odd":""}" title="${esc(T("thrTitle", d.req))}"><i style="width:${d.req}%"></i></span>
+            <span>${T("thr", d.req)}</span>
+            <span>${classic}${shift>0 ? T("shift", shift) : ""}</span>
+            <span>${pts ? T("ptsN", fmt(pts)) : T("noPts")}</span>
+          </div>
+        </div>
+      </button>
+      <div class="detail${opened?" show":""}" id="d${d.p}">${opened?detailHTML(d):""}</div>`;
+  }).join("");
+}
+function detailHTML(d){
+  const pts = completion(d);
+  const min = pts ? points(d, d.req) : 0;
+  const note = N()[d.p] || "";
+  const yt = d.yt ? `<a class="primary" href="https://www.youtube.com/watch?v=${encodeURIComponent(d.yt)}" target="_blank" rel="noopener noreferrer">${T("verif")}</a>` : "";
+  const pc = `<a class="ghost" href="https://pointercrate.com/demonlist/permalink/${d.pc}/" target="_blank" rel="noopener noreferrer">Pointercrate</a>`;
+  const shot = d.yt ? `<div class="shot"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/${encodeURIComponent(d.yt)}/mqdefault.jpg" referrerpolicy="no-referrer"></div>` : `<div class="shot"></div>`;
+  const borderNote = border(d) ? `<p>${T("borderNote", d.p, d.rp, fmt(pts))}</p>` : "";
+  const scoreNote = !d.rated ? `<p>${T("scoreUnrated", d.req)}</p>`
+    : pts ? `<p>${T("scoreCompl", fmt(pts), d.rp, d.req, d.rp<=75, fmt(min))}</p>`
+    : `<p>${T("scoreOut", d.rp)}</p>`;
+  const mine = myPct(d);
+  const mineNow = mine ? (points(d,mine) ? T("ptsN", fmt(points(d,mine))) : T("myNoPts")) : "";
+  return `<div class="detail-grid">${shot}<div>
+    ${note ? `<p>${esc(note)}</p>` : ""}${borderNote}${scoreNote}
+    <p>${T("idLine", d.lid, `<a href="#" data-who="${esc(d.pub)}">${esc(d.pub)}</a>`, `<a href="#" data-who="${esc(d.ver)}">${esc(d.ver)}</a>`)}</p>
+    <div class="mine-edit">
+      <label for="my${d.p}">${T("myBest")}</label>
+      <input id="my${d.p}" type="number" min="0" max="100" inputmode="numeric" value="${mine||""}" placeholder="${T("myPh")}" data-mine="${d.p}">
+      <button type="button" class="ghost" data-full="${d.p}">${T("myFull")}</button>
+      ${mine ? `<button type="button" class="ghost" data-clear="${d.p}">${T("clear")}</button><span style="color:var(--ok);font-size:13px">${mineNow}</span>` : ""}
+    </div>
+    <div class="actions">
+      <button type="button" class="ghost" data-copy="${d.lid}">${T("copyId")}</button>
+      <button type="button" class="ghost" data-share="${d.p}">${T("copyLink")}</button>
+      ${yt}${pc}
+    </div>
+  </div></div>`;
+}
+function setMine(p, v){
+  const d = byP.get(p); if(!d) return;
+  v = Math.max(0, Math.min(100, Math.round(Number(v)||0)));
+  if(v) prog[d.lid] = v; else delete prog[d.lid];
+  saveProg(); render(); renderMine();
+  const el = $("d"+p); if(el) el.scrollIntoView({block:"nearest"});
+}
+$("list").addEventListener("click", e=>{
+  const who = e.target.closest("[data-who]");
+  if(who){ e.preventDefault(); S.q = who.dataset.who; S.l = null; S.f = "all"; syncUI(); return; }
+  const c = e.target.closest("[data-copy]");
+  if(c){ copy(c.dataset.copy, T("idCopied")); return; }
+  const sh = e.target.closest("[data-share]");
+  if(sh){ S.l = +sh.dataset.share; writeHash(); copy(location.href, T("linkCopied")); return; }
+  const full = e.target.closest("[data-full]");
+  if(full){ setMine(+full.dataset.full, 100); return; }
+  const clr = e.target.closest("[data-clear]");
+  if(clr){ setMine(+clr.dataset.clear, 0); return; }
+  if(e.target.closest(".detail")) return;
+  const row = e.target.closest(".row");
+  if(!row) return;
+  const p = +row.dataset.p;
+  S.l = S.l===p ? null : p;
+  writeHash(); render();
+  if(S.l){ const el = $("d"+S.l); if(el) el.scrollIntoView({block:"nearest"}); }
+});
+$("list").addEventListener("change", e=>{
+  const i = e.target.closest("[data-mine]");
+  if(i) setMine(+i.dataset.mine, i.value);
+});
+$("q").addEventListener("input", e=>{ S.q = e.target.value; S.l = null; writeHash(); render(); });
+$("sort").addEventListener("change", e=>{ S.s = e.target.value; writeHash(); render(); });
+$("chips").addEventListener("click", e=>{
+  const b = e.target.closest("[data-filter]"); if(!b) return;
+  S.f = b.dataset.filter; S.l = null; syncUI();
+});
+function pickRandom(){
+  const pool = visible().filter(d => !isDone(d));
+  const src = pool.length ? pool : visible();
+  if(!src.length){ toast(T("noLevels")); return; }
+  const d = src[Math.floor(Math.random()*src.length)];
+  S.l = d.p; writeHash(); render();
+  const row = document.querySelector('.row[data-p="'+d.p+'"]');
+  if(row) row.scrollIntoView({block:"center"});
+}
+$("rand").addEventListener("click", pickRandom);
+$("csv").addEventListener("click", ()=>{
+  const q = v => '"'+String(v).replace(/"/g,'""')+'"';
+  const lines = [T("csvHead").map(q).join(",")].concat(visible().map(d =>
+    [d.p, d.rp==null?"":d.rp, named(d), d.pub, d.ver, d.req, fmt(completion(d)), d.lid].map(q).join(",")));
+  const blob = new Blob(["\ufeff"+lines.join("\n")], {type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "kizil-list.csv";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+});
+
+/* ---------- tabs ---------- */
+function showTab(id, focus){
+  S.tab = id;
+  TABS.forEach(n=>{
+    const on = n===id, t = $("tab-"+n);
+    t.setAttribute("aria-selected", String(on));
+    t.tabIndex = on ? 0 : -1;
+    $("panel-"+n).classList.toggle("show", on);
+    if(on && focus) t.focus();
+  });
+  if(id==="mine") renderMine();
+  writeHash();
+}
+$("tabs").addEventListener("click", e=>{
+  const b = e.target.closest("[role=tab]"); if(b) showTab(b.id.replace("tab-",""));
+});
+$("tabs").addEventListener("keydown", e=>{
+  const i = TABS.indexOf(S.tab);
+  let n = null;
+  if(e.key==="ArrowRight") n = (i+1)%TABS.length;
+  else if(e.key==="ArrowLeft") n = (i-1+TABS.length)%TABS.length;
+  else if(e.key==="Home") n = 0;
+  else if(e.key==="End") n = TABS.length-1;
+  if(n!==null){ e.preventDefault(); showTab(TABS[n], true); }
+});
+
+/* ---------- my progress ---------- */
+function renderMine(){
+  const entries = DATA.rows.filter(d => myPct(d));
+  const done = entries.filter(isDone).length;
+  $("mineSum").innerHTML =
+    `<div><b>${fmt(mineScore())}</b><span>${T("mineScore")}</span></div>
+     <div><b>${done}</b><span>${T("mineDone")}</span></div>
+     <div><b>${entries.length-done}</b><span>${T("mineParts")}</span></div>`;
+  if(!entries.length){ $("mineList").innerHTML = '<p class="empty">'+T("mineEmpty")+'</p>'; return; }
+  const rows = entries.slice().sort((a,b)=> points(b,myPct(b))-points(a,myPct(a)) || a.p-b.p);
+  $("mineList").innerHTML = '<table><thead><tr><th>#</th><th>'+T("thLevel")+'</th><th class="num">%</th><th class="num">'+T("thPts")+'</th></tr></thead><tbody>'+
+    rows.map(d=>`<tr><td>${d.p}</td><td><a href="#l=${d.p}" data-go="${d.p}">${esc(named(d))}</a></td><td class="num">${myPct(d)}</td><td class="num">${fmt(points(d,myPct(d)))}</td></tr>`).join("")+'</tbody></table>';
+}
+$("mineList").addEventListener("click", e=>{
+  const a = e.target.closest("[data-go]"); if(!a) return;
+  e.preventDefault(); S.l = +a.dataset.go; S.f = "all"; S.q = ""; S.tab = "list"; syncUI();
+  const row = document.querySelector('.row[data-p="'+S.l+'"]'); if(row) row.scrollIntoView({block:"center"});
+});
+$("exp").addEventListener("click", ()=>{
+  $("io").value = JSON.stringify({ app:"kizil-liste", v:1, progress:prog });
+  copy($("io").value, T("exported"));
+});
+$("imp").addEventListener("click", ()=>{
+  try{
+    const o = JSON.parse($("io").value);
+    const src = o && o.progress ? o.progress : o;
+    const clean = {};
+    Object.keys(src).forEach(k=>{
+      const lid = Number(k), v = Math.round(Number(src[k]));
+      if(DATA.rows.some(d=>d.lid===lid) && v>0 && v<=100) clean[lid] = v;
+    });
+    prog = clean; saveProg(); render(); renderMine();
+    toast(T("imported", Object.keys(clean).length));
+  }catch(err){ toast(T("badJson")); }
+});
+$("wipe").addEventListener("click", ()=>{
+  if(!Object.keys(prog).length) return;
+  if(window.confirm(T("confirmWipe"))){ prog = {}; saveProg(); render(); renderMine(); }
+});
+
+/* ---------- stats ---------- */
+function barRows(items){
+  const max = Math.max.apply(null, items.map(i=>i[1]).concat(1));
+  return items.map(i=>`<div class="b"><span class="t" title="${esc(i[0])}">${esc(i[0])}</span><span class="tr"><i style="width:${(i[1]/max*100).toFixed(1)}%"></i></span><span class="v">${i[1]}</span></div>`).join("");
+}
+function topBy(field, n){
+  const m = new Map();
+  DATA.rows.filter(d=>d.p<=150).forEach(d=> m.set(d[field], (m.get(d[field])||0)+1));
+  return [...m.entries()].sort((a,b)=>b[1]-a[1] || String(a[0]).localeCompare(String(b[0]))).slice(0,n);
+}
+function renderStats(){
+  const buckets = [];
+  for(let s=30;s<100;s+=10) buckets.push([s+"–"+(s+9), DATA.rows.filter(d=>d.p<=150 && d.req>=s && d.req<s+10).length]);
+  buckets.push(["100", DATA.rows.filter(d=>d.p<=150 && d.req===100).length]);
+  $("stReq").innerHTML = barRows(buckets.filter(b=>b[1]>0));
+  $("stTier").innerHTML = barRows([
+    [T("tierMain"), DATA.rows.filter(d=>tier(d.p)==="ana").length],
+    [T("tierExt"), DATA.rows.filter(d=>tier(d.p)==="ext").length],
+    [T("tierLeg"), DATA.rows.filter(d=>tier(d.p)==="leg").length],
+    [T("tierUnr"), DATA.rows.filter(d=>!d.rated).length]]);
+  $("stPub").innerHTML = barRows(topBy("pub",8));
+  $("stVer").innerHTML = barRows(topBy("ver",8));
+  const sc = DATA.scores.slice(1), max = sc[0], W=600, H=200, pad=24;
+  const pts = sc.map((v,i)=> (pad+(W-2*pad)*i/(sc.length-1)).toFixed(1)+","+(H-pad-(H-2*pad)*v/max).toFixed(1)).join(" ");
+  const x75 = (pad+(W-2*pad)*74/(sc.length-1)).toFixed(1);
+  $("curve").innerHTML = `<line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}" stroke="var(--line)"/>
+    <line x1="${x75}" y1="${pad}" x2="${x75}" y2="${H-pad}" stroke="var(--line)" stroke-dasharray="4 4"/>
+    <polyline points="${pts}" fill="none" stroke="var(--hot)" stroke-width="2.5"/>
+    <text x="${pad}" y="14" fill="var(--muted)" font-size="11">${T("c350")}</text>
+    <text x="${+x75+4}" y="${pad+10}" fill="var(--muted)" font-size="11">${T("c75")}</text>
+    <text x="${W-pad}" y="${H-6}" fill="var(--muted)" font-size="11" text-anchor="end">#150</text>`;
+}
+$("live").addEventListener("click", async ()=>{
+  const out = $("liveOut"); out.textContent = T("liveConn");
+  try{
+    const get = async after => {
+      const r = await fetch("https://pointercrate.com/api/v2/demons/listed/?limit=100"+(after?"&after="+after:""), {headers:{Accept:"application/json"}});
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      return r.json();
+    };
+    const live = (await get(0)).concat(await get(100));
+    const mine = new Map(DATA.rows.filter(d=>d.rp!=null).map(d=>[d.lid,d]));
+    const seen = new Set(), moved = [], added = [];
+    live.forEach(x=>{
+      seen.add(x.level_id);
+      const d = mine.get(x.level_id);
+      if(!d){ if(x.position<=150) added.push(x); }
+      else if(d.rp!==x.position) moved.push([d,x.position]);
+    });
+    const dropped = DATA.rows.filter(d=>d.rp!=null && d.rp<=150 && !seen.has(d.lid));
+    if(!moved.length && !added.length && !dropped.length){ out.innerHTML = T("liveOk"); return; }
+    const li = a => a.slice(0,12).map(s=>"<li>"+s+"</li>").join("") + (a.length>12 ? "<li>"+T("liveMore",a.length-12)+"</li>" : "");
+    out.innerHTML = T("liveDiff")+
+      (moved.length ? "<p>"+T("liveMoved",moved.length)+"</p><ul>"+li(moved.map(m=>esc(m[0].name)+": #"+m[0].rp+" → #"+m[1]))+"</ul>" : "")+
+      (added.length ? "<p>"+T("liveAdded",added.length)+"</p><ul>"+li(added.map(x=>esc(x.name)+" (#"+x.position+")"))+"</ul>" : "")+
+      (dropped.length ? "<p>"+T("liveGone",dropped.length)+"</p><ul>"+li(dropped.map(d=>esc(d.name)))+"</ul>" : "");
+  }catch(err){ out.textContent = T("liveErr", err.message); }
+});
+
+/* ---------- players / calc ---------- */
+function bars(rows, idx){
+  const max = Math.max.apply(null, rows.map(r=>r[idx]));
+  const loc = LANG==="tr" ? "tr-TR" : "en-US";
+  return rows.map(r=>`<td class="num">${r[idx].toLocaleString(loc,{minimumFractionDigits:2})}<span class="tbar" style="width:${(r[idx]/max*100).toFixed(0)}%"></span></td>`);
+}
+function fillPlayers(){
+  const pb = bars(DATA.players,3), nb = bars(DATA.nations,2);
+  $("players").innerHTML = '<thead><tr><th>#</th><th>'+T("thPlayer")+'</th><th>'+T("thClan")+'</th><th class="num">'+T("thScore")+'</th></tr></thead><tbody>'+
+    DATA.players.map((p,i)=>`<tr><td>${p[0]}</td><td>${esc(p[1])}</td><td>${esc(p[2])}</td>${pb[i]}</tr>`).join("")+'</tbody>';
+  const nm = i => LANG==="tr" ? DATA.nations[i][1] : DATA.nations_en[i];
+  $("nations").innerHTML = '<thead><tr><th>#</th><th>'+T("thNation")+'</th><th class="num">'+T("thScore")+'</th></tr></thead><tbody>'+
+    DATA.nations.map((p,i)=>`<tr><td>${p[0]}</td><td>${esc(nm(i))}</td>${nb[i]}</tr>`).join("")+'</tbody>';
+}
+function options(){
+  const opts = DATA.rows.map(d=>`<option value="${d.p}">#${d.p} ${esc(named(d))}</option>`).join("");
+  ["level","cmpA","cmpB"].forEach(id=>$(id).innerHTML = opts);
+  $("cmpB").value = "2";
+}
+function paintCalc(src){
+  const d = byP.get(Number($("level").value));
+  let v = Number(src==="r" ? $("progr").value : $("prog").value);
+  if(Number.isNaN(v)){ $("out").textContent="—"; return; }
+  v = Math.max(0, Math.min(100, v));
+  if(src==="r") $("prog").value = v; else $("progr").value = v;
+  if(!d) return;
+  $("out").textContent = fmt(points(d, v));
+  let why;
+  if(!d.rated) why = T("whyUnrated");
+  else if(d.rp>150) why = T("whyOut");
+  else if(v<d.req) why = T("whyBelow", d.req);
+  else if(d.rp>75 && v<100) why = T("whyExt", fmt(completion(d)));
+  else if(v===100) why = T("whyFull", d.rp);
+  else why = T("whyLin", fmt(points(d,d.req)), fmt(completion(d)));
+  $("break").innerHTML = `<p style="margin:0;color:var(--soft)">${why}</p><p style="margin:8px 0 0;color:var(--muted)">${T("wrongSays", fmt(wrong(v,d.req)))}</p>`;
+}
+function paintCmp(){
+  const a = byP.get(Number($("cmpA").value)), b = byP.get(Number($("cmpB").value));
+  if(!a || !b) return;
+  const harder = a.p<b.p ? a : b;
+  let classic = T("cmpNone");
+  if(a.rp!=null && b.rp!=null){
+    const h = a.rp<b.rp ? a : b;
+    classic = a.rp===b.rp ? T("cmpSame") : T("cmpHarder", named(h), Math.min(a.rp,b.rp));
+  } else if(a.rp!=null) classic = T("cmpOne", named(a), a.rp, named(b));
+  else if(b.rp!=null) classic = T("cmpOne", named(b), b.rp, named(a));
+  $("cmpOut").textContent = T("cmpMain", named(harder), harder.p, Math.abs(a.p-b.p), classic, named(a), fmt(completion(a)), named(b), fmt(completion(b)));
+}
+$("level").addEventListener("change", ()=>paintCalc());
+$("prog").addEventListener("input", ()=>paintCalc("n"));
+$("progr").addEventListener("input", ()=>paintCalc("r"));
+$("cmpA").addEventListener("change", paintCmp);
+$("cmpB").addEventListener("change", paintCmp);
+
+/* ---------- header, hero, theme, language ---------- */
+function paintHeader(){
+  const n = DATA.rows.length;
+  const unr = DATA.rows.filter(d=>!d.rated).length;
+  const bor = DATA.rows.filter(border).length;
+  const dup = new Set(DATA.rows.filter(dupName).map(d=>d.name)).size;
+  $("stats").innerHTML = [[n,"statLevels"],[unr,"statUnrated"],[bor,"statBorder"],[dup,"statDup"]]
+    .map(s=>`<div class="stat"><b>${s[0]}</b><span>${T(s[1])}</span></div>`).join("");
+  const t = DATA.rows[0];
+  const first = (N()[t.p]||"").split(/(?<=\.)\s/)[0] || "";
+  $("hero").innerHTML = `<div class="hero-copy">
+      <div class="eyebrow">${T("heroEye", t.rp||"—", t.rated)}</div>
+      <h2>${esc(named(t))}</h2>
+      <p>${esc(T("heroP", t.pub, t.ver, t.req, fmt(completion(t))))}${esc(first)}</p>
+      <div class="hero-meta"><span class="tag hot">${T("heroMain")}</span><span class="tag">ID ${t.lid}</span><span class="tag">${T("thr", t.req).replace(/^./,c=>c.toUpperCase())}</span></div>
+    </div>
+    <div class="hero-shot">${t.yt?`<img alt="${esc(T("heroImg", t.name))}" referrerpolicy="no-referrer" src="https://i.ytimg.com/vi/${encodeURIComponent(t.yt)}/hqdefault.jpg" onerror="this.remove()">`:""}</div>`;
+}
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  document.querySelector('meta[name=theme-color]').content = t==="light" ? "#faf6f1" : "#0e0c0b";
+}
+(function(){
+  let t = null;
+  try{ t = localStorage.getItem("kizil.theme"); }catch(e){}
+  if(!t) t = window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  applyTheme(t);
+  $("theme").addEventListener("click", ()=>{
+    t = t==="dark" ? "light" : "dark"; applyTheme(t);
+    try{ localStorage.setItem("kizil.theme", t); }catch(e){}
+  });
+})();
+function setLang(l, remember){
+  LANG = l;
+  if(remember){ try{ localStorage.setItem("kizil.lang", l); }catch(e){} }
+  applyStatic(); paintHeader(); fillPlayers(); renderStats(); paintCalc(); paintCmp(); renderMine(); syncUI();
+}
+$("lang").addEventListener("click", ()=> setLang(LANG==="tr" ? "en" : "tr", true));
+
+/* ---------- keyboard ---------- */
+document.addEventListener("keydown", e=>{
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||"");
+  if(e.key==="/" && !typing && !e.ctrlKey && !e.metaKey){
+    e.preventDefault(); showTab("list"); $("q").focus(); $("q").select();
+  } else if(e.key==="Escape" && document.activeElement===$("q")){
+    S.q = ""; $("q").value = ""; writeHash(); render(); $("q").blur();
+  } else if((e.key==="r"||e.key==="R") && !typing && !e.ctrlKey && !e.metaKey && S.tab==="list"){
+    pickRandom();
+  }
+});
+
+/* ---------- boot ---------- */
+function syncUI(){
+  $("q").value = S.q;
+  $("sort").value = S.s;
+  if(S.l && !passes(byP.get(S.l))) S.f = "all";
+  document.querySelectorAll("#chips button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.filter===S.f)));
+  showTab(S.tab);
+  render();
+}
+LANG = detectLang();
+options();
+applyStatic(); paintHeader(); fillPlayers(); renderStats(); paintCalc(); paintCmp();
+readHash(); syncUI();
+if(S.l){ const row = document.querySelector('.row[data-p="'+S.l+'"]'); if(row) row.scrollIntoView({block:"center"}); }
+window.addEventListener("hashchange", ()=>{ S.l=null; S.q=""; readHash(); syncUI(); });
+</script>
+</body>
+</html>
